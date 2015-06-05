@@ -29,9 +29,8 @@
 
 	getJSON('equipment.json',function(data){
 		for(var key in data){
-			var opt = new Option(key);
-			elWant.add(opt.cloneNode());
-			elOwned.add(opt);
+			elWant.add(new Option(key));
+			elOwned.add(new Option(key));
 		}
 	});
 </script>
