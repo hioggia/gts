@@ -1,0 +1,21 @@
+<!doctype html>
+<meta charset="utf-8" />
+<h1>Equipment create helper
+<p>What equipment do you want to create?
+<p><select></select>
+<h2>Additional: what item(s) you already owned?
+<p><select></select> x<input type="number" value="1" />
+<p><button>Show me what is I need to collect</button>
+<script>
+	var getJSON = function(path){
+		var xhr = new XMLHttpRequest();
+		xhr.open('get',path,false);
+		if(xhr.status == 200){
+			return JSON.parse(xhr.responseText);
+		}
+		alert('READ JSON ERROR!');
+	};
+
+	var data = getJSON('equipment.json');
+	console.log(data);
+</script>
