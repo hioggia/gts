@@ -7,14 +7,14 @@
 	var elInput = document.querySelector('textarea'), elConvert = document.querySelector('button'), elOutput = document.querySelector('div');
 	elConvert.addEventListener('click',function(){
 		var textInput = elInput.value;
-		if(textInput.length==0){
+		if(textInput.length==0 || !/\t/.test(textInput)){
 			alert('Not Right');
 			return;
 		}
 		var data = {}, rows = textInput.replace(/\r/g,'').split(/\n/);
 		for(var i=0,l=rows.length;i<l;i++){
 			var row = rows[i];
-			var cols = row.split(' ');
+			var cols = row.split(/\t/g);
 			if(cols.length<=1){
 				continue;
 			}
