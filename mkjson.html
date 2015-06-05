@@ -7,7 +7,7 @@
 	var elInput = document.querySelector('textarea'), elConvert = document.querySelector('button'), elOutput = document.querySelector('div');
 	elConvert.addEventListener('click',function(){
 		var textInput = elInput.value;
-		if(textInput.length==0 || !/[a-zA-Z]/.test(textInput)){
+		if(textInput.length==0){
 			alert('Not Right');
 			return;
 		}
