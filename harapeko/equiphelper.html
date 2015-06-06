@@ -58,7 +58,10 @@
 
 		elBank.addEventListener('click',function(ev){
 			if(ev.target.tagName.toLowerCase() == 'a'){
-				console.log(ev.target);
+				var li = ev.target.parentNode;
+				var eq = li.dataset.eq;
+				delete bank[eq];
+				elBank.removeChild(li);
 			}
 		},false);
 
