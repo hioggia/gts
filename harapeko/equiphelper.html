@@ -10,6 +10,7 @@
 <p id="bank_head" style="display:none"><strong>Your bank:</strong>
 <ul id="bank_content" style="display:none"></ul>
 <p><button id="show">Show me what is I need to collect</button>
+<p id="result">
 <script>
 	var getJSON = function(path,callback){
 		var xhr = new XMLHttpRequest();
@@ -29,10 +30,12 @@
 		xhr.send();
 	};
 
-	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elShow = document.querySelector('#show');
+	var $ = document.querySelector, $create = document.createElement;
+
+	var elWant = $('#want'), elBasic = $('#basic'), elOwned = $('#owned'), elNum = $('#num'), elAdd = $('#add'), elBankHead = $('#bank_head'), elBank = $('#bank_content'), elShow = $('#show'), elResult = $('#result');
 
 	var addBasical = function(material,isChecked,isReadonly){
-		var label = document.createElement('label'), htw = '';
+		var label = $create('label'), htw = '';
 		htw = '<input type="checkbox"';
 		if(isChecked){
 			htw += ' checked="checked"';
@@ -49,7 +52,19 @@
 		if(eq in craftTree){
 			return craftTree[eq];
 		}
-		return null;
+		return [];
+	};
+
+	var iterRun = function(eq){
+		if(eq in basic){
+			return eq;
+		}else{
+			var seq = splitEquipment(eq), ret = [];
+			for(var i=0,l=seq.length;i<l;i++){
+				ret = ret.concat(iterRun(seq[i]));
+			}
+			return ret;
+		}
 	};
 
 	var addOwnMaterial = function(){
@@ -63,7 +78,7 @@
 			elBank.querySelector('[data-eq="'+eq+'"]').innerHTML = eq+' x'+bank[eq]+' <a href="javascript:void(0)">[remove]</a>';
 		}else{
 			bank[eq]=sz;
-			var li = document.createElement('li');
+			var li = $create('li');
 			li.innerHTML = eq+' x'+sz+' <a href="javascript:void(0)">[remove]</a>';
 			li.dataset.eq = eq;
 			elBank.appendChild(li);
@@ -85,13 +100,14 @@
 
 	var showColletMaterial = function(){
 		var eq = elWant.value;
-		basic = {};
+		basic = {}, used = {};
 		for(var i=0,l=elBasic.children.length;i<l;i++){
 			var label = elBasic.children[i];
 			if(label.querySelector('input').checked){
 				basic[label.dataset.ma] = true;
 			}
 		}
+		var result = iterRun(eq);
 	};
 
 	var initPage = function(){
@@ -112,7 +128,7 @@
 		elShow.addEventListener('click',showColletMaterial,false);
 	};
 
-	var craftTree = {}, dropabelMaterial = {}, bank = {}, basic = {};
+	var craftTree = {}, dropabelMaterial = {}, bank = {}, used = {}, basic = {};
 
 	getJSON('equipment.json',function(data){
 		craftTree = data;
