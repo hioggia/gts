@@ -30,12 +30,10 @@
 		xhr.send();
 	};
 
-	var $ = document.querySelector, $create = document.createElement;
-
-	var elWant = $('#want'), elBasic = $('#basic'), elOwned = $('#owned'), elNum = $('#num'), elAdd = $('#add'), elBankHead = $('#bank_head'), elBank = $('#bank_content'), elShow = $('#show'), elResult = $('#result');
+	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elShow = document.querySelector('#show'), elResult = document.querySelector('#result');
 
 	var addBasical = function(material,isChecked,isReadonly){
-		var label = $create('label'), htw = '';
+		var label = document.createElement('label'), htw = '';
 		htw = '<input type="checkbox"';
 		if(isChecked){
 			htw += ' checked="checked"';
@@ -78,7 +76,7 @@
 			elBank.querySelector('[data-eq="'+eq+'"]').innerHTML = eq+' x'+bank[eq]+' <a href="javascript:void(0)">[remove]</a>';
 		}else{
 			bank[eq]=sz;
-			var li = $create('li');
+			var li = document.createElement('li');
 			li.innerHTML = eq+' x'+sz+' <a href="javascript:void(0)">[remove]</a>';
 			li.dataset.eq = eq;
 			elBank.appendChild(li);
