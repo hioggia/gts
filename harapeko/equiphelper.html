@@ -78,7 +78,7 @@
 			addBasical(key,key in defaultCollectableMaterial,false);
 		}
 
-		var bank = {};
+		var bank = {}, basic = {};
 
 		elAdd.addEventListener('click',function(){
 			if(elBankHead.style.cssText){
@@ -113,6 +113,14 @@
 
 		elShow.addEventListener('click',function(){
 			var eq = elWant.value;
+			basic = {};
+			for(var i=0,l=elBasic.children.length;i<l;i++){
+				var label = elBasic.children[i];
+				if(label.querySelector('input').checked){
+					basic[label.dataset.ma] = true;
+				}
+			}
+			console.log(basic);
 		},false);
 
 	});
