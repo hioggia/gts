@@ -10,6 +10,7 @@
 <p id="bank_head" style="display:none"><strong>Your bank:</strong>
 <ul id="bank_content" style="display:none"></ul>
 <p><button id="show">Show me what is I need to collect</button>
+<h2 id="result_head" style="display:none">Result</h2>
 <p id="result">
 <script>
 	var getJSON = function(path,callback){
@@ -30,7 +31,7 @@
 		xhr.send();
 	};
 
-	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elShow = document.querySelector('#show'), elResult = document.querySelector('#result');
+	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elShow = document.querySelector('#show'), elResultHead = document.querySelector('#result_head'), elResult = document.querySelector('#result');
 
 	var addBasical = function(material,isChecked,isReadonly){
 		var label = document.createElement('label'), htw = '';
@@ -116,8 +117,21 @@
 				basic[label.dataset.ma] = true;
 			}
 		}
-		var result = iterRun(eq);
-		elResult.innerHTML = result;
+		var result = iterRun(eq), sorted = {}, htw = '';
+		for(var i=0,l=result.length;i<l;i++){
+			if(result[i] in sorted){
+				sorted[result[i]]++;
+			}else{
+				sorted[result[i]]=1;
+			}
+		}
+		for(var key in sorted){
+			htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropabelMaterial[key].join(',')+'<br />'
+		}
+		if(elResultHead.style.cssText){
+			elResultHead.style.cssText = '';
+		}
+		elResult.innerHTML = htw;
 	};
 
 	var initPage = function(){
