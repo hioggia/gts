@@ -118,18 +118,22 @@
 			}
 		}
 		var result = iterRun(eq), sorted = {}, htw = '';
-		for(var i=0,l=result.length;i<l;i++){
-			if(result[i] in sorted){
-				sorted[result[i]]++;
-			}else{
-				sorted[result[i]]=1;
-			}
-		}
-		for(var key in sorted){
-			htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropabelMaterial[key].join(',')+'<br />'
-		}
 		if(elResultHead.style.cssText){
 			elResultHead.style.cssText = '';
+		}
+		if(result.length == 0){
+			htw = 'You had already owned this equipment!';
+		}else{
+			for(var i=0,l=result.length;i<l;i++){
+				if(result[i] in sorted){
+					sorted[result[i]]++;
+				}else{
+					sorted[result[i]]=1;
+				}
+			}
+			for(var key in sorted){
+				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropabelMaterial[key].join(',')+'<br />'
+			}
 		}
 		elResult.innerHTML = htw;
 	};
