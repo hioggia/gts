@@ -9,14 +9,14 @@
 <ul id="bank_content" style="display:none"></ul>
 <p><button id="show">Show me what is I need to collect</button>
 <script>
-	var getJSON = function(path,data,callback){
+	var getJSON = function(path,callback){
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState == 4){
 				if(xhr.status == 200){
-					data = JSON.parse(xhr.responseText);
+					var data = JSON.parse(xhr.responseText);
 					xhr = null;
-					callback();
+					callback(data);
 				}else{
 					xhr = null;
 					alert('READ JSON ERROR!');
@@ -29,13 +29,15 @@
 
 	var elWant = document.querySelector('#want'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elShow = document.querySelector('#show');
 
-	var data = null, bank = {};
+	getJSON('equipment.json',function(data){
 
-	getJSON('equipment.json',data,function(){
 		for(var key in data){
 			elWant.add(new Option(key));
 			elOwned.add(new Option(key));
 		}
+
+		var bank = {};
+
 		elAdd.addEventListener('click',function(){
 			if(elBankHead.style.cssText){
 				elBankHead.style.cssText = '';
@@ -53,6 +55,8 @@
 				elBank.appendChild(li);
 			}
 		},false);
+
 		elShow.addEventListener('click',function(){},false);
+		
 	});
 </script>
