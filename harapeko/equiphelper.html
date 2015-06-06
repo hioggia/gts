@@ -45,83 +45,81 @@
 		elBasic.appendChild(label);
 	};
 
-	var originalMaterial = {}, defaultCollectableMaterial = {
-		'くだものナイフ':'',
-		'ブロンズナイフ':'',
-		'くさなぎのつるぎ':'',
-		'かなづち':'',
-		'てつのおの':'',
-		'たけやり':'',
-		'魔道士のつえ':'',
-		'かわのたて':'',
-		'ひげめがね':''
+	var splitEquipment = function(eq){
+		if(eq in craftTree){
+			return craftTree[eq];
+		}
+		return null;
 	};
 
-	getJSON('equipment.json',function(data){
+	var addOwnMaterial = function(){
+		if(elBankHead.style.cssText){
+			elBankHead.style.cssText = '';
+			elBank.style.cssText = '';
+		}
+		var eq = elOwned.value, sz = ~~elNum.value;
+		if(bank[eq]){
+			bank[eq]+=sz;
+			elBank.querySelector('[data-eq="'+eq+'"]').innerHTML = eq+' x'+bank[eq]+' <a href="javascript:void(0)">[remove]</a>';
+		}else{
+			bank[eq]=sz;
+			var li = document.createElement('li');
+			li.innerHTML = eq+' x'+sz+' <a href="javascript:void(0)">[remove]</a>';
+			li.dataset.eq = eq;
+			elBank.appendChild(li);
+		}
+	};
 
-		var splitEquipment = function(eq){
-			if(eq in data){
-				return data[eq];
+	var removeOwnMaterial = function(ev){
+		if(ev.target.tagName.toLowerCase() == 'a'){
+			var li = ev.target.parentNode;
+			var eq = li.dataset.eq;
+			delete bank[eq];
+			elBank.removeChild(li);
+			if(elBank.childElementCount==0){
+				elBankHead.style.display='none';
+				elBank.style.display='none';
 			}
-			return null;
-		};
+		}
+	};
 
-		for(var key in data){
-			elWant.add(new Option(key));
+	var showColletMaterial = function(){
+		var eq = elWant.value;
+		basic = {};
+		for(var i=0,l=elBasic.children.length;i<l;i++){
+			var label = elBasic.children[i];
+			if(label.querySelector('input').checked){
+				basic[label.dataset.ma] = true;
+			}
+		}
+	};
+
+	var initPage = function(){
+		for(var key in dropabelMaterial){
+			addBasical(key,true,!(key in craftTree));
 			elOwned.add(new Option(key));
-			for(var i=0,l=data[key].length;i<l;i++){
-				if(!splitEquipment(data[key][i]) && !(data[key][i] in originalMaterial)){
-					originalMaterial[data[key][i]] = 1;
-					addBasical(data[key][i],true,true);
-				}
-			}
-			addBasical(key,key in defaultCollectableMaterial,false);
 		}
 
-		var bank = {}, basic = {};
-
-		elAdd.addEventListener('click',function(){
-			if(elBankHead.style.cssText){
-				elBankHead.style.cssText = '';
-				elBank.style.cssText = '';
+		for(var key in craftTree){
+			elWant.add(new Option(key));
+			if(!(key in dropabelMaterial)){
+				elOwned.add(new Option(key));
 			}
-			var eq = elOwned.value, sz = ~~elNum.value;
-			if(bank[eq]){
-				bank[eq]+=sz;
-				elBank.querySelector('[data-eq="'+eq+'"]').innerHTML = eq+' x'+bank[eq]+' <a href="javascript:void(0)">[remove]</a>';
-			}else{
-				bank[eq]=sz;
-				var li = document.createElement('li');
-				li.innerHTML = eq+' x'+sz+' <a href="javascript:void(0)">[remove]</a>';
-				li.dataset.eq = eq;
-				elBank.appendChild(li);
-			}
-		},false);
+		}
 
-		elBank.addEventListener('click',function(ev){
-			if(ev.target.tagName.toLowerCase() == 'a'){
-				var li = ev.target.parentNode;
-				var eq = li.dataset.eq;
-				delete bank[eq];
-				elBank.removeChild(li);
-				if(elBank.childElementCount==0){
-					elBankHead.style.display='none';
-					elBank.style.display='none';
-				}
-			}
-		},false);
+		elAdd.addEventListener('click',addOwnMaterial,false);
+		elBank.addEventListener('click',removeOwnMaterial,false);
+		elShow.addEventListener('click',showColletMaterial,false);
+	};
 
-		elShow.addEventListener('click',function(){
-			var eq = elWant.value;
-			basic = {};
-			for(var i=0,l=elBasic.children.length;i<l;i++){
-				var label = elBasic.children[i];
-				if(label.querySelector('input').checked){
-					basic[label.dataset.ma] = true;
-				}
-			}
-			console.log(basic);
-		},false);
+	var craftTree = {}, dropabelMaterial = {}, bank = {}, basic = {};
 
+	getJSON('equipment.json',function(data){
+		craftTree = data;
+		getJSON('material.json',function(data){
+			dropabelMaterial = data;
+
+			initPage();
+		});
 	});
 </script>
