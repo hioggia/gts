@@ -49,6 +49,9 @@
 		}
 		label.innerHTML = htw+' /> '+material;
 		label.dataset.ma = material;
+		//if(material in dropabelMaterial){
+			label.title = dropabelMaterial[material].join(',');
+		//}
 		elBasic.appendChild(label);
 	};
 
@@ -181,7 +184,7 @@
 			}
 		}
 		elResult.innerHTML = htw;
-		window.scrollBy(0,500);
+		window.scrollBy(0,800);
 	};
 
 	var initPage = function(){
