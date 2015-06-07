@@ -2,6 +2,7 @@
 <meta charset="utf-8" />
 <title>はらぺこ勇者と星の女神</title>
 <h1>はらぺこ勇者と星の女神　装備合成アシスタント</h1>
+<a style="position:fixed;right:10px;top:10px" href="https://github.com/hioggia/gts/tree/gh-pages/harapeko" target="_blank">[Source Code]</a>
 <p>つくりたい装備は：
 <p><select id="want"></select>
 <p><strong>集めできる素材：</strong>
@@ -12,8 +13,10 @@
 <ul id="bank_content" style="display:none"></ul>
 <p id="bank_save" style="display:none">[<a href="javascript:void(0)">セーフ</a>]
 <p><button id="show">必要モノをリスト</button>
-<h2 id="result_head" style="display:none">リスト</h2>
+<h2 id="result_head" style="display:none">探し物リスト</h2>
 <p id="result">
+<h2 id="result2_head" style="display:none">使うものリスト</h2>
+<p id="result2">
 <script>
 	var getJSON = function(path,callback){
 		var xhr = new XMLHttpRequest();
@@ -33,7 +36,7 @@
 		xhr.send();
 	};
 
-	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elLoad = document.querySelector('#load'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elBankSave = document.querySelector('#bank_save'), elShow = document.querySelector('#show'), elResultHead = document.querySelector('#result_head'), elResult = document.querySelector('#result');
+	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elLoad = document.querySelector('#load'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elBankSave = document.querySelector('#bank_save'), elShow = document.querySelector('#show'), elResultHead = document.querySelector('#result_head'), elResult = document.querySelector('#result'), elResult2Head = document.querySelector('#result2_head'), elResult2 = document.querySelector('#result2');
 
 	var addBasical = function(material,isChecked,isReadonly){
 		var label = document.createElement('label'), htw = '';
@@ -123,6 +126,11 @@
 		}
 	};
 
+	var saveOwnMaterial = function(){
+		localStorage['SavedBank'] = JSON.stringify(bank);
+		alert('Saved.')
+	};
+
 	var removeOwnMaterial = function(ev){
 		if(ev.target.tagName.toLowerCase() == 'a'){
 			var li = ev.target.parentNode;
@@ -163,6 +171,14 @@
 			for(var key in sorted){
 				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropabelMaterial[key].join(',')+'<br />'
 			}
+			if(elResult2Head.style.cssText){
+				elResult2Head.style.cssText='';
+			}
+			var htw2 = '';
+			for(var key in used){
+				htw2 += key+' x'+used[key];
+				elResult2.innerHTML = htw2;
+			}
 		}
 		elResult.innerHTML = htw;
 	};
@@ -183,6 +199,7 @@
 		elAdd.addEventListener('click',addOwnMaterial,false);
 		elLoad.addEventListener('click',loadOwnMaterial,false);
 		elBank.addEventListener('click',removeOwnMaterial,false);
+		elBankSave.querySelector('a').addEventListener('click',saveOwnMaterial,false);
 		elShow.addEventListener('click',showColletMaterial,false);
 	};
 
