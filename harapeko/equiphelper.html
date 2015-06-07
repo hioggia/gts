@@ -3,8 +3,7 @@
 <title>はらぺこ勇者と星の女神</title>
 <h1>はらぺこ勇者と星の女神　装備合成アシスタント</h1>
 <a style="position:fixed;right:10px;top:10px" href="https://github.com/hioggia/gts/tree/gh-pages/harapeko" target="_blank">[Source Code]</a>
-<p>つくりたい装備は：
-<p><select id="want"></select>
+<p>つくりたい装備は：<select id="want"></select>
 <p><strong>集めできる素材：</strong>
 <p id="basic">
 <h2>かばんにある素材：[<a id="load" href="javascript:void(0)">ロード</a>]</h2>
@@ -49,8 +48,8 @@
 		}
 		label.innerHTML = htw+' /> '+material;
 		label.dataset.ma = material;
-		//if(material in dropabelMaterial){
-			label.title = dropabelMaterial[material].join(',');
+		//if(material in dropItems){
+			label.title = dropItems[material].join(',');
 		//}
 		elBasic.appendChild(label);
 	};
@@ -172,7 +171,7 @@
 				}
 			}
 			for(var key in sorted){
-				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropabelMaterial[key].join(',')+'<br />'
+				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropItems[key].join(',')+'<br />'
 			}
 			if(elResult2Head.style.cssText){
 				elResult2Head.style.cssText='';
@@ -188,14 +187,14 @@
 	};
 
 	var initPage = function(){
-		for(var key in dropabelMaterial){
+		for(var key in dropItems){
 			addBasical(key,true,!(key in craftTree));
 			elOwned.add(new Option(key));
 		}
 
 		for(var key in craftTree){
 			elWant.add(new Option(key));
-			if(!(key in dropabelMaterial)){
+			if(!(key in dropItems)){
 				elOwned.add(new Option(key));
 			}
 		}
@@ -207,12 +206,20 @@
 		elShow.addEventListener('click',showColletMaterial,false);
 	};
 
-	var craftTree = {}, dropabelMaterial = {}, bank = {}, used = {}, basic = {};
+	var craftTree = {}, dropItems = {}, bank = {}, used = {}, basic = {};
 
-	getJSON('equipment.json',function(data){
+	var loadCraftTreeUrl = 'equipment.json',
+		loaddropItemsUrl = 'material.json';
+
+	if(location.hash.replace('#','').toLowerCase()=='hl'){
+		loadCraftTreeUrl += '?t='+new Date().getTime();
+		loaddropItemsUrl += '?t='+new Date().getTime();
+	}
+
+	getJSON(loadCraftTreeUrl,function(data){
 		craftTree = data;
-		getJSON('material.json',function(data){
-			dropabelMaterial = data;
+		getJSON(loaddropItemsUrl,function(data){
+			dropItems = data;
 
 			initPage();
 		});
