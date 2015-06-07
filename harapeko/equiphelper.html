@@ -1,16 +1,17 @@
 <!doctype html>
 <meta charset="utf-8" />
-<h1>Equipment create helper</h1>
-<p>What equipment do you want to create?
+<title>はらぺこ勇者と星の女神</title>
+<h1>はらぺこ勇者と星の女神　装備合成アシスタント</h1>
+<p>つくりたい装備は：
 <p><select id="want"></select>
-<p><strong>Basical material</strong>
+<p><strong>集めできる素材：</strong>
 <p id="basic">
-<h2>Additional: what item(s) you already owned?</h2>
-<p><select id="owned"></select> x<input type="number" value="1" id="num" style="width:22px" /> <button id="add">Add</button>
-<p id="bank_head" style="display:none"><strong>Your bank:</strong>
+<h2>かばんにある素材：</h2>
+<p><select id="owned"></select> x<input type="number" value="1" id="num" style="width:22px" /> <button id="add">追加</button>
+<p id="bank_head" style="display:none"><strong>あなたのかばん：</strong>
 <ul id="bank_content" style="display:none"></ul>
-<p><button id="show">Show me what is I need to collect</button>
-<h2 id="result_head" style="display:none">Result</h2>
+<p><button id="show">結果をリスト</button>
+<h2 id="result_head" style="display:none">リスト</h2>
 <p id="result">
 <script>
 	var getJSON = function(path,callback){
