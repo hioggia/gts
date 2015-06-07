@@ -49,7 +49,7 @@
 		label.innerHTML = htw+' /> '+material;
 		label.dataset.ma = material;
 		//if(material in dropItems){
-			label.title = dropItems[material].join(',');
+			label.title = dropItems[material].join(', ');
 		//}
 		elBasic.appendChild(label);
 	};
@@ -171,7 +171,7 @@
 				}
 			}
 			for(var key in sorted){
-				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropItems[key].join(',')+'<br />'
+				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropItems[key].join(', ')+'<br />'
 			}
 			if(elResult2Head.style.cssText){
 				elResult2Head.style.cssText='';
