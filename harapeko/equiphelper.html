@@ -16,6 +16,8 @@
 <p id="result">
 <h2 id="result2_head" style="display:none">使うものリスト</h2>
 <p id="result2">
+<h2 id="result3_head" style="display:none">現在作れる素材</h2>
+<p id="result3">
 <script>
 	var getJSON = function(path,callback){
 		var xhr = new XMLHttpRequest();
@@ -35,7 +37,7 @@
 		xhr.send();
 	};
 
-	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elLoad = document.querySelector('#load'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elBankSave = document.querySelector('#bank_save'), elShow = document.querySelector('#show'), elResultHead = document.querySelector('#result_head'), elResult = document.querySelector('#result'), elResult2Head = document.querySelector('#result2_head'), elResult2 = document.querySelector('#result2');
+	var elWant = document.querySelector('#want'), elBasic = document.querySelector('#basic'), elOwned = document.querySelector('#owned'), elNum = document.querySelector('#num'), elAdd = document.querySelector('#add'), elLoad = document.querySelector('#load'), elBankHead = document.querySelector('#bank_head'), elBank = document.querySelector('#bank_content'), elBankSave = document.querySelector('#bank_save'), elShow = document.querySelector('#show'), elResultHead = document.querySelector('#result_head'), elResult = document.querySelector('#result'), elResult2Head = document.querySelector('#result2_head'), elResult2 = document.querySelector('#result2'), elResult3Head = document.querySelector('#result3_head'), elResult3 = document.querySelector('#result3');
 
 	var addBasical = function(material,isChecked,isReadonly){
 		var label = document.createElement('label'), htw = '';
@@ -79,6 +81,9 @@
 			var seq = splitEquipment(eq), ret = [];
 			for(var i=0,l=seq.length;i<l;i++){
 				ret = ret.concat(iterRun(seq[i]));
+			}
+			if(ret.length==0){
+				craft.push(eq);
 			}
 			return ret;
 		}
@@ -149,7 +154,7 @@
 
 	var showColletMaterial = function(){
 		var eq = elWant.value;
-		basic = {}, used = {};
+		basic = {}, used = {}, craft = [];
 		for(var i=0,l=elBasic.children.length;i<l;i++){
 			var label = elBasic.children[i];
 			if(label.querySelector('input').checked){
@@ -171,7 +176,7 @@
 				}
 			}
 			for(var key in sorted){
-				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropItems[key].join(', ')+'<br />'
+				htw += '<strong>'+key+' x'+sorted[key]+'</strong>: '+dropItems[key].join(', ')+'<br />';
 			}
 			if(elResult2Head.style.cssText){
 				elResult2Head.style.cssText='';
@@ -180,6 +185,19 @@
 			for(var key in used){
 				htw2 += key+' x'+used[key]+'<br />';
 				elResult2.innerHTML = htw2;
+			}
+			if(craft.length>0){
+				if(elResult3Head.style.cssText){
+					elResult3Head.style.cssText='';
+				}
+				var htw3 = '';
+				for(var i=0,l=craft.length;i<l;i++){
+					htw3 += '<strong>'+craft[i]+'</strong>: '+craftTree[craft[i]].join(' + ')+'<br />';
+				}
+				elResult3.innerHTML = htw3;
+			}else if(elResult3.innerHTML != ''){
+				elResult3Head.style.display = 'none';
+				elResult3.innerHTML = '';
 			}
 		}
 		elResult.innerHTML = htw;
@@ -206,7 +224,7 @@
 		elShow.addEventListener('click',showColletMaterial,false);
 	};
 
-	var craftTree = {}, dropItems = {}, bank = {}, used = {}, basic = {};
+	var craftTree = {}, dropItems = {}, bank = {}, used = {}, craft = [], basic = {};
 
 	var loadCraftTreeUrl = 'equipment.json',
 		loaddropItemsUrl = 'material.json';
