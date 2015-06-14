@@ -2,9 +2,9 @@
 <meta charset="utf-8" />
 <textarea placeholder="copy the data from excel"></textarea>
 <p><button>convert</button>
-<pre>output data here</pre>
+<div>output data here</div>
 <script>
-	var elInput = document.querySelector('textarea'), elConvert = document.querySelector('button'), elOutput = document.querySelector('pre');
+	var elInput = document.querySelector('textarea'), elConvert = document.querySelector('button'), elOutput = document.querySelector('div');
 	elConvert.addEventListener('click',function(){
 		var textInput = elInput.value;
 		if(textInput.length==0 || !/\t/.test(textInput)){
@@ -26,7 +26,7 @@
 				if(cols[j].length==0){
 					continue;
 				}
-				data[key][ field[j] ] = cols[j];
+				data[key][ field[j] ] = cols[j].replace(/\</g,'&gt;');
 			}
 		}
 		elOutput.innerHTML = JSON.stringify(data);
