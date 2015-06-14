@@ -115,7 +115,7 @@
 		elTable.style.padding = pW+'px '+(pW*2)+'px '+(pW*2)+'px '+pW+'px';
 		elTable.style.width = (imgW*colSetting+pW*colSetting*2)+'px';
 		for(var key in uList){
-			htw += '<div style="float:left;width:'+imgW+'px;margin-left:'+pW+'px;margin-top:'+pW+'px"><img style="display:block" width="'+imgW+'" src="'+mData[key].img+'" /><div style="border:solid 1px rgb(117,87,64);background-color:rgb(31,21,20);color:#fff;text-align:center;">'+key+'<br/>'+uList[key]+'</div></div>';
+			htw += '<div style="float:left;width:'+imgW+'px;margin-left:'+pW+'px;margin-top:'+pW+'px" title="'+mData[key]['evo-comment']+'"><img style="display:block" width="'+imgW+'" src="'+mData[key].img+'" /><div style="border:solid 1px rgb(117,87,64);background-color:rgb(31,21,20);color:#fff;text-align:center;">'+key+'<br/>'+uList[key]+'</div></div>';
 		}
 		elTable.innerHTML = htw;
 
