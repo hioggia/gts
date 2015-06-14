@@ -1,8 +1,46 @@
 <!doctype html>
 <meta charset="utf-8" />
 
+<p>素材的名字：<input type="text" /> x<input type="number" /> <button>我插</button>
+<p>现在的素材：
+<script>
+	var getJSON = function(path,callback){
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4){
+				if(xhr.status == 200){
+					var data = JSON.parse(xhr.responseText);
+					xhr = null;
+					callback(data);
+				}else{
+					xhr = null;
+					alert('READ JSON ERROR!');
+				}
+			}
+		}
+		xhr.open('get',path,true);
+		xhr.send();
+	};
 
-<div style="width:426px;margin-left:-2px;overflow:hidden;padding:4px;background-color:rgb(159,78,43)">
+	var initPage = function(){};
+
+	var mData = {};
+
+	var loadMaterialUrl = 'material.json';
+
+	if(location.hash.replace('#','').toLowerCase()=='hl'){
+		loadMaterialUrl += '?t='+new Date().getTime();
+	}
+
+	getJSON(loadMaterialUrl,function(data){
+		mData = data;
+
+		initPage();
+	});
+</script>
+<h2 id="result">复制下面的表格吧</h2>
+
+<div style="width:434px;margin-left:-2px;overflow:hidden;padding:4px;background-color:rgb(159,78,43)">
 	<div style="float:left;width:140px;margin-left:2px;margin-top:2px"><img style="display:block" src="http://gbf.game-a.mbga.jp/assets/img_light/sp/assets/item/article/m/59.jpg" /><div style="border:solid 1px rgb(117,87,64);background-color:rgb(31,21,20);color:#fff;text-align:center;">バハムートの角:3</div></div>
 	<div style="float:left;width:140px;margin-left:2px;margin-top:2px"><img style="display:block" src="http://gbf.game-a.mbga.jp/assets/img_light/sp/assets/item/article/m/1.jpg" /><div style="border:solid 1px rgb(117,87,64);background-color:rgb(31,21,20);color:#fff;text-align:center;">碧空の結晶:7</div></div>
 	<div style="float:left;width:140px;margin-left:2px;margin-top:2px"><img style="display:block" src="http://gbf.game-a.mbga.jp/assets/img_light/sp/assets/item/article/m/59.jpg" /><div style="border:solid 1px rgb(117,87,64);background-color:rgb(31,21,20);color:#fff;text-align:center;">バハムートの角:10</div></div>
