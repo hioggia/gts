@@ -44,10 +44,11 @@
 		var k = elTextboxMaterialName.value;
 		if(k.length>0){
 			k=new RegExp(k,'i');
-			var ret = '';
+			var ret = '', ct = 0;
 			for(var key in mData){
 				if(k.test(key) || k.test(mData[key].keyword)){
 					ret += '<a href="javascript:void(0)">'+key+'</a> ';
+					if(++ct>=10) break;
 				}
 			}
 			elIFC.innerHTML = ret;
@@ -59,7 +60,13 @@
 		if(key in mData){
 			if(uList[key]){
 				uList[key]+=qt;
-				$('[data-name="'+key+'"]',elMaterialList).innerHTML = key+' x'+uList[key]+' <a href="javascript:void(0)">[移除]</a>';
+				if(uList[key]>0){
+					$('[data-name="'+key+'"]',elMaterialList).innerHTML = key+' x'+uList[key]+' <a href="javascript:void(0)">[移除]</a>';
+				}else{
+					delete uList[key];
+					var li = $('[data-name="'+key+'"]',elMaterialList);
+					elMaterialList.removeChild(li);
+				}
 			}else{
 				uList[key]=qt;
 				var li = $create('li');
@@ -91,8 +98,8 @@
 	var deleteTable = function(){
 		var elResult = $('#result');
 		if(elResult){
-			document.body.removeChild( elResult.nextElementSibling );
-			document.body.removeChild( elResult );
+			document.body.removeChild(elResult.nextElementSibling);
+			document.body.removeChild(elResult);
 		}
 		elResult = null;
 	};
