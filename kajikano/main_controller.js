@@ -1,4 +1,4 @@
-var host = 'http://hioggia.github.io/gts/kajikano/',
+var host = '',
 	mode = 'extensions';
 var inspected = false;
 
