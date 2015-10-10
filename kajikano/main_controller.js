@@ -1,6 +1,6 @@
 var host = '',
-	mode = 'extensions';
-var inspected = false;
+	mode = 'extensions',
+	lastHash = '';
 
 var defaultWGConfig = {
 	version:1,
@@ -57,7 +57,6 @@ var createScriptLoader = function(file,readySerif){
 	}sb()";
 	s.innerHTML = t;
 	document.body.appendChild(s);
-	inspected = true;
 };
 
 var getWGConfig = function(key){
@@ -90,7 +89,7 @@ var tellAppMakeConfigMenu = function(settingUrl){
 	//console.log(settingUrl);
 	var sJson = {};
 	for(var key in defaultWGConfig.content){
-		console.log(key);
+		//console.log(key);
 		sJson[key]={title:defaultWGConfig.content[key].title,value:getWGConfig(key)};
 	}
 	createAppTeller(settingUrl+JSON.stringify(sJson));
@@ -101,10 +100,21 @@ var tellAppSetConfigValue = function(key,value){
 	setWGConfig(key,value);
 };
 
-var inspector = function(){
-	if(inspected){
+var routeChanged = function(){
+	if(lastHash==location.hash){
 		return;
 	}
+	lastHash = location.hash;
+	//console.log('routeChanged');
+	if('wgModule' in window){
+		wgModule.drop(checkLoadModule);
+	}else{
+		checkLoadModule();
+	}
+};
+
+var checkLoadModule = function(){
+	//console.log(location.hash);
 	
 	if(/casino\/game\/slot/i.test(location.hash)){
 		if(getWGConfig('kSlotEnable')){
@@ -146,135 +156,7 @@ var inspector = function(){
 		}
 	}
 
-	/*else if(/quest\/supporter\/705652\/0/i.test(location.hash)){
-		setTimeout(act.func[1],2000);
-	}
-
 	else if(/quest\/stage/i.test(location.hash)){
-		setTimeout(act.func[5],5000);
-	}
-
-	else if(/quest\/scene\/scene_evt150831_cp5_q2_s10/i.test(location.hash)){
-		setTimeout(act.func[2],2000);
-	}
-
-	else if(/quest\/scene\/scene_evt150831_cp5_q2_s20/i.test(location.hash)){
-		setTimeout(act.func[2],2000);
-	}*/
-
-	setTimeout(inspector,1000);
-};
-
-var act={func:{}};
-
-function waitForTrue(condition,callback){
-	if(condition()){
-		callback()
-	}else{
-		setTimeout(function(){
-			waitForTrue(condition,callback)
-		},500);
-	}
-}
-
-act.func[0] = function(){
-	location.hash='#quest/supporter/705652/0';
-};
-
-act.func[1] = function(){
-	$('.prt-supporter-attribute .btn-supporter').eq(0).trigger('tap');
-
-	waitForTrue(function(){
-		return $('.pop-deck').is(':visible')
-	},function(){
-		$('.btn-usual-ok').trigger('tap');
-	});
-};
-
-act.func[2] = function(){
-	$('.btn-skip').trigger('tap');
-	var s = 1;
-	waitForTrue(function(){
-		return --s<0;
-		return $('.pop-synopsis').is(':visible')
-	},function(){
-		$('.btn-usual-ok').trigger('tap');
-	})
-};
-
-act.func[3] = function(){
-	if($('.enemy-1 .name').html()=='Lv12 ホワイトラビット'){
-		$('.enemy-1').trigger('tap');
-
-		waitForTrue(function(){
-			return $('.enemy-1').is('.lock-on')
-		},function(){
-			$('.btn-ability-available').eq(8).trigger('tap');
-
-			waitForTrue(function(){
-				return $('.btn-attack-start').is('.display-on')
-			},function(){
-				$('.btn-ability-available').eq(8).trigger('tap');
-
-				waitForTrue(function(){
-					return $('.btn-attack-start').is('.display-on')
-				},function(){
-					$('.btn-ability-available').eq(3).trigger('tap');
-
-					waitForTrue(function(){
-						return $('.btn-attack-start').is('.display-on')
-					},function(){
-						$('.btn-ability-available').eq(1).trigger('tap');
-
-						/*waitForTrue(function(){
-							return $('.btn-attack-start').is('.display-on')
-						},function(){
-							$('.btn-ability-available').eq(3).trigger('tap');
-						})*/
-					})
-				})
-			})
-		});
-	}else{
-		act.func[4]();
+		createScriptLoader('quest_stage.js?v=1','请稍后。');
 	}
 };
-
-act.func[4] = function(){
-	$('.btn-raid-menu').trigger('tap');
-
-	waitForTrue(function(){
-		return $('.pop-raid-menu').is(':visible')
-	},function(){
-		$('.btn-withdrow').trigger('tap');
-
-		waitForTrue(function(){
-			return $('.pop-result-withdraw').is(':visible')
-		},function(){
-			$('.btn-usual-ok').trigger('tap');
-
-			waitForTrue(function(){
-				return $('.btn-result').is(':visible')
-			},function(){
-				act.func[0]();
-
-				setTimeout(act.func[1],2000);
-			});
-		});
-	});
-};
-
-act.func[5] = function(){
-	$('.btn-command-forward:not(.disable)').trigger('tap');
-	setTimeout(act.func[5],300);
-};
-
-Object.defineProperties(act,{
-	'a0':{get:act.func[0]},
-	'a1':{get:act.func[1]},
-	'a2':{get:act.func[2]},
-	'a3':{get:act.func[3]},
-	'a4':{get:act.func[4]}
-});
-
-inspector();

@@ -1,5 +1,7 @@
+var ttj,tasj,trl,tar,tabtn;
+
 function _tapJoin(){$('.btn-usual-join:visible').trigger('tap');$('.btn-usual-ok:visible').trigger('tap');_autoTapJoin()}
-function _autoTapJoin(){if(/coopraid\/offer/i.test(location.hash))setTimeout(_tapJoin,50)}
+function _autoTapJoin(){ttj=setTimeout(_tapJoin,50)}
 _autoTapJoin();
 //$('.prt-wanted-list').on('tap',autoTapJoin);
 console.info('单击参加已启用。')
@@ -17,7 +19,7 @@ function _findAndTapSaji(){_autoSaji();$('.prt-wanted-room').each(function(i,el)
 		$(el).attr('data-taped','1');
 	}
 })}
-function _autoSaji(){setTimeout(_findAndTapSaji,50)}
+function _autoSaji(){tasj=setTimeout(_findAndTapSaji,50)}
 function autoFindRoom(comment,joinPandemo){
 	_joinPandemo = !!joinPandemo;
 	_keyword = new RegExp(comment,'i');
@@ -27,8 +29,8 @@ function autoFindRoom(comment,joinPandemo){
 }
 
 var _waitSec = 3;
-function _renewList(){if($('#loading').is(':visible')){setTimeout(_renewList,100)}else{_autoRenew();$('.btn-refresh-list').trigger('tap')}}
-function _autoRenew(){setTimeout(_renewList,1000*_waitSec)}
+function _renewList(){if($('#loading').is(':visible')){trl=setTimeout(_renewList,100)}else{_autoRenew();$('.btn-refresh-list').trigger('tap')}}
+function _autoRenew(){tar=setTimeout(_renewList,1000*_waitSec)}
 
 function appendBtn(){
 	if($ && $('.frm-room-key').size()>0){
@@ -44,8 +46,18 @@ function appendBtn(){
 			}
 		});
 	}else{
-		setTimeout(appendBtn,1000);
+		tabtn=setTimeout(appendBtn,1000);
 	}
 }
 
 appendBtn();
+
+wgModule = {drop:function(callback){
+	clearTimeout(ttj);
+	clearTimeout(tasj);
+	clearTimeout(trl);
+	clearTimeout(tar);
+	clearTimeout(tabtn);
+	delete wgModule;
+	callback();
+}}

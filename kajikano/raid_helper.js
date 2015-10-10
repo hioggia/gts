@@ -17,7 +17,6 @@ function hpvis(){
 		setStyle();
 		setHpAll();
 		console.info('血量显示已启用。');
-		//act.func[3]();
 	}else{
 		setTimeout(hpvis,1000);
 	}
@@ -26,10 +25,11 @@ function hpvis(){
 	//}
 }
 
-var rate = 3;
+var wg_raid_rate = wg_raid_rate || 3;
+
 
 function blitz(playtime){
-	return playtime/rate;
+	return playtime/wg_raid_rate;
 }
 
 function appbz(){
@@ -41,14 +41,17 @@ function appbz(){
             return ! 0
         };
         var cmd = $('<button class="wg_bzswch"></button>').appendTo('#wrapper');
+        if(wg_raid_rate==1){
+        	cmd.toggleClass('on');
+        }
         cmd.on('tap',function(){
         	cmd.toggleClass('on');
-        	rate = 4-rate;
-			console.log('speed rate change to',rate);
+        	wg_raid_rate = 4-wg_raid_rate;
+			console.log('speed rate change to',wg_raid_rate);
         });
 		if(!getWGConfig('kBlitzDefault')){
 			cmd.addClass('on');
-			rate = 1;
+			wg_raid_rate = 1;
 		}
         console.info('闪电战术已启用。');
 	}else{
@@ -131,3 +134,10 @@ function getPressedCharCode(e){
 if(getWGConfig('kKBSEnable')){
 	document.addEventListener('keypress',getPressedCharCode,false);
 }
+
+wgModule = {drop:function(callback){
+	document.removeEventListener('keypress',getPressedCharCode,false);
+	$('.wg_bzswch').remove();
+	delete wgModule;
+	callback();
+}}
