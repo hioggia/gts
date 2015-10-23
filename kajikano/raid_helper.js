@@ -92,9 +92,6 @@ function appbz(){
         	$('.btn-change-speed').html('Blitz +'+index);
         	createjs.Ticker.setFPS();
         });
-		if(!getWGConfig('kBlitzDefault')){
-			
-		}
         console.info('闪电战术已启用。');
 	}else{
 		setTimeout(appbz,1000);
@@ -102,7 +99,7 @@ function appbz(){
 }
 
 getWGConfig('kBloodEnable')&&hpvis();
-appbz();
+getWGConfig('kBlitzEnable')&&appbz();
 
 function commandToFight(type,cmd1,cmd2,cmd3,cmd4){
 	if(type=='attack'){

@@ -9,7 +9,7 @@ var defaultWGConfig = {
 		kSlotEnable:{title:"启用拉霸助手","default":true},
 		kBingoEnable:{title:"启用宾果助手","default":true},
 		kBloodEnable:{title:"显示怪物血量","default":true},
-		kBlitzDefault:{title:"默认开启闪电","default":true},
+		kBlitzEnable:{title:"开启闪电战斗","default":true},
 		kKBSEnable:{title:"战斗按键支持","default":true},
 		kQAREnable:{title:"援助列表刷新","default":true},
 		kCoopEnable:{title:"启用共斗助手","default":true}
