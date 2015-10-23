@@ -34,11 +34,47 @@ function blitz(playtime){
 
 function appbz(){
 	if(require && $ && require.specified('lib/raid/motion') && $('.btn-attack-start').size()>0){
-		require('lib/raid/motion').mWaitAll = function(a, b) {
+		var motion = require('lib/raid/motion');
+
+		var hookWaitAll = motion.mWaitAll;
+		motion.mWaitAll = function(a, b) {
 			b.playtime = blitz(b.playtime || 10);
-            //b.playtime = 0;
-            for (var c = 0; c <= a.length - 1; c++) for (var d = 0; d <= a[c].timeline.length - 1; d++) a[c].timeline[d].wait(b.playtime);
-            return ! 0
+            return hookWaitAll.call(motion,a,b);
+        };
+        var hookMoveToInstantry = motion.mMoveToInstantry;
+        motion.mMoveToInstantry = function(a, b){
+        	b.playtime = blitz(b.playtime || 0);
+        	return hookMoveToInstantry.call(motion,a,b);
+        };
+        var hookMoveTo = motion.mMoveTo;
+        motion.mMoveTo = function(b, c, d, e){
+        	d.playtime = blitz(d.playtime || 0);
+        	return hookMoveTo.call(motion,b,c,d,e);
+        };
+        var hookChangeMotionAll = motion.mChangeMotionAll;
+        motion.mChangeMotionAll = function(b, d, e, f){
+        	e.wait = blitz(e.wait || 0);
+        	return hookChangeMotionAll.call(motion,b,d,e,f);
+        };
+        var hookChangeMotion = motion.mChangeMotion;
+        motion.mChangeMotion = function(d, e, f){
+        	e.delay = blitz(e.delay || 0);
+        	return hookChangeMotion.call(motion,d,e,f);
+        };
+        var hookResetMotion = motion.mResetMotion;
+        motion.mResetMotion = function(a, b){
+        	b.delay = blitz(b.delay || 0);
+        	return hookResetMotion.call(motion,a,b);
+        };
+        var hookChangeMotionInstantly = motion.mChangeMotionInstantly;
+        motion.mChangeMotionInstantly = function(a){
+        	a.delay = blitz(a.delay || 0);
+        	return hookChangeMotionInstantly.call(motion,a);
+        };
+
+        var hookSetFPS = createjs.Ticker.setFPS;
+        createjs.Ticker.setFPS = function(a){
+        	return hookSetFPS(30*wg_raid_rate);
         };
         var cmd = $('<button class="wg_bzswch"></button>').appendTo('#wrapper');
         if(wg_raid_rate==1){
@@ -47,7 +83,7 @@ function appbz(){
         cmd.on('tap',function(){
         	cmd.toggleClass('on');
         	wg_raid_rate = 4-wg_raid_rate;
-			console.log('speed rate change to',wg_raid_rate);
+			//console.log('speed rate change to',wg_raid_rate);
         });
 		if(!getWGConfig('kBlitzDefault')){
 			cmd.addClass('on');
