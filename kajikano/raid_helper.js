@@ -30,7 +30,11 @@ if(localStorage['wg_raid_rate']==undefined){
 }
 
 function blitz(playtime){
-	return playtime/wg_rates[localStorage['wg_raid_rate']];
+	var index = ~~localStorage['wg_raid_rate'];
+	if(index>=wg_rates.length){
+		index=0;
+	}
+	return playtime/wg_rates[index];
 }
 
 function appbz(){
