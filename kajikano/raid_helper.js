@@ -25,7 +25,7 @@ function hpvis(){
 	//}
 }
 
-var wg_raid_rate = wg_raid_rate || 3;
+var wg_raid_rate = wg_raid_rate || 1.5;
 
 
 function blitz(playtime){
@@ -74,7 +74,7 @@ function appbz(){
 
         var hookSetFPS = createjs.Ticker.setFPS;
         createjs.Ticker.setFPS = function(a){
-        	return hookSetFPS(30*wg_raid_rate);
+        	return hookSetFPS(24*wg_raid_rate);
         };
         var cmd = $('<button class="wg_bzswch"></button>').appendTo('#wrapper');
         if(wg_raid_rate==1){
