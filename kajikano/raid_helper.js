@@ -24,7 +24,7 @@ function hpvis(){
 	//}
 }
 
-var wg_rates = [1,1.25,1.5,2,5];
+var wg_rates = [1,1.2,1.5,2,5];
 if(localStorage['wg_raid_rate']==undefined){
 	localStorage['wg_raid_rate'] = 2;
 }
