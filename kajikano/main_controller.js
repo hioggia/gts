@@ -49,10 +49,10 @@ var createScriptLoader = function(file,readySerif){
 	};\
 	function sb(){\
 		if(window.$ && $('#ready').size()>0 && !$('#ready').is(':visible')){\
-			setTimeout(mp,3000);\
+			setTimeout(mp,100);\
 			console.info('"+readySerif+"')\
 		}else{\
-			setTimeout(sb,1000)\
+			setTimeout(sb,100)\
 		}\
 	}sb()";
 	s.innerHTML = t;
@@ -158,5 +158,9 @@ var checkLoadModule = function(){
 
 	else if(/quest\/stage/i.test(location.hash)){
 		createScriptLoader('quest_stage.js?v=1','请稍后。');
+	}
+
+	else if(/event\/[\w\d]+\/gacha\//i.test(location.hash)){
+		createScriptLoader('event_gacha.js?v=1','请稍后。');
 	}
 };
