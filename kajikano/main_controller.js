@@ -138,7 +138,7 @@ var checkLoadModule = function(){
 		createScriptLoader('teamraid_ranker.js?v=1','请稍后。');
 	}
 
-	else if(/raid\/\d+/i.test(location.hash) || /raid_multi\/\d+/i.test(location.hash)){
+	else if(/raid\/\d+/i.test(location.hash) || /raid_multi\/\d+/i.test(location.hash) || /raid_semi\/\d+/i.test(location.hash)){
 		if(getWGConfig('kBloodEnable')||getWGConfig('kBlitzDefault')||getWGConfig('kKBSEnable')){
 			createScriptLoader('raid_helper.js?v=4','请稍后。');
 		}
@@ -163,4 +163,8 @@ var checkLoadModule = function(){
 	else if(/event\/[\w\d]+\/gacha\//i.test(location.hash)){
 		createScriptLoader('event_gacha.js?v=1','请稍后。');
 	}
+
+	//else if(/present/i.test(location.hash)){
+	//	createScriptLoader('present_auto.js?v=1','请稍后。');
+	//}
 };
