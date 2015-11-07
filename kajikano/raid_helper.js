@@ -30,11 +30,15 @@ if(localStorage['wg_raid_rate']==undefined){
 }
 
 function blitz(playtime){
+	return playtime/getRate();
+}
+
+function getRate(){
 	var index = ~~localStorage['wg_raid_rate'];
 	if(index>=wg_rates.length){
 		index=0;
 	}
-	return playtime/wg_rates[index];
+	return wg_rates[index];
 }
 
 function appbz(){
@@ -79,19 +83,21 @@ function appbz(){
 
         var hookSetFPS = createjs.Ticker.setFPS;
         createjs.Ticker.setFPS = function(a){
-        	return hookSetFPS(24*wg_rates[localStorage['wg_raid_rate']]);
+        	return hookSetFPS(24*getRate());
         };
 
-        $('.contents').off('tap','.btn-change-speed');
-        $('.btn-change-speed').removeAttr('fps').addClass('x').html('Blitz +'+localStorage['wg_raid_rate']).on('tap',function(){
-        	var index = ~~localStorage['wg_raid_rate']+1;
-        	if(index>=wg_rates.length){
-        		index=0;
-        	}
-        	localStorage['wg_raid_rate']=index;
-        	$('.btn-change-speed').html('Blitz +'+index);
-        	createjs.Ticker.setFPS();
-        });
+        setTimeout(function(){
+	        $('.contents').off('tap','.btn-change-speed');
+	        $('.btn-change-speed').removeAttr('fps').addClass('x').html('Blitz +'+localStorage['wg_raid_rate']).on('tap',function(){
+	        	var index = ~~localStorage['wg_raid_rate']+1;
+	        	if(index>=wg_rates.length){
+	        		index=0;
+	        	}
+	        	localStorage['wg_raid_rate']=index;
+	        	$('.btn-change-speed').html('Blitz +'+index);
+	        	createjs.Ticker.setFPS();
+	        });
+	    },3000);
         createjs.Ticker.setFPS();
         console.info('闪电战术已启用。');
 	}else{
