@@ -24,7 +24,7 @@ $('.btn-refresh-list').on('tap',function(){
 	Game.view.initialize(require('backbone'));
 });*/
 
-$('.contents').on('tap','#tab-multi',function(){
+$('.contents').on('tap','.onm-be',function(){
 	$('#loading').show();
 	$('.img-load').show();
 	console.log('refresh');
