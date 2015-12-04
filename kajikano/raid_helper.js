@@ -24,7 +24,7 @@ function hpvis(){
 	//}
 }
 
-var wg_rates = [1,1.2,1.5,2,5];
+var wg_rates = [1,1.2,1.33,1.5,2,5];
 if(localStorage['wg_raid_rate']==undefined){
 	localStorage['wg_raid_rate'] = 2;
 }
@@ -43,6 +43,7 @@ function getRate(){
 
 function appbz(){
 	if(require && $ && require.specified('lib/raid/motion') && $('.btn-attack-start').size()>0){
+
 		var motion = require('lib/raid/motion');
 
 		var hookWaitAll = motion.mWaitAll;
@@ -79,6 +80,20 @@ function appbz(){
         motion.mChangeMotionInstantly = function(a){
         	a.delay = blitz(a.delay || 0);
         	return hookChangeMotionInstantly.call(motion,a);
+        };
+
+        var effect = require('lib/raid/effect');
+
+        var hookHitEffect = effect.mHitEffect;
+        effect.mHitEffect = function(a, c, d){
+        	//console.log('lib/raid/effect.mHitEffect',d.delay);
+        	return hookHitEffect.call(effect,a,c,d);
+        };
+
+        var hookEffect = effect.mEffect;
+        effect.mEffect = function(a, c, d){
+        	//console.log('lib/raid/effect.mEffect',d.delay);
+        	return hookEffect.call(effect,a,c,d);
         };
 
         var hookSetFPS = createjs.Ticker.setFPS;
