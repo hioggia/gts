@@ -33,6 +33,7 @@ function setStamina(staminaType,nowStamina){
 		for(var i=0,s=nowStamina[1]+'';i<s.length;i++){
 			$('<span class="num-stamina'+s[i]+'"></span>').appendTo(cont);
 		}
+		$('.prt-stamina-gauge-inner').css('width',nowStamina[0]/nowStamina[1]*100+'%');
 	}else{
 		var cont = $('.prt-user-bp-value').attr('title',nowStamina[0]).empty();
 		for(var i=0;i<nowStamina[0];i++){
@@ -42,17 +43,20 @@ function setStamina(staminaType,nowStamina){
 }
 
 function setRemaining(staminaType, elapseTime){
-	var str = '';
+	var str = '', el = '';
+	if(staminaType=='ap'){
+		el = '.txt-stamina-remaining';
+	}else{
+		el = '.txt-bp-remaining';
+	}
 	if(elapseTime[0]!=0 || elapseTime[1]!=0){
 		if(elapseTime[0]>0){
 			str += elapseTime[0]+'時間';
 		}
 		str += elapseTime[1]+'分';
-	}
-	if(staminaType=='ap'){
-		$('.txt-stamina-remaining').text(str);
+		$(el).text(str);
 	}else{
-		$('.txt-bp-remaining').text(str);
+		$(el).empty().hide();
 	}
 }
 
