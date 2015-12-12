@@ -76,7 +76,9 @@ var recoveryPreApPointMinutes = 5,
 
 function countDown(s,r,n,t){
 	if(t[0]==0 && t[1]==0){
-		n[0]++;
+		if(n[0]<n[1]){
+			n[0]=n[1];
+		}
 		setStamina(s,n);
 		return;
 	}
