@@ -40,22 +40,22 @@ var createAppTeller = function(url){
 
 var createScriptLoader = function(file,readySerif){
 	console.log('loading '+file+' ...');
-	var s = document.createElement('script');
-	if(readySerif==undefined){readySerif='别急，很快就要开始了。'}
-	var t = "function mp(){\
+	var s = document.createElement('script'), r = ~~(Math.random()*10000);
+	if(readySerif==undefined){readySerif='请稍后。'}
+	var t = "function mp"+r+"(){\
 		var s=document.createElement('script');\
 		s.onerror=function(){location.reload()};\
 		s.src='"+host+file+"';\
 		document.body.appendChild(s)\
 	};\
-	function sb(){\
+	function sb"+r+"(){\
 		if(window.$ && $('#ready').size()>0 && !$('#ready').is(':visible')){\
-			setTimeout(mp,100);\
+			setTimeout(mp"+r+",100);\
 			console.info('"+readySerif+"')\
 		}else{\
-			setTimeout(sb,100)\
+			setTimeout(sb"+r+",100)\
 		}\
-	}sb()";
+	}sb"+r+"()";
 	s.innerHTML = t;
 	document.body.appendChild(s);
 };
@@ -101,6 +101,17 @@ var tellAppSetConfigValue = function(key,value){
 	setWGConfig(key,value);
 };
 
+var destroyers = [], registerRouteChangeDestroyer = function(fn){
+	destroyers.push(fn);
+}, routeChangedDestroy = function(){
+	if(destroyers.length>0){
+		var fn = destroyers.shift();
+		fn(routeChangedDestroy);
+	}else{
+		checkLoadModule();
+	}
+};
+
 var routeChanged = function(){
 	if(lastHash==location.hash){
 		return;
@@ -110,7 +121,7 @@ var routeChanged = function(){
 	if('wgModule' in window){
 		wgModule.drop(checkLoadModule);
 	}else{
-		checkLoadModule();
+		routeChangedDestroy();
 	}
 };
 
@@ -119,56 +130,59 @@ var checkLoadModule = function(){
 	
 	if(/mypage/i.test(location.hash)){
 		if(getWGConfig('kStaminaEnable')){
-			createScriptLoader('mypage_stamina.js?v=1','请稍后。');
+			createScriptLoader('mypage_stamina.js?v=1');
 		}
 	}
 
 	else if(/casino\/game\/slot/i.test(location.hash)){
 		if(getWGConfig('kSlotEnable')){
-			createScriptLoader('casino_slot.js?v=2');
+			createScriptLoader('casino_slot.js?v=2','别急，很快就要开始了。');
 		}
 	}
 
 	else if(/casino\/game\/poker/i.test(location.hash)){
 		if(getWGConfig('kPokerEnable')){
-			createScriptLoader('casino_poker.js?v=3');
+			createScriptLoader('casino_poker.js?v=3','别急，很快就要开始了。');
 		}
 	}
 
 	else if(/casino\/game\/bingo/i.test(location.hash)){
 		if(getWGConfig('kBingoEnable')){
-			createScriptLoader('casino_bingo.js?v=1','请稍后。');
+			createScriptLoader('casino_bingo.js?v=1');
 		}
 	}
 
 	else if(/event\/teamraid\d+\/ranking_guild\/detail/i.test(location.hash) || /event\/teamraid\d+\/ranking\/detail/i.test(location.hash)){
-		createScriptLoader('teamraid_ranker.js?v=1','请稍后。');
+		createScriptLoader('teamraid_ranker.js?v=1');
 	}
 
 	else if(/raid\/\d+/i.test(location.hash) || /raid_multi\/\d+/i.test(location.hash) || /raid_semi\/\d+/i.test(location.hash)){
 		if(getWGConfig('kBloodEnable')||getWGConfig('kBlitzDefault')||getWGConfig('kKBSEnable')){
-			createScriptLoader('raid_helper.js?v=4','请稍后。');
+			createScriptLoader('raid_helper.js?v=4');
 		}
 	}
 
 	else if(/coopraid\/offer/i.test(location.hash)){
 		if(getWGConfig('kCoopEnable')){
-			createScriptLoader('coopraid_offer.js?v=2','请稍后。');
+			createScriptLoader('coopraid_offer.js?v=2');
 		}
 	}
 
 	else if(/quest\/assist/i.test(location.hash)){
 		if(getWGConfig('kQAREnable')){
-			createScriptLoader('quest_assist.js?v=1','请稍后。');
+			createScriptLoader('quest_assist.js?v=1');
+		}
+		if(getWGConfig('kStaminaEnable')){
+			createScriptLoader('mypage_stamina.js?v=1');
 		}
 	}
 
 	else if(/quest\/stage/i.test(location.hash)){
-		createScriptLoader('quest_stage.js?v=1','请稍后。');
+		createScriptLoader('quest_stage.js?v=1');
 	}
 
 	else if(/event\/[\w\d]+\/gacha\//i.test(location.hash)){
-		createScriptLoader('event_gacha.js?v=1','请稍后。');
+		createScriptLoader('event_gacha.js?v=1');
 	}
 
 	//else if(/present/i.test(location.hash)){

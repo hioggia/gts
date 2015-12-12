@@ -103,9 +103,8 @@ checkRemainingStaminaIsShowed(function(){
 	console.info('体力回复倒计时已经会动了哦');
 });
 
-wgModule = {drop:function(callback){
+registerRouteChangeDestroyer(function(callback){
 	clearTimeout(tCounterID.ap);
 	clearTimeout(tCounterID.bp);
-	delete wgModule;
 	callback();
-}}
+});
