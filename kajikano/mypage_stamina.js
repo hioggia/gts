@@ -76,6 +76,8 @@ var recoveryPreApPointMinutes = 5,
 
 function countDown(s,r,n,t){
 	if(t[0]==0 && t[1]==0){
+		n[0]++;
+		setStamina(s,n);
 		return;
 	}
 	tCounterID[s] = setTimeout(function(){
@@ -84,13 +86,7 @@ function countDown(s,r,n,t){
 		if(t[1]<0 && t[0]>0){
 			t[0]--,t[1]=59;
 		}
-		if(t[1]>=0){
-			setRemaining(s,t);
-		}else{
-			n[0]++;
-			setStamina(s,n);
-			return;
-		}
+		setRemaining(s,t);
 		if((t[1]+1)%r==0){
 			n[0]++;
 			setStamina(s,n);
