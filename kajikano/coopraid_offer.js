@@ -35,14 +35,17 @@ function _autoRenew(){tar=setTimeout(_renewList,1000*_waitSec)}
 function appendBtn(){
 	if($ && $('.frm-room-key').size()>0){
 		$('.frm-room-key').removeAttr('maxlength');
-		var cc = $('<div class="wg"><style>.wg{position:absolute;z-index:2;top:120px;left:40px}.wg button{width:76px;height:22px;margin-right:4px}</style></div>').appendTo('.prt-input-form'),
+		var cc = $('<div class="wg"><style>.wg{position:absolute;z-index:2;top:120px;left:40px}.wg button{width:76px;height:22px;margin-right:4px}.wg label{color:white}</style></div>').appendTo('.prt-input-form'),
 			cmd1 = $('<button>自动找房间</button>').appendTo(cc),
+			chk1 = $('<label><input type="checkbox" value="1" />パンデモニウム</label>').appendTo(cc),
 			et = 'ontouchstart' in window ? 'touchstart' : 'mousedown';
 		cmd1.on(et,function(){
-			var key = $('.frm-room-key').val();
+			var key = $('.frm-room-key').val(),
+				pandemo = chk1.find('input').is(':checked');
 			if(key.length>0){
-				autoFindRoom(key);
+				autoFindRoom(key,pandemo);
 				cmd1.hide();
+				chk1.hide();
 			}
 		});
 	}else{

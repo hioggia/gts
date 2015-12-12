@@ -5,6 +5,7 @@ var host = '',
 var defaultWGConfig = {
 	version:1,
 	content:{
+		kStaminaEnable:{title:"体力回复倒计时","default":true},
 		kPokerEnable:{title:"启用扑克助手","default":true},
 		kSlotEnable:{title:"启用拉霸助手","default":true},
 		kBingoEnable:{title:"启用宾果助手","default":true},
@@ -116,7 +117,13 @@ var routeChanged = function(){
 var checkLoadModule = function(){
 	//console.log(location.hash);
 	
-	if(/casino\/game\/slot/i.test(location.hash)){
+	if(/mypage/i.test(location.hash)){
+		if(getWGConfig('kStaminaEnable')){
+			createScriptLoader('mypage_stamina.js?v=1','请稍后。');
+		}
+	}
+
+	else if(/casino\/game\/slot/i.test(location.hash)){
 		if(getWGConfig('kSlotEnable')){
 			createScriptLoader('casino_slot.js?v=2');
 		}
