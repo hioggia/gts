@@ -177,6 +177,12 @@ var checkLoadModule = function(){
 		}
 	}
 
+	else if(/quest\/index/i.test(location.hash)){
+		if(getWGConfig('kStaminaEnable')){
+			createScriptLoader('mypage_stamina.js?v=1');
+		}
+	}
+
 	else if(/quest\/stage/i.test(location.hash)){
 		createScriptLoader('quest_stage.js?v=1');
 	}
