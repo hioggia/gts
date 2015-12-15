@@ -9,8 +9,7 @@ function atf(){
 tatf = setTimeout(atf,1000);
 console.info('自动前进！');
 
-wgModule = {drop:function(callback){
+registerRouteChangeDestroyer(function(callback){
 	clearTimeout(tatf);
-	delete wgModule;
 	callback();
-}}
+});

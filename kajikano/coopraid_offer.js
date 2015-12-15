@@ -55,12 +55,11 @@ function appendBtn(){
 
 appendBtn();
 
-wgModule = {drop:function(callback){
+registerRouteChangeDestroyer(function(callback){
 	clearTimeout(ttj);
 	clearTimeout(tasj);
 	clearTimeout(trl);
 	clearTimeout(tar);
 	clearTimeout(tabtn);
-	delete wgModule;
 	callback();
-}}
+});

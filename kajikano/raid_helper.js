@@ -196,9 +196,8 @@ if(getWGConfig('kKBSEnable')){
 	document.addEventListener('keypress',getPressedCharCode,false);
 }
 
-wgModule = {drop:function(callback){
+registerRouteChangeDestroyer(function(callback){
 	document.removeEventListener('keypress',getPressedCharCode,false);
 	$('.wg_bzswch').remove();
-	delete wgModule;
 	callback();
-}}
+});

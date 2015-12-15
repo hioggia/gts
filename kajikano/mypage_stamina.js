@@ -33,7 +33,7 @@ function setStamina(staminaType,nowStamina){
 		for(var i=0,s=nowStamina[1]+'';i<s.length;i++){
 			$('<span class="num-stamina'+s[i]+'"></span>').appendTo(cont);
 		}
-		$('.prt-stamina-gauge-inner').css('width',nowStamina[0]/nowStamina[1]*100+'%');
+		$('.prt-stamina-gauge-inner').css('width',Math.min(100,nowStamina[0]/nowStamina[1]*100)+'%');
 	}else{
 		var cont = $('.prt-user-bp-value').attr('title',nowStamina[0]).empty();
 		for(var i=0;i<nowStamina[0];i++){
