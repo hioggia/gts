@@ -1,4 +1,4 @@
-var _isEnabled = true;
+(function(){var _isEnabled = true;
 
 function checkNumber(){
 	var el = $('.prt-hit-box .number');
@@ -83,3 +83,7 @@ cmd2.on(et,function(){
 });
 
 console.info('自动点击已启用。');
+setTimeout(function(){
+	createjs.Ticker.setFPS(300);
+},1000*5);
+})();

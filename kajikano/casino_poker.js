@@ -256,12 +256,14 @@
 			za=setTimeout(caf,slt*1000)
 		},
 		deck:function(){
+			sela();
 			switch(sm.deck){
 				case 0:
 					if(new Date().getTime()>=md.st1){
 						pgo();
 						return;
 					}
+					createjs.Ticker.setFPS(300);
 					if(ds){
 						ds = false;
 						cmd1.text('启动');
@@ -432,6 +434,10 @@
 	,cmd3 = $('<button style="width:52px">下局停</button>').appendTo(cc)
 	,cmd1 = $('<button>停止</button>').appendTo(cc)
 	,cmd2 = $('<button>高速</button>').appendTo(cc)
+	,ela = $('<div></div>').appendTo('.prt-button').css({position:'absolute',top:'100%',left:'0',color:'white'})
+	,sela = function(){
+		ela.html('累计回数：'+(st.累计牌桌游戏次数)+'，双倍回数：'+(st.累计双倍游戏次数)+'，成绩：'+(read.medal()-st.初始游戏筹码));
+	}
 	,av = {
 		模式设定:[
 			{
@@ -474,7 +480,7 @@
 		收集的样本在每天几点时过期:0,
 		样本可信度分母:48,
 		赌双倍的高低分水点数:8,
-		是否在控制台输出信息:true,
+		是否在控制台输出信息:false,
 		立即自动值守:true,
 		薛定谔陪你玩:true
 	};
