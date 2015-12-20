@@ -83,7 +83,7 @@ function countDown(s,r,n,t){
 		return;
 	}
 	tCounterID[s] = setTimeout(function(){
-		console.log(s,t,n);
+		//console.log(s,t,n);
 		t[1]--;
 		if(t[1]<0 && t[0]>0){
 			t[0]--,t[1]=59;
