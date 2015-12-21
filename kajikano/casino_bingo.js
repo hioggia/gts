@@ -57,28 +57,39 @@ var delayTime=1000, _autoNextID=0;
 
 mainCycle();
 
-var cc = $('<div class="wg"><style>.wg{position:absolute;z-index:20;top:0}.wg button{width:76px;height:22px;margin-right:4px}</style></div>').appendTo(document.body),
-	cmd1 = $('<button>自动下一局</button>').appendTo(cc),
-	cmd2 = $('<button>不要帮我点</button>').appendTo(cc),
+var cc = $('<div class="wg"><style>.wg{position:absolute;z-index:20;top:0}.wg button{width:64px;height:22px;padding:0;margin-right:4px}</style></div>').appendTo(document.body),
+	cmd1 = $('<button>连续挂机</button>').appendTo(cc),
+	cmd2 = $('<button>我自己点</button>').appendTo(cc),
+	cmd3 = $('<button>别开快车</button>').appendTo(cc),
 	et = 'ontouchstart' in window ? 'touchstart' : 'mousedown';
 
 cmd1.on(et,function(){
-	if(cmd1.text()=='停止'){
-		cmd1.text('自动下一局');
+	if(cmd1.text()=='停止连续'){
+		cmd1.text('连续挂机');
 		_stopAutoNext();
 	}else{
-		cmd1.text('停止');
+		cmd1.text('停止连续');
 		_autoNext();
 	}
 });
 
 cmd2.on(et,function(){
 	if(cmd2.text()=='帮我点'){
-		cmd2.text('不要帮我点');
+		cmd2.text('我自己点');
 		_isEnabled = true;
 	}else{
 		cmd2.text('帮我点');
 		_isEnabled = false;
+	}
+});
+
+cmd3.on(et,function(){
+	if(cmd3.text()=='开快车'){
+		cmd3.text('别开快车');
+		createjs.Ticker.setFPS(24);
+	}else{
+		cmd3.text('开快车');
+		createjs.Ticker.setFPS(300);
 	}
 });
 
