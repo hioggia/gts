@@ -263,7 +263,6 @@
 						pgo();
 						return;
 					}
-					createjs.Ticker.setFPS(300);
 					if(ds){
 						ds = false;
 						cmd1.text('启动');
@@ -418,6 +417,7 @@
 		var n=new Date().getTime();
 		md.st1 = n+av.模式设定[md.pf].自动值守不超过几小时*60*60*1000;
 		md.st2 = md.st1+(av.模式设定[md.pf].自动值守停止后休息几小时再继续值守+av.模式设定[md.pf].随机增加的休息小时数*Math.random())*60*60*1000;
+		createjs.Ticker.setFPS(av.模式设定[md.pf].FPS);
 		smd();
 	}
 	,pgo = function(){
@@ -442,6 +442,7 @@
 		模式设定:[
 			{
 				模式名:'高速模式',
+				FPS:300,
 				样本收集几次后开始使用:20,
 				赌双倍遇到这些点数就不要继续:[],
 				赌双倍连续获胜几回合后进入谨慎状态:7,
@@ -460,6 +461,7 @@
 			},
 			{
 				模式名:'安全模式',
+				FPS:24,
 				样本收集几次后开始使用:20,
 				赌双倍遇到这些点数就不要继续:[],
 				赌双倍连续获胜几回合后进入谨慎状态:7,
@@ -516,12 +518,11 @@
 		if(cmd2.text()=='高速'){
 			cmd2.text('安全');
 			md.pf=1;
-			sst();
 		}else{
 			cmd2.text('高速');
 			md.pf=0;
-			sst();
 		}
+		sst();
 		sout('切换至'+av.模式设定[md.pf].模式名);
 	});
 	cmd3.on(et,function(){
@@ -530,5 +531,6 @@
 			ds = true;
 		}
 	});
+	setTimeout(function(){createjs.Ticker.setFPS(av.模式设定[md.pf].FPS)},1000*5);
 	return '进入'+av.模式设定[md.pf].模式名;
 })();
