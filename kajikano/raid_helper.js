@@ -136,9 +136,15 @@ function commandToFight(type,cmd1,cmd2,cmd3,cmd4){
 		var wg_lightUP = $('<div class="wg_lightup"></div>').appendTo('.prt-command .prt-command-chara:visible .prt-ability-list div:nth-child('+cmd1+').btn-ability-available');
 		setTimeout(function(){wg_lightUP.css('opacity','0')},50);
 		setTimeout(function(){wg_lightUP.remove()},550);
-	}else if(type=='character'){
-		$('.btn-command-back.display-on').trigger('tap');
-		$('.prt-member .btn-command-character:nth-child('+cmd1+')').trigger('tap');
+	}else if(type=='summon'){
+		$('.btn-command-summon').trigger('tap').nextAll('.btn-summon-available[pos='+cmd1+']').trigger('tap');
+		$('.btn-summon-use').trigger('tap');
+	}else if(type=='switch'){
+		if($('.prt-slide-icon').is('.show-icon')){
+			$('.prt-slide-icon .'+cmd1).trigger('tap');
+		}else{
+			$('.prt-member .btn-command-character:nth-child('+cmd2+')').trigger('tap');
+		}
 	}else if(type=='next'){
 		$('.btn-result').trigger('tap');
 	}else if(type=='ougi'){
@@ -159,15 +165,26 @@ function getPressedCharCode(e){
 		case 'a':
 		case '工':
 		case 'ち':
-			commandToFight('attack',cmdChar);
+			commandToFight('attack');
 			break;
-		/*case '1':
+		case 'f':
+		case 'は':
+		case '土':
+		case 'd':
+		case 'し':
+		case '大':
+			var cmd1 = {f:'ico-next',d:'ico-pre',は:'ico-next',し:'ico-pre',土:'ico-next',大:'ico-pre'},
+				cmd2 = {f:1,d:4,は:1,し:4,土:1,大:4};
+			commandToFight('switch',cmd1[cmdChar],cmd2[cmdChar]);
+			break;
+		case '1':
 		case '2':
 		case '3':
 		case '4':
 		case '5':
-			commandToFight('character',cmdChar);
-			break;*/
+		case '6':
+			commandToFight('summon',cmdChar);
+			break;
 		case 'q':
 		case 'w':
 		case 'e':
