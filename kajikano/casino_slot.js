@@ -1,4 +1,4 @@
-(function(){function tp(s){if($('#pop-captcha').children().size()==0){$(s).trigger('tap')}};
+(function(){function tp(s){if($('#pop-captcha').children().size()==0){$(s).trigger('tap');l++}};
 function tz(s){
 	var _=$('div',s),__=_.size()-1,___=0;
 	_.each(function(i,____){
@@ -10,9 +10,9 @@ function m(p,g){
 	if(new Date().getTime()>=nextStopTime){k(p,g);return}
 	if(tz('.prt-medal')<=p || tz('.prt-medal')>=g){console.info('end');return}
 	if(tz('.prt-bet')==0){
-		ela.html('累计：'+l+'次，成绩：'+a);
 		var r=tz('.prt-won');
-		o=0,l++,a+=r-b;
+		o=0,a+=r-b;
+		ela.html('累计：'+l+'次，成绩：'+a);
 		tp('.prt-bet-max');
 	}else if(o++>30){
 		location.reload()
