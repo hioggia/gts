@@ -86,10 +86,10 @@ cmd2.on(et,function(){
 cmd3.on(et,function(){
 	if(cmd3.text()=='开快车'){
 		cmd3.text('别开快车');
-		createjs.Ticker.setFPS(24);
+		createjs.Ticker.setFPS(300);
 	}else{
 		cmd3.text('开快车');
-		createjs.Ticker.setFPS(300);
+		createjs.Ticker.setFPS(24);
 	}
 });
 
