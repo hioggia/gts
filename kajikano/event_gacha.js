@@ -1,3 +1,5 @@
+(function(){
+
 function crazyGachaMedal(){
 	if($('.btn-medal.multi').size()>0){
 		$('body').off('tap',stopCrazyGacha);
@@ -28,3 +30,5 @@ if(/result/i.test(location.hash)){
 }else{
 	$('body').on('tap',stopCrazyGacha);
 }
+
+})();

@@ -1,4 +1,5 @@
-
+(function(){
+	
 function getShowedApRemainingTime(){
 	var a = $('.txt-stamina-remaining').text().replace('分','').split('時間').map(function(v,i){return ~~v});
 	if(a.length==1){
@@ -108,3 +109,5 @@ registerRouteChangeDestroyer(function(callback){
 	clearTimeout(tCounterID.bp);
 	callback();
 });
+
+})();

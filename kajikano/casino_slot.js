@@ -1,4 +1,6 @@
-(function(){function tp(s){if($('#pop-captcha').children().size()==0){$(s).trigger('tap')}};
+(function(){
+
+function tp(s){if($('#pop-captcha').children().size()==0){$(s).trigger('tap')}};
 function tz(s){
 	var _=$('div',s),__=_.size()-1,___=0;
 	_.each(function(i,____){
@@ -59,4 +61,6 @@ function g(){
 		k(1000000,Infinity)
 	}
 }
-setTimeout(g,1000*5);})();
+setTimeout(g,1000*5);
+
+})();

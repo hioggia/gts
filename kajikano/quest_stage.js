@@ -1,3 +1,5 @@
+(function(){
+
 var tatf = 0;
 function atf(){
 	if(!$('.prt-title').is(':visible')){
@@ -13,3 +15,5 @@ registerRouteChangeDestroyer(function(callback){
 	clearTimeout(tatf);
 	callback();
 });
+
+})();

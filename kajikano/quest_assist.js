@@ -1,3 +1,4 @@
+(function(){
 /*function attachRefreshBtn(){
 	$('<div class="btn-refresh-list"></div>\
 	<style>.btn-refresh-list{\
@@ -32,3 +33,5 @@ $('.contents').on('tap','.onm-be',function(){
 });
 
 console.info('你发现了什么？');
+
+})();

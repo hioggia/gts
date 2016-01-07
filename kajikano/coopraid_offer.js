@@ -1,3 +1,5 @@
+(function(){
+
 var ttj,tasj,trl,tar,tabtn;
 
 function _tapJoin(){$('.btn-usual-join:visible').trigger('tap');$('.btn-usual-ok:visible').trigger('tap');_autoTapJoin()}
@@ -63,3 +65,5 @@ registerRouteChangeDestroyer(function(callback){
 	clearTimeout(tabtn);
 	callback();
 });
+
+})();

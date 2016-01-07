@@ -1,3 +1,5 @@
+(function(){
+
 var waiting = 2000;
 
 /*function findGuild(dn){
@@ -51,3 +53,5 @@ function findRanker(rn){
 }
 
 console.info('输入findRanker开始搜索对手吧。');
+
+})();

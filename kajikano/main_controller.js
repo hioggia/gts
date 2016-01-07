@@ -117,12 +117,7 @@ var routeChanged = function(){
 		return;
 	}
 	lastHash = location.hash;
-	//console.log('routeChanged');
-	if('wgModule' in window){
-		wgModule.drop(checkLoadModule);
-	}else{
-		routeChangedDestroy();
-	}
+	routeChangedDestroy();
 };
 
 var checkLoadModule = function(){
@@ -157,8 +152,14 @@ var checkLoadModule = function(){
 	}
 
 	else if(/raid\/\d+/i.test(location.hash) || /raid_multi\/\d+/i.test(location.hash) || /raid_semi\/\d+/i.test(location.hash)){
-		if(getWGConfig('kBloodEnable')||getWGConfig('kBlitzDefault')||getWGConfig('kKBSEnable')){
-			createScriptLoader('raid_helper.js?v=4');
+		if(getWGConfig('kBloodEnable')){
+			createScriptLoader('monster_hp.js?v=1');
+		}
+		if(getWGConfig('kBlitzEnable')){
+			createScriptLoader('combat_blitz.js?v=1');
+		}
+		if(getWGConfig('kKBSEnable')){
+			createScriptLoader('combat_hotkey.js?v=1');
 		}
 	}
 
@@ -170,7 +171,7 @@ var checkLoadModule = function(){
 
 	else if(/quest\/assist/i.test(location.hash)){
 		if(getWGConfig('kQAREnable')){
-			createScriptLoader('quest_assist.js?v=1');
+			//createScriptLoader('quest_assist.js?v=1');
 		}
 		if(getWGConfig('kStaminaEnable')){
 			createScriptLoader('mypage_stamina.js?v=1');
