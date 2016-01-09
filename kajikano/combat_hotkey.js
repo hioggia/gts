@@ -1,5 +1,7 @@
 (function(){
 
+	function setStyle(){$('<style>.wg_lightup{position:absolute;top:0px;left:0px;z-index:1;width:44px;height:44px;background:#FFF;opacity:0.4;transition:opacity 0.5s ease-out}</style>').appendTo(document.body)}
+
 	function commandToFight(type,cmd1,cmd2,cmd3,cmd4){
 		if(type=='attack'){
 			$('.btn-attack-start.display-on').trigger('tap');
@@ -87,6 +89,7 @@
 	}
 
 	document.addEventListener('keypress',getPressedCharCode,false);
+	setStyle();
 	console.info('热键已开启！');
 
 	registerRouteChangeDestroyer(function(callback){
