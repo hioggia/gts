@@ -17,7 +17,7 @@
 			setTimeout(function(){wg_lightUP.remove()},550);
 		}else if(type=='summon'){
 			$('.btn-command-summon').trigger('tap').nextAll('.btn-summon-available[pos='+cmd1+']').trigger('tap');
-			$('.btn-summon-use').trigger('tap');
+			$('.btn-summon-use:visible').trigger('tap');
 		}else if(type=='switch'){
 			if($('.prt-slide-icon').is('.show-icon')){
 				$('.prt-slide-icon .'+cmd1).trigger('tap');
