@@ -81,7 +81,7 @@
 
 	        var hookSetFPS = createjs.Ticker.setFPS;
 	        createjs.Ticker.setFPS = function(a){
-	        	return hookSetFPS(99);
+	        	//return hookSetFPS(99);
 	        	return hookSetFPS(24*getRate());
 	        };
 
