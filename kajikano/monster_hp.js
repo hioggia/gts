@@ -1,7 +1,10 @@
 (function(){
 
 	function setHp(index){
-		$('.wg-hp-area div[target='+ (index+1)+'] span').html(stage.pJsnData.boss.param[index].hp+'/'+stage.pJsnData.boss.param[index].hpmax)
+		$('.wg-hp-area div[target='+ (index+1)+'] span').html(
+				stage.pJsnData.boss.param[index].hp+'/'+stage.pJsnData.boss.param[index].hpmax+'<br />'
+				+Math.round(stage.pJsnData.boss.param[index].hp/stage.pJsnData.boss.param[index].hpmax*10000)/100+'%'
+			)
 	}
 	function setHpAll(){
 		if(window.stage &&stage.pJsnData){
