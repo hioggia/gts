@@ -30,6 +30,44 @@ if(document.getElementById('wg_script_host')){
 }
 
 
+if(!('bind' in Function.prototype)){
+	Function.prototype.bind = function(ctx){
+		var fn = this;
+		return function(){
+			var args = Array.prototype.slice.call(arguments,1);
+			fn.apply(ctx,args);
+		}
+	}
+}
+
+if(!('MutationObserver' in window)){
+	window.MutationObserver = function(callback){
+		this._callback = callback;
+		this._elem = null;
+		this._innerHTML = '';
+		this._timer = 0;
+	};
+	MutationObserver.prototype.observe = function(elem,option){
+		this._innerHTML = elem.innerHTML;
+		this._elem = elem;
+		this.polling();
+	};
+	MutationObserver.prototype.polling = function(){
+		var innerHTML = this._elem.innerHTML;
+		if(innerHTML != this._innerHTML){
+			this._innerHTML = innerHTML;
+			this._callback();
+		}
+		this._timer = setTimeout(this.polling.bind(this),500);
+	};
+	MutationObserver.prototype.disconnect = function(){
+		clearTimeout(this._timer);
+		this._elem = null;
+		this._innerHTML = '';
+	};
+}
+
+
 Game.reportError = function(msg, url, line, column, err, callback){console.log(msg, url, line, column, err, callback)};
 
 var createAppTeller = function(url){
