@@ -82,6 +82,11 @@ function init(){
 
 	moBet.observe(document.querySelector('.prt-bet'),{childList:true});
 
+	registerRouteChangeDestroyer(function(callback){
+		moBet.disconnect();
+		callback();
+	});
+
 	if(new Date().getTime()>nextStopTime){
 		sleep(0);
 	}else{

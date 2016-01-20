@@ -15,6 +15,7 @@
 	,ih = function(tex){return $('.prt-navigation').text()==tex}
 	,sstat = function(){var _=[],__=read.medal();for(var k in st){_.push(k+': '+st[k])}_.push('现在游戏筹码: '+__);_.push('累计筹码收益: '+(__-st.初始游戏筹码));console.info(_.join(''+nl+''))}
 	,gsay = function(sor,sow){if(sm.gchoice!=''){if((sm.gchoice=='大' && read.doub(1).点数 < read.doub(2).点数) || (sm.gchoice!='大' && read.doub(1).点数 > read.doub(2).点数)){st.薛定谔猜对次数++;sout(sor)}else{st.薛定谔猜错次数++;sout(sow)}sm.gchoice=''}}
+	,moi = new MutationObserver(function(ms){var b=tz('.prt-bet');console.log(b)})
 	,sm = {
 		running:false,
 		timeout:0,
@@ -412,6 +413,7 @@
 		sst();
 		sm.running=true;
 		uo.sleep(uo.deck);
+		moi.observe(document.querySelector('.prt-navigation'),{childList:true});
 	}
 	,sst = function(){
 		var n=new Date().getTime();
