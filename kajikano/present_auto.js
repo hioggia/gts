@@ -8,17 +8,18 @@
 	tmp.remove();
 
 	var btn = $('<button>疯狂一括</button>').appendTo('.prt-get-all'), k=true, taco=0, taokp=0;
-	btn.on('tap',startAutoTapGetAll);
+	btn.on('tap',toggleAutoTapGetAll);
 
 	function oneKeyPickup(){$('.btn-get-all:visible').trigger('tap')}
+	function safeCheck(){if(!$('.prt-get-all .btn-get-all').is(':visible')){toggleAutoTapGetAll()}}
 	function confirmOk(){
 		$('#pop .pop-confirm .btn-usual-ok').trigger('tap');
 		$('#pop .pop-confirm-none .btn-usual-ok').trigger('tap');
 	}
 	function aco(){ confirmOk(); taco=setTimeout(aco,1000); }
-	function aokp(){ oneKeyPickup(); taokp=setTimeout(aokp, 10000) }
+	function aokp(){ oneKeyPickup(); safeCheck(); taokp=setTimeout(aokp, 10000) }
 
-	function startAutoTapGetAll(){
+	function toggleAutoTapGetAll(){
 		if(k){
 			aco();
 			aokp();
@@ -34,7 +35,7 @@
 	registerRouteChangeDestroyer(function(callback){
 		clearTimeout(taco);
 		clearTimeout(taokp);
-		btn.off('tap',startAutoTapGetAll);
+		btn.off('tap',toggleAutoTapGetAll);
 		callback();
 	});
 
