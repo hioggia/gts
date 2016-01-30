@@ -11,15 +11,25 @@
 	btn.on('tap',toggleAutoTapGetAll);
 
 	function oneKeyPickup(){$('.btn-get-all:visible').trigger('tap')}
-	function safeCheck(){if(!$('.prt-get-all .btn-get-all').is(':visible')){toggleAutoTapGetAll()}}
+	function safeCheck(){
+		if(!$('.prt-get-all .btn-get-all').is(':visible')){
+			toggleAutoTapGetAll()
+		}
+		if($('.prt-3tabs .infinite').is('.active')){
+			toggleAutoTapGetAll(true);
+		}
+	}
 	function confirmOk(){
 		$('#pop .pop-confirm .btn-usual-ok').trigger('tap');
 		$('#pop .pop-confirm-none .btn-usual-ok').trigger('tap');
 	}
 	function aco(){ confirmOk(); taco=setTimeout(aco,1000); }
-	function aokp(){ oneKeyPickup(); safeCheck(); taokp=setTimeout(aokp, 10000) }
+	function aokp(){ safeCheck(); oneKeyPickup(); taokp=setTimeout(aokp, 10000) }
 
-	function toggleAutoTapGetAll(){
+	function toggleAutoTapGetAll(forceClose){
+		if(forceClose){
+			k=false;
+		}
 		if(k){
 			aco();
 			aokp();
