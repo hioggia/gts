@@ -1,6 +1,12 @@
 !function(){
 
-	$('<style>.prt-get-all .btn-get-all{background-position:0 -1280px;width:140px}</style>').appendTo('body');
+	var tmp = $('<div class="btn-usual-ok"></div>').appendTo('body');
+	$('.prt-get-all .btn-get-all').css({
+		'background-position': tmp.css('background-position'),
+		'width': tmp.css('width')
+	});
+	tmp.remove();
+
 	var btn = $('<button>疯狂一括</button>').appendTo('.prt-get-all'), k=true, taco=0, taokp=0;
 	btn.on('tap',startAutoTapGetAll);
 
