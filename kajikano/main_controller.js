@@ -230,7 +230,7 @@ var checkLoadModule = function(){
 		createScriptLoader('event_gacha.js?v=1');
 	}
 
-	//else if(/present/i.test(location.hash)){
-	//	createScriptLoader('present_auto.js?v=1','请稍后。');
-	//}
+	else if(/present/i.test(location.hash)){
+		createScriptLoader('present_auto.js?v=1');
+	}
 };
