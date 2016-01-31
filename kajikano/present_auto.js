@@ -1,23 +1,19 @@
 !function(){
 
 	var tmp = $('<div class="btn-usual-ok"></div>').appendTo('body');
-	$('.prt-get-all .btn-get-all').css({
+	$('#prt-present-limit .prt-get-all .btn-get-all').css({
 		'background-position': tmp.css('background-position'),
 		'width': tmp.css('width')
 	});
 	tmp.remove();
 
-	var btn = $('<button>疯狂一括</button>').appendTo('.prt-get-all'), k=true, taco=0, taokp=0;
+	var btn = $('<button>疯狂一括</button>').appendTo('#prt-present-limit .prt-get-all'), k=true, taco=0, taokp=0;
 	btn.on('tap',toggleAutoTapGetAll);
-	$('.prt-3tabs .btn-tabs').on('tap',focusCloseAutoTapGetAll);
 
-	function oneKeyPickup(){$('.btn-get-all:visible').trigger('tap')}
+	function oneKeyPickup(){$('#prt-present-limit .btn-get-all:visible').trigger('tap')}
 	function safeCheck(){
-		if(!$('.prt-get-all .btn-get-all').is(':visible')){
-			toggleAutoTapGetAll()
-		}
-		if($('.prt-3tabs .infinite').is('.active')){
-			focusCloseAutoTapGetAll();
+		if(!$('#prt-present-limit .prt-get-all .btn-get-all').is(':visible')){
+			focusCloseAutoTapGetAll()
 		}
 	}
 	function confirmOk(){
@@ -49,7 +45,6 @@
 		clearTimeout(taco);
 		clearTimeout(taokp);
 		btn.off('tap',toggleAutoTapGetAll);
-		$('.prt-3tabs .btn-tabs').off('tap',focusCloseAutoTapGetAll);
 		callback();
 	});
 
