@@ -11,6 +11,7 @@ var defaultWGConfig = {
 		kBingoEnable:{title:"启用宾果助手","default":true},
 		kBloodEnable:{title:"显示怪物血量","default":true},
 		kBlitzEnable:{title:"开启闪电战斗","default":true},
+		kWRTEnable:{title:"战斗时间显示到秒","default":true},
 		kKBSEnable:{title:"战斗按键支持","default":true},
 		kQAREnable:{title:"援助列表刷新","default":true},
 		kCoopEnable:{title:"启用共斗助手","default":true}
@@ -198,6 +199,9 @@ var checkLoadModule = function(){
 		}
 		if(getWGConfig('kKBSEnable')){
 			createScriptLoader('combat_hotkey.js?v=1');
+		}
+		if(getWGConfig('kWRTEnable')){
+			createScriptLoader('raid_timer.js?v=1');
 		}
 	}
 
