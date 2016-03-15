@@ -205,6 +205,10 @@ var checkLoadModule = function(){
 		}
 	}
 
+	else if(/coopraid\/room\/\d+/i.test(location.hash)){
+		createScriptLoader('coopraid_copy_number.js');
+	}
+
 	else if(/coopraid\/offer/i.test(location.hash)){
 		if(getWGConfig('kCoopEnable')){
 			createScriptLoader('coopraid_offer.js?v=2');
