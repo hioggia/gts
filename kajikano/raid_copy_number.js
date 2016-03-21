@@ -30,6 +30,7 @@
 
 	function popCheck(ms){
 		if( document.querySelector('.pop-start-assist') ){
+			btnElem.innerHTML = '[copy]';
 			document.querySelector('.prt-battle-join').appendChild(btnElem);
 			btnElem.addEventListener('click',doCopy);
 		}else{
