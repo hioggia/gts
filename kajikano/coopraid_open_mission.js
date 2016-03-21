@@ -2,7 +2,7 @@
 //共斗开任务，第一个参数为难度，第二个参数为大关卡，第三个参数为小关卡
 //难度1为Normal，2为Hard，3为Extra
 //如要开启H2-1，则参数应填(2,2,1)
-coopraidOpenMission(1,3,1);
+coopraidOpenMission(3,1,3);
 
 function coopraidOpenMission(b,m,s){
 	//选择Normal, Hard, Extra
