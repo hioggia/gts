@@ -203,6 +203,7 @@ var checkLoadModule = function(){
 		if(getWGConfig('kWRTEnable')){
 			createScriptLoader('raid_timer.js?v=1');
 		}
+		createScriptLoader('raid_copy_number.js?v=1');
 	}
 
 	else if(/coopraid\/room\/\d+/i.test(location.hash)){
