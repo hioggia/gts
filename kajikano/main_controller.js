@@ -1,5 +1,6 @@
 var host = '',
 	mode = 'extensions',
+	appURL = '',
 	lastHash = '';
 
 var defaultWGConfig = {
@@ -25,11 +26,11 @@ delete console.warn;
 if(document.getElementById('wg_script_host')){
 	host = document.getElementById('wg_script_host').innerHTML;
 	mode = document.getElementById('wg_script_host').dataset.mode;
+	appURL = document.getElementById('wg_script_host').dataset.appUrl;
 }else{
 	console.info('please update your kajikano extensions.');
 	//return;
 }
-
 
 if(!('bind' in Function.prototype)){
 	Function.prototype.bind = function(ctx){
@@ -69,12 +70,17 @@ if(!('MutationObserver' in window)){
 }
 
 
-Game.reportError = function(msg, url, line, column, err, callback){console.log(msg, url, line, column, err, callback)};
+Game.reportError = function(msg, url, line, column, err, callback){
+	createAppTeller('/report/err',JSON.stringify({msg:msg,url:url,line:line,column:column,err:err}));
+	console.log(msg, url, line, column, err, callback)
+};
 
-var createAppTeller = function(url){
-	var s = document.createElement('script');
-	s.src = url;
-	document.body.appendChild(s);
+var createAppTeller = function(method,data){
+	if(mode=='app'){
+		var s = document.createElement('script');
+		s.src = appURL+method+'/'+data;
+		document.body.appendChild(s);
+	}
 };
 
 var createScriptLoader = function(file,readySerif){
@@ -125,17 +131,19 @@ var setWGConfig = function(key,value){
 	localStorage['wg_global_config'] = JSON.stringify(values);
 };
 
-var tellAppMakeConfigMenu = function(settingUrl){
-	//console.log(settingUrl);
+var tellWebviewAppSetting = function(){
 	var sJson = {};
 	for(var key in defaultWGConfig.content){
 		//console.log(key);
 		sJson[key]={title:defaultWGConfig.content[key].title,value:getWGConfig(key)};
 	}
-	createAppTeller(settingUrl+JSON.stringify(sJson));
+	createAppTeller('/menu/add',JSON.stringify(sJson));
 };
+if(mode=='app'){
+	tellWebviewAppSetting();
+}
 
-var tellAppSetConfigValue = function(key,value){
+var receiveAppSetupMenu = function(key,value){
 	//console.log(key,value);
 	setWGConfig(key,value);
 };
