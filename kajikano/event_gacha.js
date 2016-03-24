@@ -2,6 +2,10 @@
 
 function crazyGachaMedal(){
 	if($('.btn-medal.multi').size()>0){
+		if($('.btn-medal.multi').attr('disable')=='true'){
+			setTimeout(crazyGachaMedal,1000);
+			return;
+		}
 		$('body').off('tap',stopCrazyGacha);
 		$('.btn-medal.multi').trigger('tap');
 	}
@@ -11,7 +15,10 @@ function stopCrazyGacha(){
 	$('body').off('tap',stopCrazyGacha);
 }
 function attachCrazyButton(){
-	var btn = $('<button style="position:absolute;right:5px;bottom:3px;z-index:2">疯狂地抽！</button>').appendTo('.prt-gacha-infomation');
+	if($('#crazyButton').size()>0){
+		return;
+	}
+	var btn = $('<button id="crazyButton" style="position:absolute;right:5px;bottom:3px;z-index:2">疯狂地抽！</button>').appendTo('.prt-gacha-infomation');
 	btn.on('tap',function(){
 		localStorage['wg_crazy_gacha'] = true;
 		crazyGachaMedal();
