@@ -4,8 +4,7 @@
 	var btnElem;
 
 	var doCopy = function(){
-		var target = document.querySelector('.prt-battle-id');
-		var ret = copyTextToClipboard(target.innerHTML+'  \r\n'+stage.pJsnData.boss.param[0].name);
+		var ret = copyTextToClipboard(stage.pJsnData.twitter.battle_id+'  \r\n'+stage.pJsnData.twitter.monster);
 		if(ret){
 			btnElem.innerHTML = 'copied';
 		}
@@ -26,7 +25,7 @@
 			btnElem = document.createElement('div');
 			btnElem.innerHTML = '[copy]';
 			btnElem.title = '点击复制房间ID';
-			btnElem.style.cssText = 'position:absolute;left:90px;top:60px;width:140px;height:32px;font-size:9px;text-align:right;line-height:6;color:＃F0E0FF';
+			btnElem.style.cssText = 'position:absolute;left:90px;top:60px;width:140px;height:32px;font-size:75%;text-align:right;line-height:6;color:＃F0E0FF';
 			moPop.observe(document.querySelector('#pop'),{childList:true});
 			registerRouteChangeDestroyer(function(callback){
 				moPop.disconnect();

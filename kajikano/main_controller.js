@@ -263,6 +263,10 @@ var checkLoadModule = function(){
 		createScriptLoader('quest_stage.js?v=1');
 	}
 
+	else if(/event\/teamraid\d+\/top/i.test(location.hash) || /event\/teamraid\d+$/i.test(location.hash)){
+		createScriptLoader('teamraid_copy_rival.js?v=1');
+	}
+
 	else if(/event\/[\w\d]+\/gacha\//i.test(location.hash)){
 		createScriptLoader('event_gacha.js?v=1');
 	}

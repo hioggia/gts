@@ -6,7 +6,7 @@
 		btnElem = document.createElement('div');
 		btnElem.innerHTML = '[copy]';
 		btnElem.title = '点击复制房间ID';
-		btnElem.style.cssText = 'position:absolute;left:11px;top:45px;width:106px;height:32px;font-size:9px;text-align:right;line-height:6;color:#8A2BE2';
+		btnElem.style.cssText = 'position:absolute;left:11px;top:45px;width:106px;height:32px;font-size:75%;text-align:right;line-height:6;color:#8A2BE2';
 		document.querySelector('.prt-view-menu').appendChild(btnElem);
 		btnElem.addEventListener('click',doCopy);
 	};
