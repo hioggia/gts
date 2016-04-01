@@ -32,4 +32,16 @@
 		return;
 	}
 
+	//test
+	if($('.cnt-multi').size()>0){
+		!function test(){
+			if($('.pop-start-assist').size()>0){
+				$('.pop-start-assist').remove();
+				$('.mask').hide();
+			}else{
+				setTimeout(test,100);
+			}
+		}();
+	}
+
 })();
