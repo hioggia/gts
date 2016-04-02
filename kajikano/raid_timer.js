@@ -33,7 +33,7 @@
 	}
 
 	//test
-	if($('.cnt-multi').size()>0){
+	if($('.cnt-multi .prt-multi-buttons .btn-assist').size()>0 && !$('.cnt-multi .prt-multi-buttons .btn-assist').is('.disable')){
 		!function test(){
 			if($('.pop-start-assist').size()>0){
 				$('.pop-start-assist').remove();
