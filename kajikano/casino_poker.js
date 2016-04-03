@@ -502,7 +502,7 @@
 		样本:{get:ssamp}
 	});
 	if(md.pf==1){
-		cmd2.text('安全');
+		cmd2.text('安全中');
 	}
 	cmd1.on(et,function(){
 		if(cmd1.text()=='停止'){
@@ -514,11 +514,11 @@
 		}
 	});
 	cmd2.on(et,function(){
-		if(cmd2.text()=='高速'){
-			cmd2.text('安全');
+		if(cmd2.text()=='高速中'){
+			cmd2.text('安全中');
 			md.pf=1;
 		}else{
-			cmd2.text('高速');
+			cmd2.text('高速中');
 			md.pf=0;
 		}
 		sst();
