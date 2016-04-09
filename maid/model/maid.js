@@ -23,12 +23,14 @@
 	Maid.prototype._init = function(args){
 		if(args.length==1){
 			this.load(args[0]);
-		}else if(args.length>=14){
+		}else if(args.length>=13){
 			this.name = args[0];
 			this._scope = args.slice(1,11);
 			this.wage = args[11];
 			this.age = args[12];
-			this.attribute.set(args[13],args.slice(14));
+			if(args[13]!=undefined){
+				this.attribute.set(args[13],args.slice(14));
+			}
 		}else if(args.length==0){
 			this._scope = [0,100,0,100,0,100,0,100,0,100];
 		}

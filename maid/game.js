@@ -51,35 +51,43 @@
 	function createRival(size){
 		rivalData = new Array(size);
 		for(var i=0;i<size;i++){
-			rivalData[i] = new Maid(NAMES[Math.floor(Math.random()*NAMES.length)],
-				Math.round(Math.random()*100),
-				100,
-				Math.round(Math.random()*100),
-				100,
-				Math.round(Math.random()*100),
-				100,
-				Math.round(Math.random()*100),
-				Math.round(Math.random()*100),
-				0,
-				100,
-				50,
-				Math.round(Math.random()*27+12),
-				3,ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)])
+			reCreateRival(i);
 		}
+	}
+
+	function reCreateRival(idx){
+		var a1 = undefined;
+		if(Math.random()>0.8){
+			a1 = ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)];
+		}
+		rivalData[idx] = new Maid(NAMES[Math.floor(Math.random()*NAMES.length)],
+			Math.round(Math.random()*100),
+			100,
+			Math.round(Math.random()*100),
+			100,
+			Math.round(Math.random()*100),
+			100,
+			Math.round(Math.random()*100),
+			Math.round(Math.random()*100),
+			0,
+			100,
+			50,
+			Math.round(Math.random()*27+12),
+			3,ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)],a1)
 	}
 
 	function createCustomers(size){
 		customerData = new Array(size);
 		for(var i=0;i<size;i++){
 			var a = {t:0,v:ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)]};
-			if(Math.random()>0.7){
+			if(Math.random()>0.4){
 				a.t=Math.ceil(Math.random()*3);
-				a.v=Math.random()>0.7?1:Math.random()>0.7?2:3;
+				a.v=Math.random()>0.4?1:Math.random()>0.4?2:3;
 			}
 			customerData[i] = {
 				name:NAMES[Math.floor(Math.random()*NAMES.length)],
 				lookfor:Math.floor(Math.random()*3),
-				pay:Math.floor(Math.random()*100)*10,
+				pay:Math.floor(Math.random()*90)*10+100,
 				favourite:ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)],
 				affect:a
 			};
@@ -184,8 +192,8 @@
 		document.querySelector('#main').style.display = 'none';
 		document.querySelector('#shop_event').style.display = 'block';
 
-		createCustomers(3);
-		createRival(1);
+		createCustomers(Math.random()>0.3?3:Math.random()>0.3?4:5);
+		createRival(Math.random()>0.3?1:Math.random()>0.3?2:3);
 		currCustomer = 0;
 		cleanUpList=[];
 		document.querySelector('#result').innerHTML = '';
@@ -237,7 +245,7 @@
 		document.querySelector('#result').innerHTML += '['+(currCustomer+1)+'/'+customerData.length+']';
 		if(highScore.pos==0){
 			document.querySelector('#result').innerHTML += rivalData[highScore.idx].name +'<=>' + c.name;
-			createRival(1);
+			reCreateRival(highScore.idx);
 			cleanUpList.push(null);
 		}else{
 			document.querySelector('#result').innerHTML += m.name +'<=>' + c.name;
@@ -264,7 +272,9 @@
 			for(var i=0;i<cleanUpList.length;i++){
 				if(cleanUpList[i]!=null){
 					var m = data.shop[currShop].staff[cleanUpList[i]];
-					totalGain += Math.floor(m.technic/100*customerData[i].pay);
+					var g = Math.floor(m.technic/100*customerData[i].pay);
+					alert('通过活动，'+m.name+'赚了'+g+'钱！');
+					totalGain += g;
 					m.health-=10;
 					m.experience+=5;
 					if(customerData[i].affect.t==0){
