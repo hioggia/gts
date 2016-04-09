@@ -16,11 +16,11 @@
 	<div id="resource">钱: <span id="my_gold"></span> | 工具箱: <span id="my_tool"></span> | 名气: <span id="my_fame"></span></div>
 	<div id="menu"><a href="javascript:gotoTab(0)">店</a> | <a href="javascript:gotoTab(1)">配置</a> | <a href="javascript:gotoTab(2)">招募</a> | <a href="javascript:gotoTab(3)">公开活动</a> | <a href="javascript:gotoTab(4)">世界</a></div>
 	<div id="tab_0">
-		<p>工作中：<span id="m_working_maid"></span>人
+		<p>工作中：<span id="m_working_maid"></span>人 <a href="javascript:gotoTab(2)">去招募</a>
 		<br />收益：<span id="m_gain_speed"></span>钱/秒
-		<p>客位数量：<span id="m_customer_size"></span> <a href="javascript:updateWaitLevel()">[花1000钱增加1数量]</a>
-		<br />服务等级：<span id="m_serve_level"></span> <a href="javascript:updateServeLevel()">[花3000钱增加1等级]</a>
-		<br />Staff Room：<span id="m_staff_room"></span> <a href="javascript:updateStaffRoom()">[花20000钱增加1房间]</a>
+		<p>客位数量：<span id="m_customer_size"></span> <a href="javascript:updateWaitLevel()">[<span id="m_cost_cs">1000</span>钱升级]</a>
+		<br />服务等级：<span id="m_serve_level"></span> <a href="javascript:updateServeLevel()">[<span id="m_cost_sl">3000</span>钱升级]</a>
+		<br />Staff Room：<span id="m_staff_room"></span> <a href="javascript:updateStaffRoom()">[<span id="m_cost_sr">20000</span>钱升级]</a>
 		<p><a href="javascript:startShopEvent()">开始营业活动</a>
 	</div>
 	<div id="tab_1" style="display:none">
@@ -34,8 +34,8 @@
 		<a href="javascript:gotoTab(1)">关闭</a>
 	</div>
 	<div id="tab_2" style="display:none">
-		<p id="pre_recruit" style="display:none">你希望花500钱招募新的员工吗？ <a href="javascript:recruit()">是的</a>
-		<P id="recruit_result" style="display:none">你获得了新的店员： <span id="m_recruit_staff"></span>  <a href="javascript:recruit()">继续招募</a>
+		<p id="pre_recruit" style="display:none">你希望花<span id="m_cost_rm">500</span>钱招募新的员工吗？ <a href="javascript:recruit()">是的</a>
+		<P id="recruit_result" style="display:none">你获得了新的店员： <span id="m_recruit_staff"></span>  <a href="javascript:recruit()"><span id="m_cost_ra">1000</span>钱继续招募</a>
 		<p id="recruit_error">
 	</div>
 	<div id="tab_3" style="display:none"></div>

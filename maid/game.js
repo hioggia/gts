@@ -113,12 +113,16 @@
 			document.querySelector('#m_customer_size').innerHTML = data.shop[currShop].wait;
 			document.querySelector('#m_serve_level').innerHTML = data.shop[currShop].serveLevel;
 			document.querySelector('#m_staff_room').innerHTML = data.shop[currShop].staffRoomSize;
+			document.querySelector('#m_cost_cs').innerHTML = Math.floor(data.shop[currShop].waitLevel/2)*1000+1000;
+			document.querySelector('#m_cost_sl').innerHTML = Math.floor(data.shop[currShop].serveLevel/5)*2000+3000;
+			document.querySelector('#m_cost_sr').innerHTML = Math.floor(data.shop[currShop].staffRoomLevel/1)*10000+10000;
 		}else if(idx==4){
 			document.querySelector('#m_city_total').innerHTML = data.city.total;
 			document.querySelector('#m_city_f').innerHTML = data.city.f;
 			document.querySelector('#m_city_p').innerHTML = data.city.p;
 			document.querySelector('#m_city_s').innerHTML = data.city.s;
 		}else if(idx==2){
+			document.querySelector('#m_cost_rm').innerHTML = data.shop[currShop].staff.length*500;
 			document.querySelector('#pre_recruit').style.display = 'block';
 			document.querySelector('#recruit_result').style.display = 'none';
 			document.querySelector('#recruit_error').style.display = 'none';
@@ -139,8 +143,8 @@
 	}
 
 	window.recruit = function(){
-		if(data.gold>=500 && data.shop[currShop].staffRoomSize>data.shop[currShop].staff.length){
-			data.gold-=500;
+		if(data.gold>=data.shop[currShop].staff.length*500 && data.shop[currShop].staffRoomSize>data.shop[currShop].staff.length){
+			data.gold-=data.shop[currShop].staff.length*500;
 			var m = new Maid(NAMES[Math.floor(Math.random()*NAMES.length)],
 				Math.round(Math.random()*70),
 				100,
@@ -157,6 +161,7 @@
 				3,ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)]);
 			document.querySelector('#pre_recruit').style.display = 'none';
 			document.querySelector('#recruit_result').style.display = 'block';
+			document.querySelector('#m_cost_ra').innerHTML = data.shop[currShop].staff.length*500;
 			document.querySelector('#m_recruit_staff').innerHTML = m.description();
 			data.shop[currShop].addStaff(m);
 		}else{
@@ -291,28 +296,31 @@
 	}
 
 	window.updateWaitLevel = function(){
-		if(data.gold>=1000){
-			data.gold-=1000;
+		if(data.gold>=Math.floor(data.shop[currShop].waitLevel/3)*1000+1000){
+			data.gold-=Math.floor(data.shop[currShop].waitLevel/3)*1000+1000;
 			data.shop[currShop].waitLevel+=1;
 			document.querySelector('#m_customer_size').innerHTML = data.shop[currShop].wait;
+			document.querySelector('#m_cost_cs').innerHTML = Math.floor(data.shop[currShop].waitLevel/3)*1000+1000;
 			document.querySelector('#m_gain_speed').innerHTML = data.shop[currShop].getGainPreSecond(data.city);
 		}
 	}
 
 	window.updateServeLevel = function(){
-		if(data.gold>=3000){
-			data.gold-=3000;
+		if(data.gold>=Math.floor(data.shop[currShop].serveLevel/5)*2000+3000){
+			data.gold-=Math.floor(data.shop[currShop].serveLevel/5)*2000+3000;
 			data.shop[currShop].serveLevel+=1;
 			document.querySelector('#m_serve_level').innerHTML = data.shop[currShop].serveLevel;
+			document.querySelector('#m_cost_sl').innerHTML = Math.floor(data.shop[currShop].serveLevel/5)*2000+3000;
 			document.querySelector('#m_gain_speed').innerHTML = data.shop[currShop].getGainPreSecond(data.city);
 		}
 	}
 
 	window.updateStaffRoom = function(){
-		if(data.gold>=20000){
-			data.gold-=20000;
+		if(data.gold>=Math.floor(data.shop[currShop].staffRoomLevel/1)*10000+10000){
+			data.gold-=Math.floor(data.shop[currShop].staffRoomLevel/1)*10000+10000;
 			data.shop[currShop].staffRoomLevel+=1;
 			document.querySelector('#m_staff_room').innerHTML = data.shop[currShop].staffRoomSize;
+			document.querySelector('#m_cost_sr').innerHTML = Math.floor(data.shop[currShop].staffRoomLevel/1)*10000+10000;
 		}
 	}
 }();
