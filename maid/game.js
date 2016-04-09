@@ -159,11 +159,11 @@
 				50,
 				Math.round(Math.random()*10+15),
 				3,ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)]);
+			data.shop[currShop].addStaff(m);
 			document.querySelector('#pre_recruit').style.display = 'none';
 			document.querySelector('#recruit_result').style.display = 'block';
 			document.querySelector('#m_cost_ra').innerHTML = data.shop[currShop].staff.length*500;
 			document.querySelector('#m_recruit_staff').innerHTML = m.description();
-			data.shop[currShop].addStaff(m);
 		}else{
 			document.querySelector('#pre_recruit').style.display = 'none';
 			document.querySelector('#recruit_result').style.display = 'none';
