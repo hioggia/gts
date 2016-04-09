@@ -15,6 +15,7 @@
 		this.name = 'NoName';
 		this.wage = 0;
 		this.age = 0;
+		this._nextRecovery = undefined;
 		this.attribute = new Attributes();
 
 		this._init(Array.prototype.slice.call(arguments,0));
@@ -60,11 +61,33 @@
 		return this._scope[fSexyMax];
 	});
 
+	Maid.prototype.__defineGetter__('element',function(){
+		if(this.fashion>this.pure && this.fashion>this.sexy){
+			return 'fashion';
+		}else if(this.pure>this.fashion && this.pure>this.sexy){
+			return 'pure';
+		}else if(this.sexy>this.fashion && this.sexy>this.pure){
+			return 'sexy';
+		}
+	});
+
 	Maid.prototype.__defineGetter__('technic',function(){
 		return this._scope[fTechnic];
 	});
 
 	Maid.prototype.__defineGetter__('health',function(){
+		if(this._nextRecovery!=undefined){
+			debulog(this.name,'will recovery at',new Date(this._nextRecovery+1000*60*5));
+			var diff = new Date().getTime()-this._nextRecovery;
+			var recoveriedPoint = Math.floor(diff/1000/60/5);
+			if(this._scope[fHealth]+recoveriedPoint>=100){
+				this._scope[fHealth]=100;
+				this._nextRecovery=undefined;
+			}else{
+				this._scope[fHealth]+=recoveriedPoint;
+				this._nextRecovery+=recoveriedPoint*1000*60*5;
+			}
+		}
 		return this._scope[fHealth];
 	});
 
@@ -93,6 +116,9 @@
 
 	Maid.prototype.__defineSetter__('health',function(v){
 		this._scope[fHealth] = Math.min(Math.max(v,0),this._scope[fHealth]);
+		if(this._scope[fHealth]!=100 && this._nextRecovery==undefined){
+			this._nextRecovery = new Date().getTime();
+		}
 	});
 
 	Maid.prototype.__defineSetter__('experience',function(v){
@@ -111,8 +137,29 @@
 		}
 	}
 
-	Maid.prototype.description = function(){
-		return this.name + '(F '+this.fashion+'/P '+this.pure+'/S '+this.sexy+'/T '+this.technic+'/H '+this.health+')';
+	Maid.prototype.description = function(isBreakLine,lightup){
+		var t = [this.name+' '+this.age+'岁'];
+		if(isBreakLine){
+			t.push('<br />');
+		}else{
+			t.push(' (');
+		}
+		if(lightup=='fashion'){t.push('<strong>')}
+		t.push('F '+this.fashion);
+		if(lightup=='fashion'){t.push('</strong>')}
+		t.push('/');
+		if(lightup=='pure'){t.push('<strong>')}
+		t.push('P '+this.pure);
+		if(lightup=='pure'){t.push('</strong>')}
+		t.push('/');
+		if(lightup=='sexy'){t.push('<strong>')}
+		t.push('S '+this.sexy);
+		if(lightup=='sexy'){t.push('</strong>')}
+		t.push('/T '+this.technic+'/H '+this.health);
+		if(!isBreakLine){
+			t.push(')');
+		}
+		return t.join('');
 	}
 
 	Maid.prototype.load = function(data){

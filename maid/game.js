@@ -1,3 +1,7 @@
+function debulog(){
+	console.log.apply(console,Array.prototype.slice.call(arguments,0));
+}
+
 !function(){
 	var data={},currShop=0,lastIdx=0,rivalData=[],customerData=[],currCustomer=0,cleanUpList=[];
 
@@ -16,9 +20,9 @@
 	if(!loadData()){
 		//初始化游戏
 		data.gold = 20000;
-		data.tool = 1;
+		data.tool = 5;
 		data.fame = 0;
-		data.city = {total:400,f:5,p:5,s:4};
+		data.city = {total:400,f:4,p:5,s:6};
 		data.shop = [new Shop()];
 		data.shop[0].addStaff(new Maid(NAMES[Math.floor(Math.random()*NAMES.length)],
 			Math.round(Math.random()*70),
@@ -213,13 +217,17 @@
 
 		t = '';
 		for(var i=0;i<rivalData.length;i++){
-			t+='<p>竟争对手派出：'+rivalData[i].name+' '+rivalData[i].age+'岁<br />F '+rivalData[i].fashion+'/P '+rivalData[i].pure+'/S '+rivalData[i].sexy+'/T '+rivalData[i].technic+'/H '+rivalData[i].health+'<br />属性：'+rivalData[i].attribute.description();
+			t+='<p>竟争对手派出：'+rivalData[i].description(true)+'<br />属性：'+rivalData[i].attribute.description();
 		}
 		document.querySelector('#rivals').innerHTML = t;
 
 		t = '';
 		for(var i=0;i<data.shop[currShop].staff.length;i++){
-			t+='<br />'+data.shop[currShop].staff[i].description()+'<br />'+data.shop[currShop].staff[i].age+'岁 属性：'+data.shop[currShop].staff[i].attribute.description()+' <a href="javascript:choice('+i+')">选择</a>';
+			t+='<br />'+data.shop[currShop].staff[i].description()+'<br />属性：'+data.shop[currShop].staff[i].attribute.description()+' <a';
+			if(data.shop[currShop].staff[i].health>=10){
+				t+=' href="javascript:choice('+i+')"';
+			}
+			t+='>选择</a>';
 		}
 		document.querySelector('#m_choice_staff>span').innerHTML = t;
 	}
@@ -269,15 +277,16 @@
 
 			t = '';
 			for(var i=0;i<rivalData.length;i++){
-				t+='<p>竟争对手派出：'+rivalData[i].name+' '+rivalData[i].age+'岁<br />F '+rivalData[i].fashion+'/P '+rivalData[i].pure+'/S '+rivalData[i].sexy+'/T '+rivalData[i].technic+'/H '+rivalData[i].health+'<br />属性：'+rivalData[i].attribute.description();
+				t+='<p>竟争对手派出：'+rivalData[i].description(true)+'<br />属性：'+rivalData[i].attribute.description();
 			}
 			document.querySelector('#rivals').innerHTML = t;
 		}else{
 			var totalGain = 0;
 			for(var i=0;i<cleanUpList.length;i++){
 				if(cleanUpList[i]!=null){
-					var m = data.shop[currShop].staff[cleanUpList[i]];
-					var g = Math.floor(m.technic/100*customerData[i].pay);
+					var m = data.shop[currShop].staff[cleanUpList[i]],
+						t = m.health>=50?m.technic:m.technic*m.health/100,
+						g = Math.floor(t/100*customerData[i].pay);
 					alert('通过活动，'+m.name+'赚了'+g+'钱！');
 					totalGain += g;
 					m.health-=10;

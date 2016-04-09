@@ -48,13 +48,13 @@
 		var c = 0;
 		for(var i=0;i<this.staff.length;i++){
 			var maid = this.staff[i];
-			if(maid.fashion>maid.pure && maid.fashion>maid.sexy){
-				c+=Math.floor(city.total*city.f/100);
-			}else if(maid.pure>maid.fashion && maid.pure>maid.sexy){
-				c+=Math.floor(city.total*city.p/100);
-			}else if(maid.sexy>maid.fashion && maid.sexy>maid.pure){
-				c+=Math.floor(city.total*city.s/100);
+			var base = 0;
+			switch(maid.element){
+				case 'fashion': base=city.f; break;
+				case 'pure': base=city.p; break;
+				case 'sexy': base=city.s; break;
 			}
+			c+=Math.floor(city.total*base/100);
 		}
 		c = Math.min(c,this.wait*60/this.serveTime);
 		return Math.floor(c*this.serve/60);
