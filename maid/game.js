@@ -15,7 +15,8 @@
 
 	if(!loadData()){
 		//初始化游戏
-		data.gold = 5000;
+		data.gold = 20000;
+		data.tool = 1;
 		data.fame = 0;
 		data.city = {total:400,f:5,p:5,s:4};
 		data.shop = [new Shop()];
@@ -70,12 +71,17 @@
 	function createCustomers(size){
 		customerData = new Array(size);
 		for(var i=0;i<size;i++){
+			var a = {t:0,v:ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)]};
+			if(Math.random()>0.7){
+				a.t=Math.ceil(Math.random()*3);
+				a.v=Math.random()>0.7?1:Math.random()>0.7?2:3;
+			}
 			customerData[i] = {
 				name:NAMES[Math.floor(Math.random()*NAMES.length)],
 				lookfor:Math.floor(Math.random()*3),
 				pay:Math.floor(Math.random()*100)*10,
 				favourite:ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)],
-				affect:ATTRIBUTE_KEYS[Math.floor(Math.random()*ATTRIBUTE_KEYS.length)]
+				affect:a
 			};
 		}
 	}
@@ -83,6 +89,7 @@
 	window.initToMain = function(){
 		document.querySelector('#prologue').style.display = 'none';
 		document.querySelector('#main').style.display = 'block';
+		document.querySelector('#my_tool').innerHTML = data.tool;
 		document.querySelector('#my_fame').innerHTML = data.fame;
 		startTimer();
 		gotoTab(0);
@@ -93,6 +100,8 @@
 		document.querySelector('#tab_'+idx).style.display = 'block';
 		lastIdx = idx;
 		if(idx==0){
+			document.querySelector('#m_working_maid').innerHTML = data.shop[currShop].staff.length;
+			document.querySelector('#m_gain_speed').innerHTML = data.shop[currShop].getGainPreSecond(data.city);
 			document.querySelector('#m_customer_size').innerHTML = data.shop[currShop].wait;
 			document.querySelector('#m_serve_level').innerHTML = data.shop[currShop].serveLevel;
 			document.querySelector('#m_staff_room').innerHTML = data.shop[currShop].staffRoomSize;
@@ -180,7 +189,13 @@
 		currCustomer = 0;
 		cleanUpList=[];
 		document.querySelector('#result').innerHTML = '';
-		var t = '<p>客户'+(currCustomer+1)+'/'+customerData.length+'：'+customerData[currCustomer].name+'<br />支付：'+customerData[currCustomer].pay+'<br />注目：'+['Fashion','Pure','Sexy'][customerData[currCustomer].lookfor]+'<br />喜好：'+ATTRIBUTE[customerData[currCustomer].favourite].text+'<br />影响：+'+ATTRIBUTE[customerData[currCustomer].affect].text;
+		var t = '<p>客户'+(currCustomer+1)+'/'+customerData.length+'：'+customerData[currCustomer].name+'<br />支付：'+customerData[currCustomer].pay+'<br />注目：'+['Fashion','Pure','Sexy'][customerData[currCustomer].lookfor]+'<br />喜好：'+ATTRIBUTE[customerData[currCustomer].favourite].text+'<br />影响：';
+		if(customerData[currCustomer].affect.t==0){
+			t+='+'+ATTRIBUTE[customerData[currCustomer].affect.v].text;
+		}else{
+			for(var i=0;i<customerData[currCustomer].affect.v;i++){t+='+'}
+			t+=['Fashion','Pure','Sexy'][customerData[currCustomer].affect.t-1];
+		}
 		document.querySelector('#target').innerHTML = t;
 
 		t = '';
@@ -198,7 +213,7 @@
 
 	window.choice = function(idx){
 		var m = data.shop[currShop].staff[idx],
-			c = customerData[currShop];
+			c = customerData[currCustomer];
 		var highScore = {score:0,pos:0,idx:0};
 		for(var i=0;i<rivalData.length;i++){
 			var score = rivalData[i][ ['fashion','pure','sexy'][c.lookfor] ];
@@ -230,7 +245,13 @@
 			cleanUpList.push(idx);
 		}
 		if(++currCustomer<customerData.length && document.querySelectorAll('#m_choice_staff>span a[href]').length>0){
-			var t = '<p>客户'+(currCustomer+1)+'/'+customerData.length+'：'+customerData[currCustomer].name+'<br />支付：'+customerData[currCustomer].pay+'<br />注目：'+['Fashion','Pure','Sexy'][customerData[currCustomer].lookfor]+'<br />喜好：'+ATTRIBUTE[customerData[currCustomer].favourite].text+'<br />影响：+'+ATTRIBUTE[customerData[currCustomer].affect].text;
+			var t = '<p>客户'+(currCustomer+1)+'/'+customerData.length+'：'+customerData[currCustomer].name+'<br />支付：'+customerData[currCustomer].pay+'<br />注目：'+['Fashion','Pure','Sexy'][customerData[currCustomer].lookfor]+'<br />喜好：'+ATTRIBUTE[customerData[currCustomer].favourite].text+'<br />影响：';
+			if(customerData[currCustomer].affect.t==0){
+				t+='+'+ATTRIBUTE[customerData[currCustomer].affect.v].text;
+			}else{
+				for(var i=0;i<customerData[currCustomer].affect.v;i++){t+='+'}
+				t+=['Fashion','Pure','Sexy'][customerData[currCustomer].affect.t-1];
+			}
 			document.querySelector('#target').innerHTML = t;
 
 			t = '';
@@ -246,7 +267,11 @@
 					totalGain += Math.floor(m.technic/100*customerData[i].pay);
 					m.health-=10;
 					m.experience+=5;
-					m.attribute.add(customerData[i].affect);
+					if(customerData[i].affect.t==0){
+						m.attribute.add(customerData[i].affect.v);
+					}else{
+						m[ ['fashion','pure','sexy'][customerData[i].affect.t-1] ] += customerData[i].affect.v;
+					}
 				}
 			}
 			alert('你获得了 '+totalGain+' 钱');
@@ -260,6 +285,7 @@
 			data.gold-=1000;
 			data.shop[currShop].waitLevel+=1;
 			document.querySelector('#m_customer_size').innerHTML = data.shop[currShop].wait;
+			document.querySelector('#m_gain_speed').innerHTML = data.shop[currShop].getGainPreSecond(data.city);
 		}
 	}
 
@@ -268,12 +294,13 @@
 			data.gold-=3000;
 			data.shop[currShop].serveLevel+=1;
 			document.querySelector('#m_serve_level').innerHTML = data.shop[currShop].serveLevel;
+			document.querySelector('#m_gain_speed').innerHTML = data.shop[currShop].getGainPreSecond(data.city);
 		}
 	}
 
 	window.updateStaffRoom = function(){
-		if(data.gold>=50000){
-			data.gold-=50000;
+		if(data.gold>=20000){
+			data.gold-=20000;
 			data.shop[currShop].staffRoomLevel+=1;
 			document.querySelector('#m_staff_room').innerHTML = data.shop[currShop].staffRoomSize;
 		}

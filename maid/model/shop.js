@@ -1,6 +1,6 @@
 !function(exports){
 	function Shop(){
-		this._scope = [1,1,3,1,5,5,2,1,1,1,1];
+		this._scope = [1,1,3,1,5,5,1,2,1,1,1];
 		this.staff = [];
 	}
 
