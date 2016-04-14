@@ -64,6 +64,15 @@ var SoundPlayer = function(){
 				}
 			}, 0);
 		},
+		preloadBGM: function(url){
+			if(url in buffs){
+				//nothing todo
+			}else{
+				loadUrl(url,function(){
+					console.log('hey');
+				});
+			}
+		},
 		playBGM: function(url,loopStart,loopEnd){
 			if(url in buffs){
 				swapBGM(url,loopStart,loopEnd);
@@ -90,6 +99,7 @@ var SoundPlayer = function(){
 
 SoundPlayer.checkUnlockState(function(result){
 	if(!result){
+		SoundPlayer.preloadBGM('bgm.mp3');
 		document.body.addEventListener('touchend',function bb(){
 			SoundPlayer.playBGM('bgm.mp3',0,158);
 			document.body.removeEventListener('touchend',bb,false);
