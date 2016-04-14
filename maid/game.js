@@ -259,6 +259,10 @@ function debulog(){
 		if(highScore.pos==0){
 			document.querySelector('#result').innerHTML += rivalData[highScore.idx].name +'<=>' + c.name;
 			reCreateRival(highScore.idx);
+			m.health-=2;
+			if(m.health<10){
+				document.querySelectorAll('#m_choice_staff>span a')[idx].removeAttribute('href');
+			}
 			cleanUpList.push(null);
 		}else{
 			document.querySelector('#result').innerHTML += m.name +'<=>' + c.name;
