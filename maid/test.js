@@ -90,11 +90,15 @@ var SoundPlayer = function(){
 
 SoundPlayer.checkUnlockState(function(result){
 	if(!result){
-		alert(result);
+		document.body.addEventListener('touchend',function bb(){
+			SoundPlayer.playBGM('bgm.mp3',0,158);
+			document.body.removeEventListener('touchend',bb,false);
+		},false);
+	}else{
+		SoundPlayer.playBGM('bgm.mp3',0,158);
 	}
 });
 
-SoundPlayer.playBGM('bgm.mp3',0,158);
 document.querySelector('button').addEventListener('click',function(){
 	SoundPlayer.playSE('btn.mp3');
 	//SoundPlayer.playBGM('bgm.mp3',0,158);
