@@ -99,13 +99,13 @@ var SoundPlayer = function(){
 
 SoundPlayer.checkUnlockState(function(result){
 	if(!result){
-		SoundPlayer.preloadBGM('bgm.mp3');
+		SoundPlayer.preloadBGM('bgm2.jpg');
 		document.body.addEventListener('touchend',function bb(){
-			SoundPlayer.playBGM('bgm.mp3',0,158);
+			SoundPlayer.playBGM('bgm2.jpg',0,158);
 			document.body.removeEventListener('touchend',bb,false);
 		},false);
 	}else{
-		SoundPlayer.playBGM('bgm.mp3',0,158);
+		SoundPlayer.playBGM('bgm2.jpg',0,158);
 	}
 });
 
