@@ -158,7 +158,7 @@ function tweenScrolling(){
 		lockTime = new Date().getTime();
 	}
 	var delta = new Date().getTime() - lockTime;
-	if(delta>=500){
+	if(delta>=300){
 		document.querySelector('.scroll_panel').scrollLeft = nIndex*320;
 		lockTime = 0;
 	}else{
