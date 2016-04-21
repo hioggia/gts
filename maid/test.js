@@ -3,6 +3,7 @@ var SoundPlayer = function(){
 
 	var atx = new (window.AudioContext || window.webkitAudioContext)();
 	var buffs = {}, playingBgm = null;
+	var volume = 0.8, mute = false;
 
 	function loadUrl(url,callback){
 		var xhr = new XMLHttpRequest();
@@ -23,6 +24,7 @@ var SoundPlayer = function(){
 		src.connect(gain);
 		src.buffer = buffs[url];
 		gain.connect(atx.destination);
+		gain.gain.value = volume;
 		return {src:src,gain:gain.gain};
 	}
 
@@ -34,9 +36,14 @@ var SoundPlayer = function(){
 		}
 
 		var newBgm = createSource(url);
-		newBgm.src.loop = true;
-		newBgm.src.loopStart = loopStart;
-		newBgm.src.loopEnd = loopEnd;
+		if(loopStart!=undefined && loopStart>0){
+
+		}else{
+			newBgm.src.loop = true;
+			newBgm.src.loopStart = loopStart||0;
+			newBgm.src.loopEnd = loopEnd||0;
+		}
+		
 		//src.playbackRate.value=1;
 		newBgm.src.start(atx.currentTime,0);
 		/*if(oldBgm){
@@ -69,11 +76,31 @@ var SoundPlayer = function(){
 				//nothing todo
 			}else{
 				loadUrl(url,function(){
-					console.log('hey');
 				});
 			}
 		},
+		volume: function(set){
+			if(set!=undefined){
+				volume = set;
+				if(playingBgm!=null){
+					playingBgm.gain.value = volume;
+				}
+			}else{
+				return volume;
+			}
+		},
+		mute: function(set){
+			if(set!=undefined){
+				mute = set;
+				playingBgm.src.stop(0);
+			}else{
+				return mute;
+			}
+		},
 		playBGM: function(url,loopStart,loopEnd){
+			if(mute){
+				return;
+			}
 			if(url in buffs){
 				swapBGM(url,loopStart,loopEnd);
 			}else{
@@ -83,6 +110,9 @@ var SoundPlayer = function(){
 			}
 		},
 		playSE: function(url){
+			if(mute){
+				return;
+			}
 			if(url in buffs){
 				var src = createSource(url).src;
 				src.start(atx.currentTime,0);

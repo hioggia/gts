@@ -1,68 +1,180 @@
 <!doctype html>
-<script src="const/name.js"></script>
-<script src="const/attribute.js"></script>
-<script src="model/attribute.js"></script>
-<script src="model/maid.js"></script>
-<script src="model/shop.js"></script>
+<meta charset="utf-8" />
+<script>
+	//UI-width / device-width * window.devicePixelRatio * 160
+	var designWidth = 320;
+	if(/Android/i.test(navigator.userAgent)){
+		var dpi = Math.round(designWidth/window.screen.width*window.devicePixelRatio*160);
+		document.write('<meta name="viewport" content="target-densitydpi='+dpi+',width='+designWidth+',user-scalable=no" />');
+	}else{
+		//var scale = window.innerWidth/320;
+		document.write('<meta name="viewport" content="width='+designWidth+',user-scalable=no" />');
+	}
+</script>
+<link rel="stylesheet" href="all.css" />
 <body>
-<div id="prologue">
-	<p>在这个充满铜臭味的社会里，你一直找不到合适自己的工作。<br />就在这百般坚难的时候，你觉得你是时候创业了！
-	<p>你爸给了你一笔钱，于是你开了一个女仆咖啡店。
-	<p>现在你是老板！
-	<p>你获得了第一个店员：<span id="m_first_maid">{maid.name}</span>！
-	<p><a href="javascript:initToMain()">继续</a>
+<div id="main_container">
+	<div class="event_top">
+		<h1>营业活动</h1>
+	</div>
+	<div class="custom_head">
+		<h2>目标客户</h2>
+		<span class="queue">
+			<b class="u"></b>
+			<b class="u"></b>
+			<b class="a"></b>
+			<b class="a"></b>
+			<b class="a"></b>
+		</span>
+	</div>
+	<div class="custom_box_c" data-custom-pic="305">
+		<div class="price">9,000</div>
+		<div class="name">近藤海</div>
+		<div class="desc">刚刚与女友分手，心情很差，希望到这里可以重拾信心。</div>
+		<div class="data_lay">
+			<span class="like">纯洁</span>
+			<span class="spec">优等生</span>
+			<span class="affect">性感down</span>
+		</div>
+		<b class="chara_face"></b>
+	</div>
+	<div class="rival_head">
+		<h2>竟争者</h2>
+	</div>
+	<div class="chara_band"><span>猫拖女仆咖啡屋</span></div>
+	<div class="chara_box_s" data-chara-pic="9" data-bg-type="2">
+		<div class="data_lay">
+			<span class="name">シャルロッテ</span>
+			<span class="age">17</span>
+			<span class="fashion">SS</span>
+			<span class="pure">C-</span>
+			<span class="sexy">A+</span>
+			<span class="technic">D</span>
+			<span class="health">B+</span>
+		</div>
+		<div class="tag_lay">
+			<span>逃学威龙</span>
+			<span>露出癖</span>
+			<span>善长交往</span>
+		</div>
+		<b class="chara_face"></b>
+		<b class="tag_back"></b>
+	</div>
+	<div class="self_head">
+		<h2>我</h2>
+	</div>
+	<div class="scroll_panel">
+		<div class="scroll_container">
+			<div class="scroll_node">
+				<div class="chara_band">
+					<span>大正浪漫女仆咖啡屋</span>
+				</div>
+				<div class="chara_box_s" data-chara-pic="15" data-bg-type="1">
+					<div class="data_lay">
+						<span class="name">レディ・グレイ</span>
+						<span class="age">18</span>
+						<span class="fashion">C+</span>
+						<span class="pure">A-</span>
+						<span class="sexy">B</span>
+						<span class="technic">B-</span>
+						<span class="health">A+</span>
+					</div>
+					<div class="tag_lay">
+						<span>无经验</span>
+						<span>巨乳</span>
+						<span>死气沉沉</span>
+						<span>劣等生</span>
+						<span>呆毛</span>
+					</div>
+					<b class="chara_face"></b>
+					<b class="tag_back"></b>
+				</div>
+			</div>
+			<div class="scroll_node">
+				<div class="chara_band">
+					<span>大正浪漫女仆咖啡屋</span>
+				</div>
+				<div class="chara_box_s" data-chara-pic="16" data-bg-type="1">
+					<div class="data_lay">
+						<span class="name">レディ・グレイ</span>
+						<span class="age">18</span>
+						<span class="fashion">C+</span>
+						<span class="pure">A-</span>
+						<span class="sexy">B</span>
+						<span class="technic">B-</span>
+						<span class="health">A+</span>
+					</div>
+					<div class="tag_lay">
+						<span>无经验</span>
+						<span>巨乳</span>
+						<span>死气沉沉</span>
+						<span>劣等生</span>
+						<span>呆毛</span>
+					</div>
+					<b class="chara_face"></b>
+					<b class="tag_back"></b>
+				</div>
+			</div>
+			<div class="scroll_node">
+				<div class="chara_band">
+					<span>大正浪漫女仆咖啡屋</span>
+				</div>
+				<div class="chara_box_s" data-chara-pic="17" data-bg-type="1">
+					<div class="data_lay">
+						<span class="name">レディ・グレイ</span>
+						<span class="age">18</span>
+						<span class="fashion">C+</span>
+						<span class="pure">A-</span>
+						<span class="sexy">B</span>
+						<span class="technic">B-</span>
+						<span class="health">A+</span>
+					</div>
+					<div class="tag_lay">
+						<span>无经验</span>
+						<span>巨乳</span>
+						<span>死气沉沉</span>
+						<span>劣等生</span>
+						<span>呆毛</span>
+					</div>
+					<b class="chara_face"></b>
+					<b class="tag_back"></b>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll_point">
+		<b class="curr"></b>
+		<b></b>
+		<b></b>
+	</div>
+	<div class="action">
+		<button class="btn_blue btn_large">确定派出</button>
+	</div>
 </div>
-<div id="main" style="display:none">
-	<div id="resource">钱: <span id="my_gold"></span> | 工具箱: <span id="my_tool"></span> | 名气: <span id="my_fame"></span></div>
-	<div id="menu"><a href="javascript:gotoTab(0)">店</a> | <a href="javascript:gotoTab(1)">配置</a> | <a href="javascript:gotoTab(2)">招募</a> | <a href="javascript:gotoTab(3)">公开活动</a> | <a href="javascript:gotoTab(4)">世界</a> | <a href="javascript:gotoTab(5)">每日任务</a></div>
-	<div id="tab_0">
-		<p>工作中：<span id="m_working_maid"></span>人 <a href="javascript:gotoTab(2)">去招募</a>
-		<br />收益：<span id="m_gain_speed"></span>钱/秒
-		<p>客位数量：<span id="m_customer_size"></span> <a href="javascript:updateWaitLevel()">[<span id="m_cost_cs">1000</span>钱升级]</a>
-		<br />服务等级：<span id="m_serve_level"></span> <a href="javascript:updateServeLevel()">[<span id="m_cost_sl">3000</span>钱升级]</a>
-		<br />Staff Room：<span id="m_staff_room"></span> <a href="javascript:updateStaffRoom()">[<span id="m_cost_sr">20000</span>钱升级]</a>
-		<p><a href="javascript:startShopEvent()">开始营业活动</a>
-	</div>
-	<div id="tab_1" style="display:none">
-		<p id="m_staff_list">员工：<span></span>
-		<p id="m_staff_detail" style="display:none">名字：<span id="m_maid_name"></span><br />
-		年龄：<span id="m_maid_age"></span><br />
-		Fashion：<span id="m_maid_fashion"></span> Pure：<span id="m_maid_pure"></span> Sexy：<span id="m_maid_sexy"></span><br />
-		Technic：<span id="m_maid_technic"></span> Health：<span id="m_maid_health"></span><br />
-		经验：<span id="m_maid_experience"></span><br />
-		属性：<span id="m_maid_attributes"></span><br />
-		<a href="javascript:gotoTab(1)">关闭</a>
-	</div>
-	<div id="tab_2" style="display:none">
-		<p id="pre_recruit" style="display:none">你希望花<span id="m_cost_rm">500</span>钱招募新的员工吗？ <a href="javascript:recruit()">是的</a>
-		<P id="recruit_result" style="display:none">你获得了新的店员： <span id="m_recruit_staff"></span>  <a href="javascript:recruit()"><span id="m_cost_ra">1000</span>钱继续招募</a>
-		<p id="recruit_error">
-	</div>
-	<div id="tab_3" style="display:none"></div>
-	<div id="tab_4" style="display:none">
-		<p>城市总人口：<span id="m_city_total"></span> 万人
-		<p>该城市人群的喜好分布为：<br />
-		F <span id="m_city_f"></span>% | P <span id="m_city_p"></span>% | S <span id="m_city_s"></span>%
-	</div>
-	<div id="tab_5" style="display:none">
-		<p>每天登录游戏可领取 工具箱x1 <a href="javascript:void(0)">领取</a>
-		<p>完成任务更可获得更多奖励！
-		<ul>
-			<li>进行5次营业活动 [工具箱x1]
-			<li>将游戏分享给好友 [工具箱x3]
-	</div>
-</div>
-<div id="shop_event" style="display:none">
-	<div><a href="javascript:gotoMain()">&lt;&lt;返回</a></div>
-	<div id="result">
-		
-	</div>
-	<div id="target">
-		
-	</div>
-	<div id="rivals">
-		
-	</div>
-	<div id="m_choice_staff">选择一名员工：<span></span></div>
-</div>
-<script src="game.js"></script>
+<script>
+var nIndex = 0, recordingX = undefined;
+function recordMouseTouch(ev){
+	if(ev.type == 'touchstart'){
+		recordingX = ev.touches[0].pageX;
+	}else if(ev.type == 'touchmove'){
+		if(recordingX!=undefined){
+			document.querySelector('.scroll_panel').scrollLeft = nIndex*320+recordingX-ev.touches[0].pageX;
+		}
+	}else{
+		var shift = document.querySelector('.scroll_panel').scrollLeft-nIndex*320;
+		if(shift>=128){
+			nIndex+=1;
+		}else if(shift<=-128){
+			nIndex-=1;
+		}
+		document.querySelector('.scroll_panel').scrollLeft = nIndex*320;
+		recordingX = undefined;
+		document.querySelector('.scroll_point .curr').className = '';
+		document.querySelectorAll('.scroll_point b')[nIndex].className = 'curr';
+	}
+}
+document.querySelector('.scroll_panel').addEventListener('touchstart',recordMouseTouch,false);
+document.querySelector('.scroll_panel').addEventListener('touchmove',recordMouseTouch,false);
+document.querySelector('.scroll_panel').addEventListener('touchend',recordMouseTouch,false);
+document.querySelector('.scroll_panel').addEventListener('touchcancel',recordMouseTouch,false);
+</script>

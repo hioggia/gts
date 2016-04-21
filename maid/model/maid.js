@@ -10,34 +10,66 @@
 		fExperience = 8,
 		fExperienceNext = 9;
 
-	function Maid(){
+	function Maid(parse){
+		this._id = 0;
 		this._scope = new Array(10);
 		this.name = 'NoName';
 		this.wage = 0;
 		this.age = 0;
+		this.job = 0;
 		this._nextRecovery = undefined;
-		this.attribute = new Attributes();
+		this.tags = new TagSet();
 
-		this._init(Array.prototype.slice.call(arguments,0));
-	}
-
-	Maid.prototype._init = function(args){
-		if(args.length==1){
-			this.load(args[0]);
-		}else if(args.length>=13){
-			this.name = args[0];
-			this._scope = args.slice(1,11);
-			this.wage = args[11];
-			this.age = args[12];
-			if(args[13]!=undefined){
-				this.attribute.set(args[13],args.slice(14));
-			}
-		}else if(args.length==0){
-			this._scope = [0,100,0,100,0,100,0,100,0,100];
+		if(parse!=undefined){
+			this.parse(parse);
 		}
 	}
 
+	function _valueToRankText(value){
+		if(value==0){
+			return 'D';
+		}
+		if(value<10){
+			return 'C-';
+		}
+		if(value<20){
+			return 'C';
+		}
+		if(value<30){
+			return 'C+';
+		}
+		if(value<40){
+			return 'B-';
+		}
+		if(value<50){
+			return 'B';
+		}
+		if(value<60){
+			return 'B+';
+		}
+		if(value<70){
+			return 'A-';
+		}
+		if(value<80){
+			return 'A';
+		}
+		if(value<90){
+			return 'A+';
+		}
+		if(value<100){
+			return 'S';
+		}
+		if(value<110){
+			return 'SS';
+		}
+		return 'SSS';
+	}
+
 	Maid.prototype.__defineGetter__('fashion',function(){
+		return _valueToRankText(this._scope[fFashion]);
+	});
+
+	Maid.prototype.__defineGetter__('fashionValue',function(){
 		return this._scope[fFashion];
 	});
 
@@ -46,6 +78,10 @@
 	});
 
 	Maid.prototype.__defineGetter__('pure',function(){
+		return _valueToRankText(this._scope[fPureMax]);
+	});
+
+	Maid.prototype.__defineGetter__('pureValue',function(){
 		return this._scope[fPure];
 	});
 
@@ -54,6 +90,10 @@
 	});
 
 	Maid.prototype.__defineGetter__('sexy',function(){
+		return _valueToRankText(this._scope[fSexy]);
+	});
+
+	Maid.prototype.__defineGetter__('sexyValue',function(){
 		return this._scope[fSexy];
 	});
 
@@ -62,11 +102,11 @@
 	});
 
 	Maid.prototype.__defineGetter__('element',function(){
-		if(this.fashion>this.pure && this.fashion>this.sexy){
+		if(this.fashionValue>this.pureValue && this.fashionValue>this.sexyValue){
 			return 'fashion';
-		}else if(this.pure>this.fashion && this.pure>this.sexy){
+		}else if(this.pureValue>this.fashionValue && this.pureValue>this.sexyValue){
 			return 'pure';
-		}else if(this.sexy>this.fashion && this.sexy>this.pure){
+		}else if(this.sexyValue>this.fashionValue && this.sexyValue>this.pureValue){
 			return 'sexy';
 		}
 	});
@@ -99,17 +139,17 @@
 		return this._scope[fExperienceNext];
 	});
 
-	Maid.prototype.__defineSetter__('fashion',function(v){
+	Maid.prototype.__defineSetter__('fashionValue',function(v){
 		this._scope[fFashion] = Math.min(Math.max(v,0),this._scope[fFashionMax]);
 		this._prepareLimit();
 	});
 
-	Maid.prototype.__defineSetter__('pure',function(v){
+	Maid.prototype.__defineSetter__('pureValue',function(v){
 		this._scope[fPure] = Math.min(Math.max(v,0),this._scope[fPureMax]);
 		this._prepareLimit();
 	});
 
-	Maid.prototype.__defineSetter__('sexy',function(v){
+	Maid.prototype.__defineSetter__('sexyValue',function(v){
 		this._scope[fSexy] = Math.min(Math.max(v,0),this._scope[fSexyMax]);
 		this._prepareLimit();
 	});
@@ -125,49 +165,31 @@
 		this._scope[fExperience] = Math.min(Math.max(v,0),this._scope[fExperienceNext]);
 	});
 
-	Maid.prototype._prepareLimit = function(){
-		return;
-		/*fashion低于50时，sexy最大只能达到80%;fashion为0时，sexy最大只能到达50%*/
-		if(this._scope[fFashion]<50){
-			this._scope[fSexy] = Math.min(this._scope[fSexy],Math.ceil((this._scope[fFashion]/50*0.3+0.2)*this._scope[fSexyMax]));
-		}
-		/*sexy大于75时，pure最大只能达到80%;sexy等于100时，pure最大只能达到50%*/
-		if(this._scope[fSexyMax]-this._scope[fSexy]<25){
-			this._scope[fPure] = Math.min(this._scope[fPure],Math.ceil(((this._scope[fSexyMax]-this._scope[fSexy])/25*0.3+0.5)*this._scope[fPureMax]));
-		}
-	}
-
-	Maid.prototype.description = function(isBreakLine,lightup){
-		var t = [this.name+' '+this.age+'岁'];
-		if(isBreakLine){
-			t.push('<br />');
-		}else{
-			t.push(' (');
-		}
-		if(lightup=='fashion'){t.push('<strong>')}
-		t.push('F '+this.fashion);
-		if(lightup=='fashion'){t.push('</strong>')}
-		t.push('/');
-		if(lightup=='pure'){t.push('<strong>')}
-		t.push('P '+this.pure);
-		if(lightup=='pure'){t.push('</strong>')}
-		t.push('/');
-		if(lightup=='sexy'){t.push('<strong>')}
-		t.push('S '+this.sexy);
-		if(lightup=='sexy'){t.push('</strong>')}
-		t.push('/T '+this.technic+'/H '+this.health);
-		if(!isBreakLine){
-			t.push(')');
-		}
-		return t.join('');
-	}
-
-	Maid.prototype.load = function(data){
-
-	}
-
 	Maid.prototype.serialize = function(){
+		var t = [this._id,this.name].concat(this._scope);
+		t.push(this.age);
+		t.push(this.job);
+		t.push(this.tags.serialize());
+		return t.join(',');
+	}
 
+	Maid.prototype.parse = function(data){
+		var t = data.split(','), i = 0;
+		this._id = ~~t[i++];
+		this.name = t[i++];
+		this._scope[fFashion] = ~~t[i++];
+		this._scope[fFashionMax] = ~~t[i++];
+		this._scope[fPure] = ~~t[i++];
+		this._scope[fPureMax] = ~~t[i++];
+		this._scope[fSexy] = ~~t[i++];
+		this._scope[fSexyMax] = ~~t[i++];
+		this._scope[fTechnic] = ~~t[i++];
+		this._scope[fHealth] = ~~t[i++];
+		this._scope[fExperience] = ~~t[i++];
+		this._scope[fExperienceNext] = ~~t[i++];
+		this.age = ~~t[i++];
+		this.job = ~~t[i++];
+		this.tags.parse(t[i++]);
 	}
 
 	exports.Maid = Maid;
