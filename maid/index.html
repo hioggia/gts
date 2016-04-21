@@ -150,8 +150,61 @@
 	<div class="action">
 		<button class="btn_blue btn_large">确定派出</button>
 	</div>
+	<div class="cover"><div class="cutin"></div></div>
 </div>
 <script>
+var customerData = [
+	{pic:305,name:'近藤海',desc:'刚刚与女友分手，心情很差，希望到这里可以重拾信心。',price:9000,like:'纯洁',spec:'优等生',affect:'性感down'}
+], rivalData = {
+	'猫拖女仆咖啡屋':[
+		{pic:9,name:''}
+	]
+};
+function close_cutin(){
+	document.querySelector('.cover').style.display = 'none';
+	document.querySelector('.cover').removeEventListener('touchend',close_cutin,false);
+	document.querySelector('.cutin').style.display = 'none';
+	document.querySelector('.cutin').innerHTML = '';
+}
+function cutin_control(stagePic,customer,rivals,mine,result){
+	var pCounter = 1, cutinStage = document.querySelector('.cutin');
+	document.querySelector('.cover').style.display = 'block';
+	cutinStage.style.display = 'block';
+	cutinStage.dataset.stagePic = stagePic;
+
+	for(var i=0;i<rivals.length;i++){
+		cutinStage.appendChild( createCutinHead(rivals[i],pCounter++,2) );
+	}
+	cutinStage.appendChild( createCutinHead(mine,pCounter,1) );
+	cutinStage.dataset.totalChara = pCounter;
+
+	var c = createCutinHead(customer,0,3);
+	cutinStage.appendChild(c);
+	c.innerHTML = '<b class="anim_ellipsis"></b>';
+	setTimeout(function(){
+		c.innerHTML = '';
+		c.dataset.result = result;
+		setTimeout(function(){
+			c.innerHTML = '<b class="anim_heart"></b>';
+			setTimeout(function(){
+				document.querySelector('.cover').addEventListener('touchend',close_cutin,false);
+			},600);
+		},250);
+	},4000);
+}
+function createCutinHead(charaPic,pos,borderType){
+	var head = document.createElement('div');
+	head.className = 'head';
+	head.dataset.charaPic = charaPic;
+	head.dataset.pos = pos;
+	head.dataset.borderType = borderType;
+	return head;
+}
+
+document.querySelector('.action button').addEventListener('touchend',function(){
+	cutin_control(1,305,[9],15,2);
+},false);
+
 var nIndex = 0, recordingX = undefined, lockTime = 0;
 function tweenScrolling(){
 	if(lockTime==0){

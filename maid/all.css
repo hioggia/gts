@@ -31,6 +31,66 @@ html,body{font-size:12px;margin:0;padding:0;}
 .btn_large{border-width:2px;padding:6px 12px;border-radius:4px;font-size:18px;font-weight:700;}
 .btn_blue{border-style:solid;border-color:#000;background-color:#1d52bc;color:#fff;}
 
+.cover{position:fixed;display:none;left:0;top:0;z-index:10;width:100%;height:100%;background-color:rgba(0,0,0,.5);}
+.cutin{position:fixed;display:none;left:50%;top:50%;z-index:11;width:286px;height:184px;margin:-94px 0 0 -146px;border:solid 3px #fff;border-radius:5px;}
+.cutin[data-stage-pic="1"]{background-image:url(img/bg/cutin/1.png);}
+.cutin[data-stage-pic="2"]{background-image:url(img/bg/cutin/2.png);}
+.cutin[data-stage-pic="3"]{background-image:url(img/bg/cutin/3.png);}
+.cutin .head{position:absolute;width:50px;height:50px;border-radius:25px;border-width:2px;border-style:solid;background-color:#fff;}
+.cutin .head[data-chara-pic="1"]{background-image:url(img/chara/cutin/1.png);}
+.cutin .head[data-chara-pic="2"]{background-image:url(img/chara/cutin/2.png);}
+.cutin .head[data-chara-pic="3"]{background-image:url(img/chara/cutin/3.png);}
+.cutin .head[data-chara-pic="4"]{background-image:url(img/chara/cutin/4.png);}
+.cutin .head[data-chara-pic="5"]{background-image:url(img/chara/cutin/5.png);}
+.cutin .head[data-chara-pic="6"]{background-image:url(img/chara/cutin/6.png);}
+.cutin .head[data-chara-pic="7"]{background-image:url(img/chara/cutin/7.png);}
+.cutin .head[data-chara-pic="8"]{background-image:url(img/chara/cutin/8.png);}
+.cutin .head[data-chara-pic="9"]{background-image:url(img/chara/cutin/9.png);}
+.cutin .head[data-chara-pic="10"]{background-image:url(img/chara/cutin/10.png);}
+.cutin .head[data-chara-pic="11"]{background-image:url(img/chara/cutin/11.png);}
+.cutin .head[data-chara-pic="12"]{background-image:url(img/chara/cutin/12.png);}
+.cutin .head[data-chara-pic="13"]{background-image:url(img/chara/cutin/13.png);}
+.cutin .head[data-chara-pic="14"]{background-image:url(img/chara/cutin/14.png);}
+.cutin .head[data-chara-pic="15"]{background-image:url(img/chara/cutin/15.png);}
+.cutin .head[data-chara-pic="16"]{background-image:url(img/chara/cutin/16.png);}
+.cutin .head[data-chara-pic="17"]{background-image:url(img/chara/cutin/17.png);}
+.cutin .head[data-chara-pic="18"]{background-image:url(img/chara/cutin/18.png);}
+.cutin .head[data-chara-pic="19"]{background-image:url(img/chara/cutin/19.png);}
+.cutin .head[data-chara-pic="20"]{background-image:url(img/chara/cutin/20.png);}
+.cutin .head[data-chara-pic="21"]{background-image:url(img/chara/cutin/21.png);}
+.cutin .head[data-chara-pic="22"]{background-image:url(img/chara/cutin/22.png);}
+.cutin .head[data-chara-pic="23"]{background-image:url(img/chara/cutin/23.png);}
+.cutin .head[data-chara-pic="24"]{background-image:url(img/chara/cutin/24.png);}
+.cutin .head[data-chara-pic="25"]{background-image:url(img/chara/cutin/25.png);}
+.cutin .head[data-chara-pic="26"]{background-image:url(img/chara/cutin/26.png);}
+.cutin .head[data-chara-pic="301"]{background-image:url(img/chara/cutin/301.png);}
+.cutin .head[data-chara-pic="302"]{background-image:url(img/chara/cutin/302.png);}
+.cutin .head[data-chara-pic="303"]{background-image:url(img/chara/cutin/303.png);}
+.cutin .head[data-chara-pic="304"]{background-image:url(img/chara/cutin/304.png);}
+.cutin .head[data-chara-pic="305"]{background-image:url(img/chara/cutin/305.png);}
+.cutin .head[data-border-type="1"]{border-color:#a2d0eb;}
+.cutin .head[data-border-type="2"]{border-color:#fb3f86;}
+.cutin .head[data-border-type="3"]{border-color:#c87bf9;}
+
+.cutin .head[data-pos="0"]{left:116px;top:10px;-webkit-transition:-webkit-transform 250ms ease-in;}
+.cutin[data-total-chara="2"] .head[data-pos="1"]{left:26px;top:120px;}
+.cutin[data-total-chara="2"] .head[data-pos="2"]{left:206px;top:120px;}
+
+.cutin[data-total-chara="2"] .head[data-pos="0"][data-result="1"]{-webkit-transform:translate3d(-90px,110px,0);}
+.cutin[data-total-chara="2"] .head[data-pos="0"][data-result="2"]{-webkit-transform:translate3d(90px,110px,0);}
+
+.anim_ellipsis{position:absolute;left:40px;top:-2px;width:18px;height:16px;background-image:url(img/sys/ellipsis.png);-webkit-animation:anim-ellipsis 4s steps(4) forwards;}
+@-webkit-keyframes anim-ellipsis{
+	0%{background-position:0 0;}
+	100%{background-position:-72px 0;}
+}
+
+.anim_heart{position:absolute;left:15px;top:9px;width:18px;height:16px;background-image:url(img/sys/heart.png);-webkit-animation:anim-heart 800ms ease-in forwards;}
+@-webkit-keyframes anim-heart{
+	0%{-webkit-transform:translate3d(0,0,0) scale(1);opacity:1;}
+	100%{-webkit-transform:translate3d(0,-50px,0) scale(1.4);opacity:0;}
+}
+
 .custom_box_c{position:relative;margin:3px auto;width:310px;border:3px solid #000;border-radius:5px;height:120px;overflow:hidden;background-color:#c87bf9;background-image:url(img/sys/detail_arrow.png);background-repeat:repeat-x;}
 .custom_box_c .price{position:absolute;right:-10px;top:-10px;width:90px;height:28px;border-radius:5px;padding:10px 20px 0 0;background-color:#000;color:#fff;text-align:right;line-height:24px;}
 .custom_box_c .price:before{content:"$ ";}
