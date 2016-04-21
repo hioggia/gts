@@ -154,6 +154,7 @@
 <script>
 var nIndex = 0, recordingX = undefined;
 function recordMouseTouch(ev){
+	ev.stopPropagation();
 	if(ev.type == 'touchstart'){
 		recordingX = ev.touches[0].pageX;
 	}else if(ev.type == 'touchmove'){
