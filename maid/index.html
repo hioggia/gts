@@ -152,11 +152,27 @@
 	</div>
 </div>
 <script>
-var nIndex = 0, recordingX = undefined;
+var nIndex = 0, recordingX = undefined, lockTime = 0;
+function tweenScrolling(){
+	if(lockTime==0){
+		lockTime = new Date().getTime();
+	}
+	var delta = new Date().getTime() - lockTime;
+	if(delta>=500){
+		document.querySelector('.scroll_panel').scrollLeft = nIndex*320;
+		lockTime = 0;
+	}else{
+		document.querySelector('.scroll_panel').scrollLeft += (nIndex*320 - document.querySelector('.scroll_panel').scrollLeft)*0.6;
+		setTimeout(tweenScrolling,30);
+	}
+}
 function recordMouseTouch(ev){
 	ev.stopPropagation();
 	ev.preventDefault();
 	if(ev.type == 'touchstart'){
+		if(lockTime>0){
+			return;
+		}
 		recordingX = ev.touches[0].pageX;
 	}else if(ev.type == 'touchmove'){
 		if(recordingX!=undefined){
@@ -169,7 +185,7 @@ function recordMouseTouch(ev){
 		}else if(shift<=-128){
 			nIndex-=1;
 		}
-		document.querySelector('.scroll_panel').scrollLeft = nIndex*320;
+		tweenScrolling();
 		recordingX = undefined;
 		document.querySelector('.scroll_point .curr').className = '';
 		document.querySelectorAll('.scroll_point b')[nIndex].className = 'curr';
