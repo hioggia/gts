@@ -66,9 +66,6 @@ var customerData=[
 
 var currCustomer = null, currRivalIndex = {};
 
-var mEventName = 'onmousedown' in window ? 'mouseup' : 'touchend';
-alert(mEventName);
-
 newCustomerShow();
 rivalShow();
 document.querySelector('.scroll_panel').dataset.totalChara = mineData.length;
@@ -81,6 +78,11 @@ for(var i=0;i<mineData.length;i++){
 		pt.className = 'curr';
 	}
 	document.querySelector('.scroll_point').appendChild(pt);
+}
+
+function nextRound(){
+	newCustomerShow();
+	rivalShow();
 }
 
 function newCustomerShow(){
@@ -159,6 +161,8 @@ function close_cutin(){
 	document.querySelector('.result').removeEventListener('touchend',close_cutin,false);
 	document.querySelector('.result .hint_tap').style.display = '';
 	document.querySelector('.cutin').innerHTML = '';
+
+	nextRound();
 }
 function cutin_control(stagePic,customer,rivals,mine,result){
 	var pCounter = 1, cutinStage = document.querySelector('.cutin');
@@ -188,14 +192,43 @@ function cutin_control(stagePic,customer,rivals,mine,result){
 }
 
 document.querySelector('.action button').addEventListener('touchend',function(){
-	console.log('1');
 	var mineMaid = mineData[scroller.currentIndex];
+	var highScore = {pos:0,score:0};
+	var pos = 0;
 	var rivalMaidPicArray = [];
 	for(var shop in currRivalIndex){
-		rivalMaidPicArray.push( rivalData[shop][currRivalIndex[shop]].pic );
+		pos++;
+		var maid = rivalData[shop][currRivalIndex[shop]];
+		rivalMaidPicArray.push( maid.pic );
+		var score = maid.getValueByElement(currCustomer.likeValue);
+		if(currCustomer.specValue.type==1){
+			var m = maid.tags.match(currCustomer.specValue.value);
+			if(m>0){
+				score*=m-98;
+			}else if(m<0){
+				score=0;
+			}
+			if(score>highScore.score){
+				highScore.score = score;
+				highScore.pos = pos;
+			}
+		}
 	}
-	console.log(1,currCustomer.pic,rivalMaidPicArray,mineMaid.pic,2)
-	cutin_control(1,currCustomer.pic,rivalMaidPicArray,mineMaid.pic,2);
+	pos++;
+	var score = mineMaid.getValueByElement(currCustomer.likeValue);
+	if(currCustomer.specValue.type==1){
+		var m = mineMaid.tags.match(currCustomer.specValue.value);
+		if(m>0){
+			score*=m-98;
+		}else if(m<0){
+			score=0;
+		}
+		if(score>highScore.score){
+			highScore.score = score;
+			highScore.pos = pos;
+		}
+	}
+	cutin_control(1,currCustomer.pic,rivalMaidPicArray,mineMaid.pic,highScore.pos);
 },false);
 
 var scroller = UI.makeScroller(document.querySelector('.scroll_panel'),document.querySelector('.scroll_point'),document.querySelector('.scroll_button .prev'),document.querySelector('.scroll_button .next'),mineData.length);
