@@ -14,6 +14,7 @@
 		this._id = 0;
 		this._scope = new Array(10);
 		this.name = 'NoName';
+		this.pic = 0;
 		this.wage = 0;
 		this.age = 0;
 		this.job = 0;
@@ -78,7 +79,7 @@
 	});
 
 	Maid.prototype.__defineGetter__('pure',function(){
-		return _valueToRankText(this._scope[fPureMax]);
+		return _valueToRankText(this._scope[fPure]);
 	});
 
 	Maid.prototype.__defineGetter__('pureValue',function(){
@@ -112,10 +113,18 @@
 	});
 
 	Maid.prototype.__defineGetter__('technic',function(){
+		return _valueToRankText(this._scope[fTechnic]);
+	});
+
+	Maid.prototype.__defineGetter__('technicValue',function(){
 		return this._scope[fTechnic];
 	});
 
 	Maid.prototype.__defineGetter__('health',function(){
+		return _valueToRankText(this._scope[fHealth]);
+	});
+
+	Maid.prototype.__defineGetter__('healthValue',function(){
 		if(this._nextRecovery!=undefined){
 			debulog(this.name,'will recovery at',new Date(this._nextRecovery+1000*60*5));
 			var diff = new Date().getTime()-this._nextRecovery;
@@ -166,7 +175,7 @@
 	});
 
 	Maid.prototype.serialize = function(){
-		var t = [this._id,this.name].concat(this._scope);
+		var t = [this._id,this.name,this.pic].concat(this._scope);
 		t.push(this.age);
 		t.push(this.job);
 		t.push(this.tags.serialize());
@@ -177,6 +186,7 @@
 		var t = data.split(','), i = 0;
 		this._id = ~~t[i++];
 		this.name = t[i++];
+		this.pic = t[i++];
 		this._scope[fFashion] = ~~t[i++];
 		this._scope[fFashionMax] = ~~t[i++];
 		this._scope[fPure] = ~~t[i++];

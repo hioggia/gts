@@ -12,6 +12,14 @@
 	}
 </script>
 <link rel="stylesheet" href="all.css" />
+<script src="const/define.js"></script>
+<script src="const/name.js"></script>
+<script src="const/job.js"></script>
+<script src="const/tag.js"></script>
+<script src="model/tagset.js"></script>
+<script src="model/maid.js"></script>
+<script src="model/customer.js"></script>
+<script src="lib/ui.js"></script>
 <body>
 <div id="main_container">
 	<div class="event_top">
@@ -19,166 +27,105 @@
 	</div>
 	<div class="custom_head">
 		<h2>目标客户</h2>
-		<span class="queue">
-			<b class="u"></b>
-			<b class="u"></b>
-			<b class="a"></b>
-			<b class="a"></b>
-			<b class="a"></b>
-		</span>
+		<span class="queue"></span>
 	</div>
-	<div class="custom_box_c" data-custom-pic="305">
-		<div class="price">9,000</div>
-		<div class="name">近藤海</div>
-		<div class="desc">刚刚与女友分手，心情很差，希望到这里可以重拾信心。</div>
-		<div class="data_lay">
-			<span class="like">纯洁</span>
-			<span class="spec">优等生</span>
-			<span class="affect">性感down</span>
-		</div>
-		<b class="chara_face"></b>
-	</div>
+	<div class="customer_cont"></div>
 	<div class="rival_head">
 		<h2>竟争者</h2>
 	</div>
-	<div class="chara_band"><span>猫拖女仆咖啡屋</span></div>
-	<div class="chara_box_s" data-chara-pic="9" data-bg-type="2">
-		<div class="data_lay">
-			<span class="name">シャルロッテ</span>
-			<span class="age">17</span>
-			<span class="fashion">SS</span>
-			<span class="pure">C-</span>
-			<span class="sexy">A+</span>
-			<span class="technic">D</span>
-			<span class="health">B+</span>
-		</div>
-		<div class="tag_lay">
-			<span>逃学威龙</span>
-			<span>露出癖</span>
-			<span>善长交往</span>
-		</div>
-		<b class="chara_face"></b>
-		<b class="tag_back"></b>
-	</div>
+	<div class="rival_cont"></div>
 	<div class="self_head">
 		<h2>我</h2>
 	</div>
 	<div class="scroll_panel">
-		<div class="scroll_container">
-			<div class="scroll_node">
-				<div class="chara_band">
-					<span>大正浪漫女仆咖啡屋</span>
-				</div>
-				<div class="chara_box_s" data-chara-pic="15" data-bg-type="1">
-					<div class="data_lay">
-						<span class="name">レディ・グレイ</span>
-						<span class="age">18</span>
-						<span class="fashion">C+</span>
-						<span class="pure">A-</span>
-						<span class="sexy">B</span>
-						<span class="technic">B-</span>
-						<span class="health">A+</span>
-					</div>
-					<div class="tag_lay">
-						<span>无经验</span>
-						<span>巨乳</span>
-						<span>死气沉沉</span>
-						<span>劣等生</span>
-						<span>呆毛</span>
-					</div>
-					<b class="chara_face"></b>
-					<b class="tag_back"></b>
-				</div>
-			</div>
-			<div class="scroll_node">
-				<div class="chara_band">
-					<span>大正浪漫女仆咖啡屋</span>
-				</div>
-				<div class="chara_box_s" data-chara-pic="16" data-bg-type="1">
-					<div class="data_lay">
-						<span class="name">レディ・グレイ</span>
-						<span class="age">18</span>
-						<span class="fashion">C+</span>
-						<span class="pure">A-</span>
-						<span class="sexy">B</span>
-						<span class="technic">B-</span>
-						<span class="health">A+</span>
-					</div>
-					<div class="tag_lay">
-						<span>无经验</span>
-						<span>巨乳</span>
-						<span>死气沉沉</span>
-						<span>劣等生</span>
-						<span>呆毛</span>
-					</div>
-					<b class="chara_face"></b>
-					<b class="tag_back"></b>
-				</div>
-			</div>
-			<div class="scroll_node">
-				<div class="chara_band">
-					<span>大正浪漫女仆咖啡屋</span>
-				</div>
-				<div class="chara_box_s" data-chara-pic="17" data-bg-type="1">
-					<div class="data_lay">
-						<span class="name">レディ・グレイ</span>
-						<span class="age">18</span>
-						<span class="fashion">C+</span>
-						<span class="pure">A-</span>
-						<span class="sexy">B</span>
-						<span class="technic">B-</span>
-						<span class="health">A+</span>
-					</div>
-					<div class="tag_lay">
-						<span>无经验</span>
-						<span>巨乳</span>
-						<span>死气沉沉</span>
-						<span>劣等生</span>
-						<span>呆毛</span>
-					</div>
-					<b class="chara_face"></b>
-					<b class="tag_back"></b>
-				</div>
-			</div>
-		</div>
+		<div class="scroll_container"></div>
 	</div>
-	<div class="scroll_point">
-		<b class="curr"></b>
-		<b></b>
-		<b></b>
+	<div class="scroll_button">
+		<div class="prev"></div>
+		<div class="next"></div>
 	</div>
+	<div class="scroll_point"></div>
 	<div class="action">
-		<button class="btn_blue btn_large">确定派出</button>
+		<button class="btn_blue btn_large">派出招揽</button>
 	</div>
-	<div class="cover"><div class="cutin"></div></div>
+	<div class="result"><div class="title">招揽结果</div><div class="cutin"></div><b class="hint_tap">TAP SCREEN</b></div>
 </div>
 <script>
-var customerData = [
-	{pic:305,name:'近藤海',desc:'刚刚与女友分手，心情很差，希望到这里可以重拾信心。',price:9000,like:'纯洁',spec:'优等生',affect:'性感down'}
-], rivalData = {
-	'猫拖女仆咖啡屋':[
-		{pic:9,name:''}
+var customerData=[
+	createCustomer('纳撒尼尔','刚刚与女友分手，心情很差，希望到这里可以重拾信心。',301,20000,ELEMENT_SEXY,SPECTYPE_NULL,0,AFFECTTYPE_TECHNIC,1),
+	createCustomer('弗雷德里克','对新鲜的事物充满好奇的他，想在这里找到不一样的体验。',303,8000,ELEMENT_FASHION,SPECTYPE_TAG,8010,AFFECTTYPE_TAG,2031)
+],rivalData={
+	'萌萌猫耳娘主题咖啡馆':[
+		createMaid('马琳',21,48,26,76,86,90,18,0,[1011]),
+		createMaid('埃莉诺',9,41,9,82,74,90,19,0,[5010,10010])
 	]
-};
+},mineData=[
+	createMaid('丹妮尔',7,39,77,35,55,90,17,0,[12010]),
+	createMaid('莉莲',8,23,91,19,73,90,18,0,[8010])
+];
+
+for(var i=0;i<customerData.length;i++){
+	document.querySelector('.custom_head .queue').innerHTML += '<b class="a"></b>';
+}
+document.querySelector('.customer_cont').appendChild( UI.createCustomBoxC(customerData[0]) );
+document.querySelector('.rival_cont').appendChild( UI.createCharaBoxS(rivalData['萌萌猫耳娘主题咖啡馆'][1],2,'萌萌猫耳娘主题咖啡馆') );
+document.querySelector('.scroll_panel').dataset.totalChara = mineData.length;
+for(var i=0;i<mineData.length;i++){
+	var node = UI.createCharaBoxS(mineData[i],1,'大正浪漫女仆咖啡屋');
+	node.className = 'scroll_node';
+	document.querySelector('.scroll_container').appendChild(node);
+	var pt = document.createElement('b');
+	if(i==0){
+		pt.className = 'curr';
+	}
+	document.querySelector('.scroll_point').appendChild(pt);
+}
+
+function randomNamePic(gender){
+	if(gender==1){
+		return [MALE_NAMES[Math.floor(Math.random()*MALE_NAMES.length)],Math.ceil(Math.random()*5)+300];
+	}else{
+		return [FEMALE_NAMES[Math.floor(Math.random()*FEMALE_NAMES.length)],Math.ceil(Math.random()*26)];
+	}
+}
+
+function createCustomer(name,desc,pic,price,like,specType,specValue,affectType,affectValue){
+	var c = new Customer();
+	c.name = name;
+	c.desc = desc;
+	c.pic = pic;
+	c.priceValue = price;
+	c.likeValue = like;
+	c.specValue.type = specType;
+	c.specValue.value = specValue;
+	c.affectValue.type = affectType;
+	c.affectValue.value = affectValue;
+	return c;
+}
+
+function createMaid(name,pic,fashion,pure,sexy,technic,health,age,job,tags){
+	var t = [0,name,pic,fashion,100,pure,100,sexy,100,technic,health,0,100,age,job,[5].concat(tags).join('-')].join(',');
+	return new Maid(t);
+}
+
 function close_cutin(){
-	document.querySelector('.cover').style.display = 'none';
-	document.querySelector('.cover').removeEventListener('touchend',close_cutin,false);
-	document.querySelector('.cutin').style.display = 'none';
+	document.querySelector('.result').style.display = 'none';
+	document.querySelector('.result').removeEventListener('touchend',close_cutin,false);
+	document.querySelector('.result .hint_tap').style.display = '';
 	document.querySelector('.cutin').innerHTML = '';
 }
 function cutin_control(stagePic,customer,rivals,mine,result){
 	var pCounter = 1, cutinStage = document.querySelector('.cutin');
-	document.querySelector('.cover').style.display = 'block';
-	cutinStage.style.display = 'block';
+	document.querySelector('.result').style.display = 'block';
 	cutinStage.dataset.stagePic = stagePic;
 
 	for(var i=0;i<rivals.length;i++){
-		cutinStage.appendChild( createCutinHead(rivals[i],pCounter++,2) );
+		cutinStage.appendChild( UI.createCutinHead(rivals[i],pCounter++,2) );
 	}
-	cutinStage.appendChild( createCutinHead(mine,pCounter,1) );
+	cutinStage.appendChild( UI.createCutinHead(mine,pCounter,1) );
 	cutinStage.dataset.totalChara = pCounter;
 
-	var c = createCutinHead(customer,0,3);
+	var c = UI.createCutinHead(customer,0,3);
 	cutinStage.appendChild(c);
 	c.innerHTML = '<b class="anim_ellipsis"></b>';
 	setTimeout(function(){
@@ -187,65 +134,16 @@ function cutin_control(stagePic,customer,rivals,mine,result){
 		setTimeout(function(){
 			c.innerHTML = '<b class="anim_heart"></b>';
 			setTimeout(function(){
-				document.querySelector('.cover').addEventListener('touchend',close_cutin,false);
+				document.querySelector('.result .hint_tap').style.display = 'block';
+				document.querySelector('.result').addEventListener('touchend',close_cutin,false);
 			},600);
 		},250);
 	},4000);
-}
-function createCutinHead(charaPic,pos,borderType){
-	var head = document.createElement('div');
-	head.className = 'head';
-	head.dataset.charaPic = charaPic;
-	head.dataset.pos = pos;
-	head.dataset.borderType = borderType;
-	return head;
 }
 
 document.querySelector('.action button').addEventListener('touchend',function(){
 	cutin_control(1,305,[9],15,2);
 },false);
 
-var nIndex = 0, recordingX = undefined, lockTime = 0;
-function tweenScrolling(){
-	if(lockTime==0){
-		lockTime = new Date().getTime();
-	}
-	var delta = new Date().getTime() - lockTime;
-	if(delta>=300){
-		document.querySelector('.scroll_panel').scrollLeft = nIndex*320;
-		lockTime = 0;
-	}else{
-		document.querySelector('.scroll_panel').scrollLeft += (nIndex*320 - document.querySelector('.scroll_panel').scrollLeft)*0.6;
-		setTimeout(tweenScrolling,30);
-	}
-}
-function recordMouseTouch(ev){
-	ev.stopPropagation();
-	ev.preventDefault();
-	if(ev.type == 'touchstart'){
-		if(lockTime>0){
-			return;
-		}
-		recordingX = ev.touches[0].pageX;
-	}else if(ev.type == 'touchmove'){
-		if(recordingX!=undefined){
-			document.querySelector('.scroll_panel').scrollLeft = nIndex*320+recordingX-ev.touches[0].pageX;
-		}
-	}else{
-		var shift = document.querySelector('.scroll_panel').scrollLeft-nIndex*320;
-		if(shift>=128){
-			nIndex+=1;
-		}else if(shift<=-128){
-			nIndex-=1;
-		}
-		tweenScrolling();
-		recordingX = undefined;
-		document.querySelector('.scroll_point .curr').className = '';
-		document.querySelectorAll('.scroll_point b')[nIndex].className = 'curr';
-	}
-}
-document.querySelector('.scroll_panel').addEventListener('touchstart',recordMouseTouch,false);
-document.querySelector('.scroll_panel').addEventListener('touchmove',recordMouseTouch,false);
-document.querySelector('.scroll_panel').addEventListener('touchend',recordMouseTouch,false);
-document.querySelector('.scroll_panel').addEventListener('touchcancel',recordMouseTouch,false);
+var scroller = UI.makeScroller(document.querySelector('.scroll_panel'),document.querySelector('.scroll_point'),document.querySelector('.scroll_button .prev'),document.querySelector('.scroll_button .next'),mineData.length);
 </script>

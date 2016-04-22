@@ -40,7 +40,7 @@
 			for(var key in this._scope){
 				size++
 			}
-			if(size<max){
+			if(size<this.max){
 				this._scope[tag.key] = tag;
 			}
 		}
