@@ -63,7 +63,7 @@ var customerData=[
 	]
 },mineData=[
 	createMaid('丹妮尔',7,39,77,35,55,90,17,0,[12010]),
-	createMaid('莉莲',8,23,91,19,73,90,18,0,[8010])
+	createMaid('莉莲',8,27,91,19,73,90,18,0,[8010])
 ];
 
 var currCustomer = null, currRivalIndex = {};
@@ -199,9 +199,13 @@ document.querySelector('.action button').addEventListener('click',function(){
 	var pos = 0;
 	var rivalMaidPicArray = [];
 	for(var shop in currRivalIndex){
-		pos++;
 		var maid = rivalData[shop][currRivalIndex[shop]];
 		rivalMaidPicArray.push( maid.pic );
+		calcScore(maid);
+	}
+	calcScore(mineMaid);
+	function calcScore(maid){
+		pos++;
 		var score = maid.getValueByElement(currCustomer.likeValue);
 		if(currCustomer.specValue.type==1){
 			var m = maid.tags.match(currCustomer.specValue.value);
@@ -211,24 +215,11 @@ document.querySelector('.action button').addEventListener('click',function(){
 				score=0;
 			}
 		}
+		console.log(pos,score);
 		if(score>highScore.score){
 			highScore.score = score;
 			highScore.pos = pos;
 		}
-	}
-	pos++;
-	var score = mineMaid.getValueByElement(currCustomer.likeValue);
-	if(currCustomer.specValue.type==1){
-		var m = mineMaid.tags.match(currCustomer.specValue.value);
-		if(m>0){
-			score*=m-98;
-		}else if(m<0){
-			score=0;
-		}
-	}
-	if(score>highScore.score){
-		highScore.score = score;
-		highScore.pos = pos;
 	}
 	cutin_control(1,currCustomer.pic,rivalMaidPicArray,mineMaid.pic,highScore.pos);
 },false);
