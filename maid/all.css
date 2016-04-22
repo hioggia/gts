@@ -11,6 +11,8 @@ html,body{font-size:12px;margin:0;padding:0;}
 .customer_cont>div.out{position:absolute;z-index:2;-webkit-transform:scale(1) translate3d(-320px,0,0);}
 
 .rival_cont{}
+.rival_cont>div{-webkit-transition:-webkit-transform 250ms ease-in;-webkit-transform:scale(0.1);}
+.rival_cont>div.in{-webkit-transform:scale(1);}
 
 .custom_head{position:relative;margin:10px 0 5px;}
 .custom_head h2{margin:0 0 0 5px;padding:0;}

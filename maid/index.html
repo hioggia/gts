@@ -110,6 +110,7 @@ function rivalMaidShow(shop){
 	var cont = document.querySelector('.rival_cont');
 	var rElem = UI.createCharaBoxS(rivalData[shop][currRivalIndex[shop]],2,shop);
 	cont.appendChild( rElem );
+	setTimeout(function(){rElem.className='in'},10);
 }
 
 function selectRivalMaid(shop){
