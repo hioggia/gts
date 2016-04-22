@@ -51,7 +51,7 @@
 	<div class="result"><div class="title">招揽结果</div><div class="cutin"></div><b class="hint_tap">TAP SCREEN</b></div>
 </div>
 <script>
-var isUsingMouse = false;
+var isUsingMouse = false, isLockingSubmit = false;
 
 var customerData=[
 	createCustomer('纳撒尼尔','刚刚与女友分手，心情很差，希望到这里可以重拾信心。',301,20000,ELEMENT_SEXY,SPECTYPE_NULL,0,AFFECTTYPE_TECHNIC,1),
@@ -165,6 +165,7 @@ function close_cutin(){
 	document.querySelector('.cutin').innerHTML = '';
 
 	nextRound();
+	setTimeout(function(){isLockingSubmit=false},100);
 }
 function cutin_control(stagePic,customer,rivals,mine,result){
 	var pCounter = 1, cutinStage = document.querySelector('.cutin');
@@ -193,7 +194,11 @@ function cutin_control(stagePic,customer,rivals,mine,result){
 	},4000);
 }
 
-document.querySelector('.action button').addEventListener('click',function(){
+document.querySelector('.action button').addEventListener('touchend',function(){
+	if(isLockingSubmit){
+		return;
+	}
+	isLockingSubmit = true;
 	var mineMaid = mineData[scroller.currentIndex];
 	var highScore = {pos:0,score:0};
 	var pos = 0;
