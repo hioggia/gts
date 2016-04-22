@@ -64,11 +64,13 @@ var customerData=[
 	createMaid('莉莲',8,23,91,19,73,90,18,0,[8010])
 ];
 
-for(var i=0;i<customerData.length;i++){
-	document.querySelector('.custom_head .queue').innerHTML += '<b class="a"></b>';
-}
-document.querySelector('.customer_cont').appendChild( UI.createCustomBoxC(customerData[0]) );
-document.querySelector('.rival_cont').appendChild( UI.createCharaBoxS(rivalData['萌萌猫耳娘主题咖啡馆'][1],2,'萌萌猫耳娘主题咖啡馆') );
+var currCustomer = null, currRivalIndex = {};
+
+var mEventName = 'onmousedown' in window ? 'mouseup' : 'touchend';
+alert(mEventName);
+
+newCustomerShow();
+rivalShow();
 document.querySelector('.scroll_panel').dataset.totalChara = mineData.length;
 for(var i=0;i<mineData.length;i++){
 	var node = UI.createCharaBoxS(mineData[i],1,'大正浪漫女仆咖啡屋');
@@ -79,6 +81,50 @@ for(var i=0;i<mineData.length;i++){
 		pt.className = 'curr';
 	}
 	document.querySelector('.scroll_point').appendChild(pt);
+}
+
+function newCustomerShow(){
+	var cont = document.querySelector('.customer_cont');
+	if(cont.childNodes.length>0){
+		cont.childNodes[0].className = 'out';
+		setTimeout(function(){cont.removeChild(cont.childNodes[0])},300);
+		document.querySelector('.custom_head .queue .a').className = 'u';
+	}else{
+		for(var i=0;i<customerData.length;i++){
+			document.querySelector('.custom_head .queue').innerHTML += '<b class="a"></b>';
+		}
+	}
+	if(customerData.length>0){
+		currCustomer = customerData.shift();
+		var cElem = UI.createCustomBoxC(currCustomer);
+		cont.appendChild( cElem );
+		setTimeout(function(){cElem.className='in'},10);
+	}
+}
+
+function rivalMaidShow(shop){
+	var cont = document.querySelector('.rival_cont');
+	var rElem = UI.createCharaBoxS(rivalData[shop][currRivalIndex[shop]],2,shop);
+	cont.appendChild( rElem );
+}
+
+function selectRivalMaid(shop){
+	var targetElement = currCustomer.likeValue;
+	for(var i=0;i<rivalData[shop].length;i++){
+		if(i==0){
+			currRivalIndex[shop] = i;
+		}else if(rivalData[shop][i].getValueByElement(targetElement)>rivalData[shop][currRivalIndex[shop]].getValueByElement(targetElement)){
+			currRivalIndex[shop] = i;
+		}
+	}
+	rivalMaidShow(shop);
+}
+
+function rivalShow(){
+	document.querySelector('.rival_cont').innerHTML = '';
+	for(var shop in rivalData){
+		selectRivalMaid(shop);
+	}
 }
 
 function randomNamePic(gender){
@@ -142,7 +188,14 @@ function cutin_control(stagePic,customer,rivals,mine,result){
 }
 
 document.querySelector('.action button').addEventListener('touchend',function(){
-	cutin_control(1,305,[9],15,2);
+	console.log('1');
+	var mineMaid = mineData[scroller.currentIndex];
+	var rivalMaidPicArray = [];
+	for(var shop in currRivalIndex){
+		rivalMaidPicArray.push( rivalData[shop][currRivalIndex[shop]].pic );
+	}
+	console.log(1,currCustomer.pic,rivalMaidPicArray,mineMaid.pic,2)
+	cutin_control(1,currCustomer.pic,rivalMaidPicArray,mineMaid.pic,2);
 },false);
 
 var scroller = UI.makeScroller(document.querySelector('.scroll_panel'),document.querySelector('.scroll_point'),document.querySelector('.scroll_button .prev'),document.querySelector('.scroll_button .next'),mineData.length);

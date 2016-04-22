@@ -66,6 +66,14 @@
 		return 'SSS';
 	}
 
+	Maid.prototype.getValueByElement = function(element){
+		switch(element){
+			case ELEMENT_FASHION: return this.fashionValue;
+			case ELEMENT_PURE: return this.pureValue;
+			case ELEMENT_SEXY: return this.sexyValue;
+		}
+	};
+
 	Maid.prototype.__defineGetter__('fashion',function(){
 		return _valueToRankText(this._scope[fFashion]);
 	});
@@ -103,12 +111,16 @@
 	});
 
 	Maid.prototype.__defineGetter__('element',function(){
+		return ['','fashion','pure','sexy'][this.elementValue];
+	});
+
+	Maid.prototype.__defineGetter__('elementValue',function(){
 		if(this.fashionValue>this.pureValue && this.fashionValue>this.sexyValue){
-			return 'fashion';
+			return ELEMENT_FASHION;
 		}else if(this.pureValue>this.fashionValue && this.pureValue>this.sexyValue){
-			return 'pure';
+			return ELEMENT_PURE;
 		}else if(this.sexyValue>this.fashionValue && this.sexyValue>this.pureValue){
-			return 'sexy';
+			return ELEMENT_SEXY;
 		}
 	});
 
