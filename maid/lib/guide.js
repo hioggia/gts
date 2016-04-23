@@ -3,7 +3,7 @@
 		start: function(sce){
 			guideLayer = document.createElement('div');
 			guideLayer.id = 'guide';
-			guideLayer.innerHTML = '<div class="lightup"></div><span class="desc"></span><div class="area"></div>';
+			guideLayer.innerHTML = '<div class="lightup"></div><span class="desc"></span><div class="tour"><i></i><div></div></div><div class="area"></div>';
 			guideLayer.style.height = document.body.scrollHeight +'px';
 			document.body.appendChild(guideLayer);
 			guideLayer.querySelector('.area').addEventListener('touchend',areaTouched,false);
@@ -18,6 +18,7 @@
 	var guideLayer,scenario=[];
 
 	function areaTouched(){
+		console.log('areaTouched');
 		guideLayer.querySelector('.area').style.display = '';
 		nextStep();
 	}
@@ -29,6 +30,7 @@
 			return;
 		}
 		var curr = scenario.shift();
+		console.log(curr.cmd);
 		switch(curr.cmd){
 			case 'simTouchElement':
 				simTouchElement.apply(null,curr.param);
