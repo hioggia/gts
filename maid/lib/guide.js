@@ -15,7 +15,7 @@
 		}
 	};
 
-	var guideLayer,scenario=[];
+	var guideLayer,scenario=[],fixForMobile=true;
 
 	function areaTouched(){
 		guideLayer.querySelector('.area').style.display = '';
@@ -78,18 +78,22 @@
 	function clipRect(x,y,w,h){
 		var cssText = 'polygon(0 0,100% 0,100% 100%,0 100%,0 '+y+'px,'+x+'px '+y+'px,'+x+'px '+(y+h)+'px,'+(x+w)+'px '+(y+h)+'px,'+(x+w)+'px '+y+'px,0 '+y+'px)';
 		var lightupLayer = guideLayer.querySelector('.lightup');
-		lightupLayer.style.display = 'none';
 		lightupLayer.style.webkitClipPath = cssText;
-		lightupLayer.offsetHeight;
-		lightupLayer.style.display = '';
+		if(fixForMobile){
+			lightupLayer.style.display = 'none';
+			lightupLayer.offsetHeight;
+			lightupLayer.style.display = '';
+		}
 	}
 
 	function clearClipRect(){
 		var lightupLayer = guideLayer.querySelector('.lightup');
-		lightupLayer.style.display = 'none';
 		lightupLayer.style.webkitClipPath = '';
-		lightupLayer.offsetHeight;
-		lightupLayer.style.display = '';
+		if(fixForMobile){
+			lightupLayer.style.display = 'none';
+			lightupLayer.offsetHeight;
+			lightupLayer.style.display = '';
+		}
 	}
 
 	function typeText(str,x,y){
@@ -113,7 +117,7 @@
 	}
 
 	function waitingForTap(){
-		tapRectToContinue(0,0,document.body.scrollWidth,document.body.scrollHeight);
+		tapRectToContinue(0,0,320,document.body.scrollHeight);
 	}
 
 	function pauseForTime(time){
