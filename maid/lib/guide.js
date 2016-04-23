@@ -18,7 +18,6 @@
 	var guideLayer,scenario=[];
 
 	function areaTouched(){
-		console.log('areaTouched');
 		guideLayer.querySelector('.area').style.display = '';
 		nextStep();
 	}
@@ -44,6 +43,9 @@
 			case 'typeText':
 				typeText.apply(null,curr.param);
 				break;
+			case 'clearText':
+				clearText.apply(null,curr.param);
+				break;
 			case 'tapRectToContinue':
 				tapRectToContinue.apply(null,curr.param);
 				break;
@@ -63,22 +65,40 @@
 		if(typeof target == 'string'){
 			target = document.querySelector(target);
 		}
-		var evt = new TouchEvent('touchend');
-		target.dispatchEvent(evt);
+		try{
+			var evt = new TouchEvent('touchend');
+			target.dispatchEvent(evt);
+		}catch(ex){
+			var evt = document.createEvent('TouchEvent');
+			evt.initUIEvent('touchend',true,true);
+			target.dispatchEvent(evt);
+		}
 	}
 
 	function clipRect(x,y,w,h){
 		var cssText = 'polygon(0 0,100% 0,100% 100%,0 100%,0 '+y+'px,'+x+'px '+y+'px,'+x+'px '+(y+h)+'px,'+(x+w)+'px '+(y+h)+'px,'+(x+w)+'px '+y+'px,0 '+y+'px)';
-		document.querySelector('#guide .lightup').style.webkitClipPath = cssText;
+		var lightupLayer = guideLayer.querySelector('.lightup');
+		lightupLayer.style.display = 'none';
+		lightupLayer.style.webkitClipPath = cssText;
+		lightupLayer.offsetHeight;
+		lightupLayer.style.display = '';
 	}
 
 	function clearClipRect(){
-		document.querySelector('#guide .lightup').style.webkitClipPath = '';
+		var lightupLayer = guideLayer.querySelector('.lightup');
+		lightupLayer.style.display = 'none';
+		lightupLayer.style.webkitClipPath = '';
+		lightupLayer.offsetHeight;
+		lightupLayer.style.display = '';
 	}
 
 	function typeText(str,x,y){
-		document.querySelector('#guide .desc').style.webkitTransform = 'translate3d('+x+'px,'+y+'px,0)';
-		document.querySelector('#guide .desc').innerHTML = str;
+		guideLayer.querySelector('.desc').style.webkitTransform = 'translate3d('+x+'px,'+y+'px,0)';
+		guideLayer.querySelector('.desc').innerHTML = str;
+	}
+
+	function clearText(){
+		guideLayer.querySelector('.desc').innerHTML = '';
 	}
 
 	function tapRectToContinue(x,y,w,h){

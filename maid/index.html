@@ -271,6 +271,7 @@ Guide.start([
 	{cmd:'clipRect',param:[2,45,316,160],block:false},//目标客户
 	{cmd:'typeText',param:['最上方显示的是目标客户的信息',50,250],block:false},
 	{cmd:'waitingForTap',param:[],block:true},
+	{cmd:'clearText',param:[],block:false},
 	{cmd:'clipRect',param:[3,356,316,164],block:false},//我
 	{cmd:'waitingForTap',param:[],block:true},
 	{cmd:'clipRect',param:[3,210,316,142],block:false},//竟争者
@@ -284,16 +285,15 @@ Guide.start([
 	{cmd:'clipRect',param:[147,425,68,23],block:false},//性感 B-
 	{cmd:'waitingForTap',param:[],block:true},
 	{cmd:'clipRect',param:[302,424,18,50],block:false},//右箭头
-	{cmd:'waitingForTap',param:[],block:true},
+	{cmd:'tapRectToContinue',param:[302,424,18,50],block:true},
 	{cmd:'simTouchElement',param:['.next'],block:false},
-	{cmd:'waitingForTap',param:[],block:true},
 	{cmd:'clipRect',param:[109,522,102,46],block:false},//派遣
-	{cmd:'waitingForTap',param:[],block:true},
+	{cmd:'tapRectToContinue',param:[109,522,102,46],block:true},
 	{cmd:'simTouchElement',param:['.action button'],block:false},
-	{cmd:'pauseForTime',param:[4000],block:true},
+	{cmd:'clearClipRect',param:[],block:false},
+	{cmd:'pauseForTime',param:[5000],block:true},
 	{cmd:'waitingForTap',param:[],block:true},
 	{cmd:'simTouchElement',param:['.result'],block:false},
-	{cmd:'waitingForTap',param:[],block:true},
 	{cmd:'clipRect',param:[286,48,32,26],block:false},//剩余客户
 	{cmd:'waitingForTap',param:[],block:true},
 	{cmd:'clipRect',param:[181,156,112,22],block:false},//特殊癖好
