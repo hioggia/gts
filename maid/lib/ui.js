@@ -1,5 +1,16 @@
 !function(exports){
 	var UI = {
+		createEmptyCharaBoxS: function createCharaBoxS(band){
+			var container = document.createElement('div');
+			if(band!=undefined){
+				container.innerHTML = '<div class="chara_band"><span>'+band+'</span></div>';
+			}
+			container.innerHTML += '<div class="chara_box_s" data-chara-pic="0" data-bg-type="4">\
+				<b class="chara_face"></b>\
+				<b class="tag_back"></b>\
+			</div>';
+			return container;
+		},
 		createCharaBoxS: function createCharaBoxS(charaData,bgType,band){
 			var container = document.createElement('div');
 			if(band!=undefined){

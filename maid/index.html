@@ -58,8 +58,8 @@ var customerData=[
 	createCustomer('弗雷德里克','对新鲜的事物充满好奇的他，想在这里找到不一样的体验。',303,8000,ELEMENT_FASHION,SPECTYPE_TAG,8010,AFFECTTYPE_TAG,2031)
 ],rivalData={
 	'萌萌猫耳娘主题咖啡馆':[
-		createMaid('马琳',21,48,26,76,86,90,18,0,[1011]),
-		createMaid('埃莉诺',9,41,9,82,74,90,19,0,[5010,10010])
+		createMaid('马琳',21,48,26,66,86,90,18,0,[1011]),
+		createMaid('埃莉诺',9,41,9,72,74,90,19,0,[5010,10010])
 	]
 },mineData=[
 	createMaid('丹妮尔',7,39,77,35,55,90,17,0,[12010]),
@@ -67,6 +67,27 @@ var customerData=[
 ];
 
 var currCustomer = null, currRivalIndex = {};
+
+for(var key in {'放课后TEATIME':0,'家庭餐厅QUEENZ':0}){
+	var m = randomNamePic(0);
+	var t = [];
+	if(Math.random()>0.5){
+		t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+		if(Math.random()>0.6){
+			t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+			if(Math.random()>0.7){
+				t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+				if(Math.random()>0.8){
+					t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+					if(Math.random()>0.9){
+						t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+					}
+				}
+			}
+		}
+	}
+	rivalData[key] = [ createMaid(m[0],m[1],randomIntNumber(0,120),randomIntNumber(0,120),randomIntNumber(0,120),randomIntNumber(0,100),randomIntNumber(0,100),randomIntNumber(14,26),0,t) ];
+}
 
 newCustomerShow();
 rivalShow();
@@ -84,7 +105,11 @@ for(var i=0;i<mineData.length;i++){
 
 function nextRound(){
 	newCustomerShow();
-	rivalShow();
+	if(document.querySelector('.custom_head .queue .a')){
+		rivalShow();
+	}else{
+		console.log('end');
+	}
 }
 
 function newCustomerShow(){
@@ -108,13 +133,19 @@ function newCustomerShow(){
 
 function rivalMaidShow(shop){
 	var cont = document.querySelector('.rival_cont');
-	var rElem = UI.createCharaBoxS(rivalData[shop][currRivalIndex[shop]],2,shop);
+	var rmIdx = currRivalIndex[shop];
+	if(rmIdx>=0){
+		var rElem = UI.createCharaBoxS(rivalData[shop][rmIdx],2,shop);
+	}else{
+		var rElem = UI.createEmptyCharaBoxS(shop);
+	}
 	cont.appendChild( rElem );
 	setTimeout(function(){rElem.className='in'},10);
 }
 
-function selectRivalMaid(shop){
+function rivalAutoSelectMaid(shop){
 	var targetElement = currCustomer.likeValue;
+	currRivalIndex[shop] = -1;
 	for(var i=0;i<rivalData[shop].length;i++){
 		if(i==0){
 			currRivalIndex[shop] = i;
@@ -128,7 +159,7 @@ function selectRivalMaid(shop){
 function rivalShow(){
 	document.querySelector('.rival_cont').innerHTML = '';
 	for(var shop in rivalData){
-		selectRivalMaid(shop);
+		rivalAutoSelectMaid(shop);
 	}
 }
 
@@ -138,6 +169,10 @@ function randomNamePic(gender){
 	}else{
 		return [FEMALE_NAMES[Math.floor(Math.random()*FEMALE_NAMES.length)],Math.ceil(Math.random()*26)];
 	}
+}
+
+function randomIntNumber(min,max){
+	return Math.round(Math.random()*(max-min))+min;
 }
 
 function createCustomer(name,desc,pic,price,like,specType,specValue,affectType,affectValue){
@@ -205,23 +240,42 @@ document.querySelector('.action button').addEventListener('touchend',function(){
 	var pos = 0;
 	var rivalMaidPicArray = [];
 	for(var shop in currRivalIndex){
-		var maid = rivalData[shop][currRivalIndex[shop]];
+		var idx = currRivalIndex[shop];
+		if(idx<0){
+			continue;
+		}
+		var maid = rivalData[shop][idx];
 		rivalMaidPicArray.push( maid.pic );
 		calcScore(maid);
 	}
 	calcScore(mineMaid);
+	if(highScore.pos==pos){
+		//mine is win;
+		document.querySelectorAll('.scroll_container .scroll_node')[scroller.currentIndex].querySelector('.chara_box_s').dataset.bgType = 4;
+	}else{
+		//mine is lose;
+		var c=1;
+		for(var shop in currRivalIndex){
+			if(currRivalIndex[shop]==-1){
+				continue;
+			}
+			if(c++==highScore.pos){
+				//remove winner
+				var m = rivalData[shop].splice(currRivalIndex[shop],1)[0];
+			}
+		}
+	}
 	function calcScore(maid){
 		pos++;
 		var score = maid.getValueByElement(currCustomer.likeValue);
 		if(currCustomer.specValue.type==1){
 			var m = maid.tags.match(currCustomer.specValue.value);
 			if(m>0){
-				score*=m-98;
+				score*=m-96;//4倍
 			}else if(m<0){
 				score=0;
 			}
 		}
-		console.log(pos,score);
 		if(score>highScore.score){
 			highScore.score = score;
 			highScore.pos = pos;
