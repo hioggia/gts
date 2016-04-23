@@ -20,7 +20,6 @@
 <script src="model/maid.js"></script>
 <script src="model/customer.js"></script>
 <script src="lib/ui.js"></script>
-<script src="lib/guide.js"></script>
 <body>
 <div id="main_container">
 	<div class="event_top">
@@ -68,6 +67,27 @@ var customerData=[
 ];
 
 var currCustomer = null, currRivalIndex = {};
+
+for(var key in {'放课后TEATIME':0,'家庭餐厅QUEENZ':0}){
+	var m = randomNamePic(0);
+	var t = [];
+	if(Math.random()>0.5){
+		t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+		if(Math.random()>0.6){
+			t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+			if(Math.random()>0.7){
+				t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+				if(Math.random()>0.8){
+					t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+					if(Math.random()>0.9){
+						t.push( TAGKEYS[ Math.floor(Math.random()*TAGKEYS.length) ] );
+					}
+				}
+			}
+		}
+	}
+	rivalData[key] = [ createMaid(m[0],m[1],randomIntNumber(0,120),randomIntNumber(0,120),randomIntNumber(0,120),randomIntNumber(0,100),randomIntNumber(0,100),randomIntNumber(14,26),0,t) ];
+}
 
 newCustomerShow();
 rivalShow();
@@ -265,42 +285,4 @@ document.querySelector('.action button').addEventListener('touchend',function(){
 },false);
 
 var scroller = UI.makeScroller(document.querySelector('.scroll_panel'),document.querySelector('.scroll_point'),document.querySelector('.scroll_button .prev'),document.querySelector('.scroll_button .next'),mineData.length);
-
-Guide.start([
-	{cmd:'pauseForTime',param:[200],block:true},
-	{cmd:'clipRect',param:[2,45,316,160],block:false},//目标客户
-	{cmd:'typeText',param:['最上方显示的是目标客户的信息',50,250],block:false},
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[3,356,316,164],block:false},//我
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[3,210,316,142],block:false},//竟争者
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[7,281,210,42],block:false},//五属性
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[125,155,58,24],block:false},//性感派
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[147,280,68,23],block:false},//性感 A
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[147,425,68,23],block:false},//性感 B-
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[302,424,18,50],block:false},//右箭头
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'simTouchElement',param:['.next'],block:false},
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[109,522,102,46],block:false},//派遣
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'simTouchElement',param:['.action button'],block:false},
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'simTouchElement',param:['.result'],block:false},
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[286,48,32,26],block:false},//剩余客户
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[181,156,112,22],block:false},//特殊癖好
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'clipRect',param:[10,470,36,24],block:false},//捆绑
-	{cmd:'waitingForTap',param:[],block:true},
-	{cmd:'simTouchElement',param:['.action button'],block:false}
-]);
-
-
 </script>

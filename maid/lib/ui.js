@@ -79,6 +79,7 @@
 				if(lockTime==0){
 					lockTime = new Date().getTime();
 					checkEdge();
+					setPointNode();
 				}
 				var delta = new Date().getTime() - lockTime;
 				if(delta>=300){
@@ -110,9 +111,11 @@
 					}
 					tweenScrolling();
 					recordingX = undefined;
-					pointNode.querySelector('.curr').className = '';
-					pointNode.childNodes[nIndex].className = 'curr';
 				}
+			}
+			function setPointNode(){
+				pointNode.querySelector('.curr').className = '';
+				pointNode.childNodes[nIndex].className = 'curr';
 			}
 			function checkEdge(){
 				if(nIndex==0){
