@@ -1,6 +1,10 @@
 <!doctype html>
 <meta charset="utf-8" />
 <script>
+	if(!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+		var s = encodeURIComponent(location.href);
+		location.replace('qrcode.html?url='+s);
+	}
 	//UI-width / device-width * window.devicePixelRatio * 160
 	var designWidth = 320;
 	if(/Android/i.test(navigator.userAgent)){
