@@ -3,7 +3,7 @@
 		start: function(sce){
 			guideLayer = document.createElement('div');
 			guideLayer.id = 'guide';
-			guideLayer.innerHTML = '<div class="lightup"></div><span class="desc"></span><div class="tour"><i></i><div></div></div><div class="area"></div>';
+			guideLayer.innerHTML = '<div class="lightup"></div><div class="desc"></div><div class="tour" data-anim="init"><i></i><div></div></div><div class="area"></div>';
 			guideLayer.style.height = document.body.scrollHeight +'px';
 			document.body.appendChild(guideLayer);
 			guideLayer.querySelector('.area').addEventListener('touchend',areaTouched,false);
@@ -28,35 +28,59 @@
 			Guide.end();
 			return;
 		}
-		var curr = scenario.shift();
-		console.log(curr.cmd);
-		switch(curr.cmd){
+		var param = scenario.shift();
+		var cmd = param.shift(), block = false;
+		console.log(cmd);
+		switch(cmd){
 			case 'simTouchElement':
-				simTouchElement.apply(null,curr.param);
+				simTouchElement.apply(null,param);
 				break;
 			case 'clipRect':
-				clipRect.apply(null,curr.param);
+				clipRect.apply(null,param);
 				break;
 			case 'clearClipRect':
-				clearClipRect.apply(null,curr.param);
+				clearClipRect.apply(null,param);
 				break;
 			case 'typeText':
-				typeText.apply(null,curr.param);
+				typeText.apply(null,param);
 				break;
 			case 'clearText':
-				clearText.apply(null,curr.param);
+				clearText.apply(null,param);
 				break;
-			case 'tapRectToContinue':
-				tapRectToContinue.apply(null,curr.param);
+			case 'tourAnim':
+				tourAnim.apply(null,param);
 				break;
-			case 'waitingForTap':
-				waitingForTap.apply(null,curr.param);
+			case 'tourEmotion':
+				tourEmotion.apply(null,param);
 				break;
-			case 'pauseForTime':
-				pauseForTime.apply(null,curr.param);
+			case 'tourSerifShow':
+				tourSerifShow.apply(null,param);
+				break;
+			case 'tourSerifHide':
+				tourSerifHide.apply(null,param);
+				break;
+			case 'tourSerifSay':
+				block = true;
+				tourSerifSay.apply(null,param);
+				break;
+			case 'tourSerifAddLine':
+				block = true;
+				tourSerifAddLine.apply(null,param);
+				break;
+			case 'pauseUntilTapRect':
+				block = true;
+				pauseUntilTapRect.apply(null,param);
+				break;
+			case 'pauseUntilTapScreen':
+				block = true;
+				pauseUntilTapScreen.apply(null,param);
+				break;
+			case 'pauseByTime':
+				block = true;
+				pauseByTime.apply(null,param);
 				break;
 		}
-		if(!curr.block){
+		if(!block){
 			nextStep();
 		}
 	}
@@ -105,7 +129,56 @@
 		guideLayer.querySelector('.desc').innerHTML = '';
 	}
 
-	function tapRectToContinue(x,y,w,h){
+	function tourAnim(anim){
+		if(guideLayer.querySelector('.tour').dataset.anim == anim){
+			anim+='2';
+		}
+		guideLayer.querySelector('.tour').dataset.anim = anim;
+	}
+
+	function tourEmotion(emotion){
+		guideLayer.querySelector('.tour').dataset.emotion = emotion;
+	}
+
+	function tourSerifShow(){
+		guideLayer.querySelector('.tour div').style.opacity = 1;
+	}
+
+	function tourSerifHide(){
+		guideLayer.querySelector('.tour div').style.opacity = 0;
+	}
+
+	function tourSerifSay(serif){
+		var buf = serif.split(''), serifLayer = guideLayer.querySelector('.tour div');
+		serifLayer.dataset.ready = '';
+		serifLayer.innerHTML = '';
+		!(function l(){
+			if(buf.length>0){
+				serifLayer.innerHTML += buf.splice(0,1)[0];
+				setTimeout(l,50);
+			}else{
+				serifLayer.dataset.ready = '1';
+				nextStep();
+			}
+		})();
+	}
+
+	function tourSerifAddLine(serif){
+		var buf = serif.split(''), serifLayer = guideLayer.querySelector('.tour div');
+		serifLayer.dataset.ready = '';
+		serifLayer.innerHTML += '<br />';
+		!(function l(){
+			if(buf.length>0){
+				serifLayer.innerHTML += buf.splice(0,1)[0];
+				setTimeout(l,50);
+			}else{
+				serifLayer.dataset.ready = '1';
+				nextStep();
+			}
+		})();
+	}
+
+	function pauseUntilTapRect(x,y,w,h){
 		var area = guideLayer.querySelector('.area');
 		area.style.left = x+'px';
 		area.style.top = y+'px';
@@ -116,11 +189,11 @@
 		},100);
 	}
 
-	function waitingForTap(){
-		tapRectToContinue(0,0,320,document.body.scrollHeight);
+	function pauseUntilTapScreen(){
+		pauseUntilTapRect(0,0,320,document.body.scrollHeight);
 	}
 
-	function pauseForTime(time){
+	function pauseByTime(time){
 		setTimeout(nextStep,time);
 	}
 
