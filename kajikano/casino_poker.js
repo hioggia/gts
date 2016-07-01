@@ -248,6 +248,9 @@
 	}
 	,uo = {
 		sleep:function(caf){
+			if ($(".frm-group .frm-message").length != 0 && $(".frm-group .frm-message").attr("placeholder") == "認証文字入力"){
+        		return;
+        	}
 			if(sm.timeout++>20){
 				location.reload()
 			}
