@@ -20,8 +20,8 @@ var defaultWGConfig = {
 };
 
 delete window.onerror;
-delete console.log;
-delete console.warn;
+//delete console.log;
+//delete console.warn;
 
 if(document.getElementById('wg_script_host')){
 	host = document.getElementById('wg_script_host').innerHTML;
