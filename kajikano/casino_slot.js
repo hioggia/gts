@@ -78,7 +78,7 @@ function init(){
 		nTotal = tmp1.l, nReward = tmp1.a, nWins = tmp1.c;
 	}
 
-	createjs.Ticker.setFPS(300);
+	//createjs.Ticker.setFPS(300);
 
 	moBet.observe(document.querySelector('.prt-bet'),{childList:true});
 
