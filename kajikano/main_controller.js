@@ -143,6 +143,10 @@ if(mode=='app'){
 	tellWebviewAppSetting();
 }
 
+if(require && require.specified('util/anticheat')){
+	$('body').off('mousedown mouseup touchstart touchend tap');
+}
+
 var receiveAppSetupMenu = function(key,value){
 	//console.log(key,value);
 	setWGConfig(key,value);
