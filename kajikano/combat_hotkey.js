@@ -4,30 +4,30 @@
 
 	function commandToFight(type,cmd1,cmd2,cmd3,cmd4){
 		if(type=='attack'){
-			$('.btn-attack-start.display-on').trigger('tap');
-			$('.btn-result:visible').trigger('tap');
-			$('.btn-command-forward:not(.disable)').trigger('tap')
+			$('.btn-attack-start.display-on').trigger(tapEvent);
+			$('.btn-result:visible').trigger(tapEvent);
+			$('.btn-command-forward:not(.disable)').trigger(tapEvent)
 		}else if(type=='ability'){
 			//if($('.prt-command .prt-member .invisible').size()==0){return}
 			//var chara = ~~$('.prt-command .prt-member .invisible').attr('pos')+1;
 			//$('.prt-command .prt-command-chara[pos='+chara+'] .prt-ability-list div:nth-child('+cmd1+').btn-ability-available').trigger('tap');
-			$('.prt-command .prt-command-chara:visible .prt-ability-list div:nth-child('+cmd1+').btn-ability-available').trigger('tap');
+			$('.prt-command .prt-command-chara:visible .prt-ability-list div:nth-child('+cmd1+').btn-ability-available').trigger(tapEvent);
 			var wg_lightUP = $('<div class="wg_lightup"></div>').appendTo('.prt-command .prt-command-chara:visible .prt-ability-list div:nth-child('+cmd1+').btn-ability-available');
 			setTimeout(function(){wg_lightUP.css('opacity','0')},50);
 			setTimeout(function(){wg_lightUP.remove()},550);
 		}else if(type=='summon'){
-			$('.btn-command-summon').trigger('tap').nextAll('.btn-summon-available[pos='+cmd1+']').trigger('tap');
-			$('.btn-summon-use:visible').trigger('tap');
+			$('.btn-command-summon').trigger(tapEvent).nextAll('.btn-summon-available[pos='+cmd1+']').trigger(tapEvent);
+			$('.btn-summon-use:visible').trigger(tapEvent);
 		}else if(type=='switch'){
 			if($('.prt-slide-icon').is('.show-icon')){
-				$('.prt-slide-icon .'+cmd1).trigger('tap');
+				$('.prt-slide-icon .'+cmd1).trigger(tapEvent);
 			}else{
-				$('.prt-member .btn-command-character:nth-child('+cmd2+')').trigger('tap');
+				$('.prt-member .btn-command-character:nth-child('+cmd2+')').trigger(tapEvent);
 			}
 		}else if(type=='next'){
-			$('.btn-result').trigger('tap');
+			$('.btn-result').trigger(tapEvent);
 		}else if(type=='ougi'){
-			$('.btn-lock').trigger('tap');
+			$('.btn-lock').trigger(tapEvent);
 		}
 	}
 

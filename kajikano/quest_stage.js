@@ -3,7 +3,7 @@
 var tatf = 0;
 function atf(){
 	if(!$('.prt-title').is(':visible')){
-		$('.btn-command-forward:not(.disable)').trigger('tap');
+		$('.btn-command-forward:not(.disable)').trigger(tapEvent);
 	}
 	tatf = setTimeout(atf,300);
 }

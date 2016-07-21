@@ -4,7 +4,7 @@
 		//console.log('crazyGachaMedal',$('.btn-medal.multi').get(0));
 		$('body').off('tap',stopCrazyGacha);
 		if($('.btn-medal.multi').size()>0 && $('.btn-medal.multi').attr('disable')!='true'){
-			$('.btn-medal.multi').trigger('tap');
+			$('.btn-medal.multi').trigger(tapEvent);
 		}else{
 			setTimeout(crazyGachaMedal,1000);
 		}

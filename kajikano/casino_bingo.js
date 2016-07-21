@@ -17,7 +17,7 @@ function tapNumber(n){
 	var el = $('.prt-sheet-box .btn-number-close-'+n);
 	if(el.size()>0){
 		console.info('tap on '+n);
-		el.trigger('tap');
+		el.trigger(tapEvent);
 	}
 }
 
@@ -30,9 +30,9 @@ function mainCycle(){
 }
 
 function playNext(){
-	$('.btn-usual-ok').trigger('tap');
-	$('.pop-bingo-result .btn-play-again').trigger('tap');
-	$('.pop-bet .btn-play-ok').trigger('tap');
+	$('.btn-usual-ok').trigger(tapEvent);
+	$('.pop-bingo-result .btn-play-again').trigger(tapEvent);
+	$('.pop-bet .btn-play-ok').trigger(tapEvent);
 }
 
 function _autoNext(){

@@ -42,7 +42,7 @@ function findRanker(rn){
 		}
 	});
 	if(!found && $('.btn-forward').attr('disable')=='false'){
-		$('.btn-forward').trigger('tap');
+		$('.btn-forward').trigger(tapEvent);
 		setTimeout(function(){
 			findRanker(rn);
 		},waiting);

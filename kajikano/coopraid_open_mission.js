@@ -7,7 +7,7 @@ coopraidOpenMission(3,1,3);
 function coopraidOpenMission(b,m,s){
 	//选择Normal, Hard, Extra
 	function selectDifficult(difficult){
-		$('.prt-stage-toggle div[data-difficulty='+difficult+']').trigger('tap');
+		$('.prt-stage-toggle div[data-difficulty='+difficult+']').trigger(tapEvent);
 	}
 
 	//检查任务列表是否打开
@@ -20,16 +20,16 @@ function coopraidOpenMission(b,m,s){
 	function openStage(stage){
 		var btnStage = $('.btn-stage-detail[data-stage-id='+stage+']');
 		if(btnStage.size()>0){
-			btnStage.trigger('tap');
+			btnStage.trigger(tapEvent);
 		}else{
-			$('.btn-forward').trigger('tap');
+			$('.btn-forward').trigger(tapEvent);
 		}
 	}
 
 	//检查是否有弹出窗口，若弹出窗口为选择小关卡，则点击小关卡
 	var moPop = new MutationObserver(function(ms){
 		if($('.pop-stage-detail').size()>0){
-			$('.prt-stage-quest>div:nth-child('+s+') .btn-set-quest').trigger('tap');
+			$('.prt-stage-quest>div:nth-child('+s+') .btn-set-quest').trigger(tapEvent);
 		}
 	});
 	moPop.observe($('#pop').get(0),{childList:true});
@@ -37,7 +37,7 @@ function coopraidOpenMission(b,m,s){
 	//检查是否有确认设置任务窗口，若有则点确定
 	var moPopSecond = new MutationObserver(function(ms){
 		if($('.pop-quest-detail').size()>0){
-			$('.pop-quest-detail .btn-usual-ok').trigger('tap');
+			$('.pop-quest-detail .btn-usual-ok').trigger(tapEvent);
 			disconnectAll();
 		}
 	});

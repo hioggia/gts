@@ -147,6 +147,8 @@ if(require && require.specified('util/anticheat')){
 	$('body').off('mousedown mouseup touchstart touchend tap');
 }
 
+var tapEvent = jQuery.Event('tap',{x:64});
+
 var receiveAppSetupMenu = function(key,value){
 	//console.log(key,value);
 	setWGConfig(key,value);

@@ -6,7 +6,7 @@
 	,nl = '\n'
 	,zc = ['color:#000000','color:#307730','color:#AAAAAA','color:white; background-color:#77A8F3','color:white; background-color:#0055CC','color:white; background-color:#B03939']
 	,sout = function(inf,sty){if(!av.是否在控制台输出信息){sout=function(){};return}console.info('%c'+inf,zc[~~sty])}
-	,tp = function(sel){$(sel).trigger('tap')}
+	,tp = function(sel){$(sel).trigger(tapEvent)}
 	,tz = function(sel){var _=$('div',sel),__=_.size()-1,___=0;_.each(function(i,____){___+=~~____.className.split('_')[1]*Math.pow(10,__-i)});return ___}
 	,ce = function(en){$('#canv').trigger(en)}
 	,ce2 = function(b){exportRoot["card_" + b + "_select"]=1}
@@ -256,7 +256,7 @@
 			}
 			var slt=av.模式设定[md.pf].点击动作延迟几秒+Math.random()*av.模式设定[md.pf].随机增加的延迟秒数;
 			sout('Relax! 我只睡'+Math.round(slt*10)/10+'秒',2);
-			$('.btn-usual-ok:visible').trigger('tap');
+			$('.btn-usual-ok:visible').trigger(tapEvent);
 			za=setTimeout(caf,slt*1000)
 		},
 		deck:function(){

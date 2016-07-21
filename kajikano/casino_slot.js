@@ -51,7 +51,7 @@ function sleep(x){
 
 function tp(s){
 	if($('#pop-captcha').children().size()==0){
-		$(s).trigger('tap')
+		$(s).trigger(tapEvent)
 	}
 };
 
