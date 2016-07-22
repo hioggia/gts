@@ -144,11 +144,10 @@ if(mode=='app'){
 }
 
 !function checkAnticheat(){
-if(require && require.specified('util/anticheat')){
+if(require && require.specified('lib/locallib')){
 	//$('body').off('mousedown mouseup touchstart touchend tap');
-	var anticheatPath = 'http://game-a3.granbluefantasy.jp/assets/js/lib/locallib.js',
-		anticheatModuleName = 'lib/locallib';
-	anticheatPath = $('[data-requiremodule="'+anticheatModuleName+'"]').attr('src');
+	var anticheatPath = 'http://game-a3.granbluefantasy.jp/assets/js/lib/locallib.js';
+	anticheatPath = $('[data-requiremodule="lib/locallib"]').attr('src');
 
 	function checkModified(codeText){
 		var code = codeText.match(/define\(\'util\/anticheat\',[^\n]+/i);
@@ -182,7 +181,7 @@ if(require && require.specified('util/anticheat')){
 
 var tapTime = Date.now();
 Object.defineProperty(window,'tapEvent',{get:function(){
-	var n=Date().now();
+	var n=Date.now();
 	if(n-tapTime<5100){
 		tapTime=n;
 		return $.Event('none');
