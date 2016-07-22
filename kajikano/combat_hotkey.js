@@ -39,7 +39,8 @@
 		if(targetTag == 'textarea' || targetTag == 'input'){
 			return;
 		}
-		var cmdChar = String.fromCharCode(e.charCode);
+		var cmdChar = String.fromCharCode(e.charCode).toLowerCase();
+		//console.info(cmdChar);
 		switch(cmdChar){
 			case 'a':
 			case '工':
