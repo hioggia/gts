@@ -181,12 +181,12 @@ if(require && require.specified('lib/locallib')){
 
 var tapTime = Date.now();
 Object.defineProperty(window,'tapEvent',{get:function(){
-	var n=Date.now();
-	if(n-tapTime<5100){
-		tapTime=n;
+	var n=Date.now(),d=n-tapTime;
+	tapTime=n;
+	console.info(d);
+	if(d<5100){
 		return $.Event('none');
 	}
-	tapTime=n;
 	return $.Event('tap',{x:64});
 }});
 
