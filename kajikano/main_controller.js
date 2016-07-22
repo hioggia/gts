@@ -147,8 +147,15 @@ if(require && require.specified('util/anticheat')){
 	//$('body').off('mousedown mouseup touchstart touchend tap');
 }
 
+var tapTime = Date.now();
 Object.defineProperty(window,'tapEvent',{get:function(){
-	return jQuery.Event('tap',{x:64});
+	var n=Date().now();
+	if(n-tapTime<5100){
+		tapTime=n;
+		return $.Event('none');
+	}
+	tapTime=n;
+	return $.Event('tap',{x:64});
 }});
 
 var receiveAppSetupMenu = function(key,value){
