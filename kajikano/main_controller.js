@@ -143,9 +143,41 @@ if(mode=='app'){
 	tellWebviewAppSetting();
 }
 
+!function checkAnticheat(){
 if(require && require.specified('util/anticheat')){
 	//$('body').off('mousedown mouseup touchstart touchend tap');
+	var anticheatPath = 'http://game-a3.granbluefantasy.jp/assets/js/lib/locallib.js',
+		anticheatModuleName = 'lib/locallib';
+	anticheatPath = $('[data-requiremodule="'+anticheatModuleName+'"]').attr('src');
+
+	function checkModified(codeText){
+		var code = codeText.match(/define\(\'util\/anticheat\',[^\n]+/i);
+		if(code && code.length>0){
+			if(code[0]==='define(\'util/anticheat\',["jquery"],function(a){var b=1001,c=7001,d=9001,e=9002,f=5011,g=10111,h=20011,i=30011,j=60101,k={contentType:"application/json",dataType:"json",type:"POST",url:"ob"},l=function(b){var c={u:Game.userId,c:b};k.data=JSON.stringify(c),a.ajax(k)},m=function(b,c,d,e){var f=a(c),g=function(a){e(a)&&(f.off(d,g),l(b))};f.on(d,g)},n=function(a,b,c,d){var e=function(){d()?l(a):(b+=c,setTimeout(e,b))};setTimeout(e,b)};!function(){var a=0,c=Date.now();m(b,"body","mousedown mouseup touchstart touchend tap",function(b){return"tap"===b.type?a=(b.x||b.y)&&Date.now()-c<f?0:a+1:c=Date.now(),a>3})}(),function(){n(c,g,g,function(){return createjs&&createjs.Ticker&&createjs.Ticker.getFPS&&createjs.Ticker.getFPS()>35})}(),function(){n(d,f,h,function(){return a("[id^=gbfTool]").length})}(),function(){n(e,i,j,function(){return a("script[id^=gfe_]").length})}()});'){
+				console.info('safe');
+				return;
+			}
+		}
+		alert('官方已更新反作弊代码，请注意！');
+		//window.codeText = codeText;
+		//define('util/anticheat',["jquery"],function(a){var b=1001,c=7001,d=9001,e=9002,f=5011,g=10111,h=20011,i=30011,j=60101,k={contentType:"application/json",dataType:"json",type:"POST",url:"ob"},l=function(b){var c={u:Game.userId,c:b};k.data=JSON.stringify(c),a.ajax(k)},m=function(b,c,d,e){var f=a(c),g=function(a){e(a)&&(f.off(d,g),l(b))};f.on(d,g)},n=function(a,b,c,d){var e=function(){d()?l(a):(b+=c,setTimeout(e,b))};setTimeout(e,b)};!function(){var a=0,c=Date.now();m(b,"body","mousedown mouseup touchstart touchend tap",function(b){return"tap"===b.type?a=(b.x||b.y)&&Date.now()-c<f?0:a+1:c=Date.now(),a>3})}(),function(){n(c,g,g,function(){return createjs&&createjs.Ticker&&createjs.Ticker.getFPS&&createjs.Ticker.getFPS()>35})}(),function(){n(d,f,h,function(){return a("[id^=gbfTool]").length})}(),function(){n(e,i,j,function(){return a("script[id^=gfe_]").length})}()});
+	}
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('get',anticheatPath,true);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState===4){
+			if(xhr.status===200){
+				//console.info(xhr.responseText);
+				checkModified(xhr.responseText);
+			}
+		}
+	};
+	xhr.send();
+}else{
+	setTimeout(checkAnticheat,300);
 }
+}();
 
 var tapTime = Date.now();
 Object.defineProperty(window,'tapEvent',{get:function(){
