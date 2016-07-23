@@ -180,13 +180,22 @@ if(require && require.specified('lib/locallib')){
 }();
 
 var tapTime = Date.now();
-Object.defineProperty(window,'tapEvent',{get:function(){
-	var n=Date.now(),d=n-tapTime;
-	console.info(d);
-	if(d<1000){
-		return $.Event('none');
+!function rmupdate(){
+	if('$' in window){
+		$('body').on('mousedown mouseup touchstart touchend',function(ev){
+			var n=Date.now(),d=n-tapTime;
+			console.info(d);
+			tapTime=n;
+		});
+	}else{
+		setTimeout(rmupdate,300);
 	}
-	tapTime=n;
+}();
+Object.defineProperty(window,'tapEvent',{get:function(){
+	/*var n=Date.now(),d=n-tapTime;
+	if(d<5011){
+		return $.Event('none');
+	}*/
 	return $.Event('tap',{x:64});
 }});
 
