@@ -145,6 +145,9 @@ if(mode=='app'){
 
 !function checkAnticheat(){
 if(require && require.specified('lib/locallib')){
+	require(['util/anticheat'],function(){
+		$('body').off('mousedown mouseup touchstart touchend');
+	});
 	//$('body').off('mousedown mouseup touchstart touchend tap');
 	var anticheatPath = 'http://game-a3.granbluefantasy.jp/assets/js/lib/locallib.js';
 	anticheatPath = $('[data-requiremodule="lib/locallib"]').attr('src');
