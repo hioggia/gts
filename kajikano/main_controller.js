@@ -145,17 +145,17 @@ if(mode=='app'){
 
 !function checkAnticheat(){
 if(require && require.specified('lib/locallib')){
-	require(['util/anticheat'],function(){
-		$('body').off('mousedown mouseup touchstart touchend tap');
+	require(['util/ob'],function(){
+		$('#wrapper').off('mousedown mouseup touchstart touchend tap');
 	});
 	//$('body').off('mousedown mouseup touchstart touchend tap');
 	var anticheatPath = 'http://game-a3.granbluefantasy.jp/assets/js/lib/locallib.js';
 	anticheatPath = $('[data-requiremodule="lib/locallib"]').attr('src');
 
 	function checkModified(codeText){
-		var code = codeText.match(/define\(\'util\/anticheat\',[^\n]+/i);
+		var code = codeText.match(/define\(\'util\/ob\',[^\n]+/i);
 		if(code && code.length>0){
-			if(code[0]==='define(\'util/anticheat\',["jquery"],function(a){var b=1001,c=7001,d=9001,e=9002,f=5011,g=10111,h=20011,i=30011,j=60101,k={contentType:"application/json",dataType:"json",type:"POST",url:"ob"},l=function(b){var c={u:Game.userId,c:b};k.data=JSON.stringify(c),a.ajax(k)},m=function(b,c,d,e){var f=a(c),g=function(a){e(a)&&(f.off(d,g),l(b))};f.on(d,g)},n=function(a,b,c,d){var e=function(){d()?l(a):(b+=c,setTimeout(e,b))};setTimeout(e,b)};!function(){var a=0,c=Date.now();m(b,"body","mousedown mouseup touchstart touchend tap",function(b){return"tap"===b.type?a=(b.x||b.y)&&Date.now()-c<f?0:a+1:c=Date.now(),a>3})}(),function(){n(c,g,g,function(){return createjs&&createjs.Ticker&&createjs.Ticker.getFPS&&createjs.Ticker.getFPS()>35})}(),function(){n(d,f,h,function(){return a("[id^=gbfTool]").length})}(),function(){n(e,i,j,function(){return a("script[id^=gfe_]").length})}()});'){
+			if(code[0]==='define("util/ob",["jquery"],function(a){var b=this,c=0,d=1,e="",f=" ",g=\'"\',h="#",i=",",j="-",k="/",l="3",m="5",n=":",o="=",p="A",q="D",r="F",s="G",t="I",u="J",v="N",w="O",x="P",y="S",z="T",A="U",B="[",C="]",D="^",E="_",F="a",G="b",H="c",I="d",J="e",K="f",L="g",M="h",N="i",O="j",P="k",Q="l",R="m",S="n",T="o",U="p",V="r",W="s",X="t",Y="u",Z="w",$="x",_="y",aa=1001,ba=7001,ca=8001,da=8002,ea=9001,fa=9002,ga=9003,ha=9004,ia=3011,ja=5011,ka=10111,la=20011,ma=30011,na=60101,oa=R+F+P+J+p+V+V+F+_,pa=O+T+N+S,qa=function(){return a[oa](arguments)[pa](e)},ra=qa(Q,J,S,L,X,M),sa={};sa[qa(H,T,S,X,J,S,X,z,_,U,J)]=qa(F,U,U,Q,N,H,F,X,N,T,S,k,O,W,T,S),sa[qa(I,F,X,F,z,_,U,J)]=qa(O,W,T,S),sa[qa(X,_,U,J)]=qa(x,w,y,z);var ta=function(c,d){c=c||e,d=d||{},d[qa(Y)]=b[qa(s,F,R,J)][qa(Y,W,J,V,t,I)],sa[qa(Y,V,Q)]=b[qa(s,F,R,J)][qa(G,F,W,J,A,V,N)]+qa(T,G,k)+c,sa[qa(I,F,X,F)]=b[qa(u,y,w,v)][qa(W,X,V,N,S,L,N,K,_)](d),a[qa(F,O,F,$)](sa)},ua=b[qa(W,J,X,z,N,R,J,T,Y,X)],va={},wa=c,xa=function(a){va[a]=(va[a]||c)+d,wa||(wa=d,ua(function(){var a={};a[qa(H)]=va,ta(qa(V),a),wa=c},ia))},ya=function(b,c,d,e){var f=a(c),g=function(a){e(a)&&(f[qa(T,K,K)](d,g),xa(b))};f[qa(T,S)](d,g)},za=function(a,b,c,d){var e=function(){d()?xa(a):(b+=c,ua(e,b))};ua(e,b)};!function(){var a=qa(X,_,U,J),e=qa(X,F,U),g=qa($),i=qa(_),j=b[qa(q,F,X,J)][qa(S,T,Z)],k=c,m=j();ya(aa,qa(h,Z,V,F,U,U,J,V),qa(R,T,Y,W,J,I,T,Z,S,f,R,T,Y,W,J,Y,U,f,X,T,Y,H,M,W,X,F,V,X,f,X,T,Y,H,M,J,S,I,f,X,F,U),function(b){return b[a]===e?k=(b[g]||b[i])&&j()-m<ja?c:k+d:m=j(),k>l})}(),function(){var a=qa(H,V,J,F,X,J,O,W),c=qa(z,N,H,P,J,V),d=qa(L,J,X,r,x,y),e=qa(l,m);za(ba,ja,ka,function(){return b[a]&&b[a][c]&&b[a][c][d]&&b[a][c][d]()>e})}(),function(){var b=qa(W,H,V,N,U,X,B,W,V,H,D,o,g,H,M,V,T,R,J,j,J,$,X,J,S,W,N,T,S,n,k,k,K,L,U,T,P,U,P,S,J,M,L,Q,H,N,T,N,O,J,O,K,J,J,G,N,L,I,S,G,S,T,P,O,g,C,i,Q,N,S,P,B,M,V,J,K,D,o,g,H,M,V,T,R,J,j,J,$,X,J,S,W,N,T,S,n,k,k,K,L,U,T,P,U,P,S,J,M,L,Q,H,N,T,N,O,J,O,K,J,J,G,N,L,I,S,G,S,T,P,O,g,C);za(ca,ka,na,function(){return a(b)[ra]})}(),function(){var b=qa(B,N,I,D,o,R,P,X,E,C,i,B,H,Q,F,W,W,D,o,R,P,X,E,C);za(da,ka,na,function(){return a(b)[ra]})}(),function(){var b=qa(B,N,I,D,o,L,G,K,z,T,T,Q,C);za(ea,ja,la,function(){return a(b)[ra]})}(),function(){var b=qa(W,H,V,N,U,X,B,N,I,D,o,L,K,J,E,C);za(fa,ma,na,function(){return a(b)[ra]})}(),function(){var b=qa(B,N,I,D,o,L,Y,V,F,G,Y,V,Y,C);za(ga,ja,la,function(){return a(b)[ra]})}(),function(){var b=qa(W,H,V,N,U,X,B,N,I,D,o,X,P,J,E,C);za(ha,ma,na,function(){return a(b)[ra]})}()});'){
 				console.info('safe');
 				return;
 			}
