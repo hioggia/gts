@@ -145,9 +145,37 @@ if(mode=='app'){
 
 !function checkAnticheat(){
 if(require && require.specified('lib/locallib')){
-	require(['util/ob'],function(){
-		$('#wrapper').off('mousedown mouseup touchstart touchend tap');
-	});
+	require('util/ob'),!function bt(){
+		//console.info('offing');
+		//$('#wrapper').off('mousedown mouseup touchstart touchend tap');
+		var es=$._data($('#wrapper').get(0)).events,rs={tap:1,mouseup:2,mousedown:3,touchstart:4,touchend:5},guid=-1,count=0;
+		if(!es){
+			return setTimeout(bt,200)
+		}
+		for(var key in es){
+			for(var i=0;i<es[key].length;i++){
+				if(es[key][i].selector==undefined && es[key][i].origType in rs){
+					if(guid===-1){
+						guid=es[key][i].guid;
+					}else if(guid!==es[key][i].guid){
+						continue;
+					}
+					count++;
+					//console.info(es[key][i]);
+					es[key][i].handler=function(){
+						//console.info('hacked');
+					}
+					//$('#wrapper').off(key,es[key][i].handler);
+				}
+			}
+		}
+		//console.info(count);
+		if(count!==5){
+			setTimeout(bt,200);
+		}else{
+			console.info('hacked!');
+		}
+	}();
 	//$('body').off('mousedown mouseup touchstart touchend tap');
 	var anticheatPath = 'http://game-a3.granbluefantasy.jp/assets/js/lib/locallib.js';
 	anticheatPath = $('[data-requiremodule="lib/locallib"]').attr('src');
@@ -183,18 +211,6 @@ if(require && require.specified('lib/locallib')){
 }
 }();
 
-var tapTime = Date.now();
-!function rmupdate(){
-	if('$' in window){
-		$('body').on('mousedown mouseup touchstart touchend',function(ev){
-			var n=Date.now(),d=n-tapTime;
-			console.info(d);
-			tapTime=n;
-		});
-	}else{
-		setTimeout(rmupdate,300);
-	}
-}();
 Object.defineProperty(window,'tapEvent',{get:function(){
 	/*var n=Date.now(),d=n-tapTime;
 	if(d<5011){
