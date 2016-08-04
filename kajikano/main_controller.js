@@ -212,11 +212,7 @@ if(require && require.specified('lib/locallib')){
 }();
 
 Object.defineProperty(window,'tapEvent',{get:function(){
-	/*var n=Date.now(),d=n-tapTime;
-	if(d<5011){
-		return $.Event('none');
-	}*/
-	return $.Event('tap',{x:64});
+	return $.Event('tap',{x:506-Math.round(Math.random()*146),y:416-Math.round(Math.random()*50)});
 }});
 
 var receiveAppSetupMenu = function(key,value){
