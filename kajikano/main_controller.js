@@ -216,7 +216,9 @@ if(require && require.specified('lib/locallib')){
 
 	var hookJQueryAjaxBeforeSend = $.ajaxSettings.beforeSend;
 	$.ajaxSettings.beforeSend = function(a,b){
-		console.info('ajax',a,b);
+		if(/\/ob\/r|\/gc\/gc/.test(b.url)){
+			console.info(b.url,b.data);
+		}
 		hookJQueryAjaxBeforeSend.call($.ajaxSettings,a,b);
 	};
 }else{
