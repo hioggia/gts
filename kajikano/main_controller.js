@@ -213,6 +213,12 @@ if(require && require.specified('lib/locallib')){
 		}
 	};
 	xhr.send();
+
+	var hookJQueryAjaxBeforeSend = $.ajaxSettings.beforeSend;
+	$.ajaxSettings.beforeSend = function(a,b){
+		console.info('ajax',a,b);
+		hookJQueryAjaxBeforeSend.call($.ajaxSettings,a,b);
+	};
 }else{
 	setTimeout(checkAnticheat,300);
 }
