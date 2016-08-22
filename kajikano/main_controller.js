@@ -217,7 +217,22 @@ if(require && require.specified('lib/locallib')){
 	var hookJQueryAjaxBeforeSend = $.ajaxSettings.beforeSend;
 	$.ajaxSettings.beforeSend = function(a,b){
 		if(/\/ob\/r|\/gc\/gc/.test(b.url)){
-			console.info(b.url,b.data);
+			var p=b.url.split('/').splice(3,2).join('/'),
+				m=b.data;
+			b.data = m
+				.replace(/,?"(\d{4})"\:\d+/ig,function($1,$2){if($2!=='1002' && $2!=='4001'){return ''}return $1})
+				/*.replace(/,?"1001"\:\d+/i,'')
+                .replace(/,?"7001"\:\d+/i,'')
+                .replace(/,?"8001"\:\d+/i,'')
+                .replace(/,?"8002"\:\d+/i,'')
+                .replace(/,?"9001"\:\d+/i,'')
+                .replace(/,?"9002"\:\d+/i,'')
+                .replace(/,?"9003"\:\d+/i,'')
+                .replace(/,?"9004"\:\d+/i,'')
+                .replace(/,?"9005"\:\d+/i,'')*/
+                .replace('{,','{')
+                .replace(',}','}');
+			console.info(p,m,b.data);
 		}
 		hookJQueryAjaxBeforeSend.call($.ajaxSettings,a,b);
 	};
