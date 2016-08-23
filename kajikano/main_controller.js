@@ -223,7 +223,7 @@ if(require && require.specified('lib/locallib')){
 				.replace(/,?"(\d{4})"\:\d+/ig,function($1,$2){if($2!=='1002' && $2!=='4001'){if(!($2 in warnRecordKeeper)){warnRecordKeeper[$2]=1;alert('你触犯了作弊码'+$2+'，赶紧把其它插件禁用了吧！')}return ''}return $1})
                 .replace('{,','{')
                 .replace(',}','}');
-			console.info(p,m,b.data);
+			//console.info(p,m,b.data);
 		}
 		hookJQueryAjaxBeforeSend.call($.ajaxSettings,a,b);
 	};
