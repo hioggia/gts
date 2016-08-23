@@ -214,22 +214,13 @@ if(require && require.specified('lib/locallib')){
 	};
 	xhr.send();
 
-	var hookJQueryAjaxBeforeSend = $.ajaxSettings.beforeSend;
+	var warnRecordKeeper={},hookJQueryAjaxBeforeSend = $.ajaxSettings.beforeSend;
 	$.ajaxSettings.beforeSend = function(a,b){
 		if(/\/ob\/r|\/gc\/gc/.test(b.url)){
 			var p=b.url.split('/').splice(3,2).join('/'),
 				m=b.data;
 			b.data = m
-				.replace(/,?"(\d{4})"\:\d+/ig,function($1,$2){if($2!=='1002' && $2!=='4001'){return ''}return $1})
-				/*.replace(/,?"1001"\:\d+/i,'')
-                .replace(/,?"7001"\:\d+/i,'')
-                .replace(/,?"8001"\:\d+/i,'')
-                .replace(/,?"8002"\:\d+/i,'')
-                .replace(/,?"9001"\:\d+/i,'')
-                .replace(/,?"9002"\:\d+/i,'')
-                .replace(/,?"9003"\:\d+/i,'')
-                .replace(/,?"9004"\:\d+/i,'')
-                .replace(/,?"9005"\:\d+/i,'')*/
+				.replace(/,?"(\d{4})"\:\d+/ig,function($1,$2){if($2!=='1002' && $2!=='4001'){if(!($2 in warnRecordKeeper)){warnRecordKeeper[$2]=1;alert('你触犯了作弊码'+$2+'，赶紧把其它插件禁用了吧！')}return ''}return $1})
                 .replace('{,','{')
                 .replace(',}','}');
 			console.info(p,m,b.data);
