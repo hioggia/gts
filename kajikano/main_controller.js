@@ -146,6 +146,8 @@ if(mode=='app'){
 !function checkAnticheat(){
 if(require && require.specified('lib/locallib')){
 	require('util/ob'),!function bt(){
+
+		$.Finger.preventDefault = true;
 		//console.info('offing');
 		//$('#wrapper').off('mousedown mouseup touchstart touchend tap');
 		var es=$._data($('#wrapper').get(0)).events,rs={tap:1,mouseup:2,mousedown:3,touchstart:4,touchend:5},guid=-1,count=0;
@@ -164,7 +166,7 @@ if(require && require.specified('lib/locallib')){
 					//console.info(es[key][i]);
 					var handler=es[key][i].handler;
 					es[key][i].handler=function(ev){
-						if(ev.type==='tap'){
+						if(ev.type!=='tap'){
 							console.info(ev.type,ev.x,ev.y);
 						}
 						/*if(ev.type==='tap' && ev.x>0 && ev.y>0){
@@ -209,6 +211,9 @@ if(require && require.specified('lib/locallib')){
 			if(xhr.status===200){
 				//console.info(xhr.responseText);
 				checkModified(xhr.responseText);
+			}else{
+				alert('反作弊代码检查失败，请注意！');
+				createAppTeller('/report/err',JSON.stringify({sensitive:1,msg:'反作弊代码检查失败，请注意！'}));
 			}
 		}
 	};
@@ -254,16 +259,6 @@ var destroyers = [], registerRouteChangeDestroyer = function(fn){
 
 var copyTextToClipboard = function(text){
 	var textArea = document.createElement("textarea");
-	/*textArea.style.position = "fixed";
-	textArea.style.top = 0;
-	textArea.style.left = 0;
-	textArea.style.width = "2em";
-	textArea.style.height = "2em";
-	textArea.style.padding = 0;
-	textArea.style.border = "none";
-	textArea.style.outline = "none";
-	textArea.style.boxShadow = "none";
-	textArea.style.background = "transparent";*/
 	textArea.value = text;
 	document.body.appendChild(textArea);
 	textArea.select();
