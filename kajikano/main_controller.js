@@ -147,7 +147,7 @@ if(mode=='app'){
 if(require && require.specified('lib/locallib')){
 	require('util/ob'),!function bt(){
 
-		$.Finger.preventDefault = true;
+		//$.Finger.preventDefault = true;
 		//console.info('offing');
 		//$('#wrapper').off('mousedown mouseup touchstart touchend tap');
 		var es=$._data($('#wrapper').get(0)).events,rs={tap:1,mouseup:2,mousedown:3,touchstart:4,touchend:5},guid=-1,count=0;
