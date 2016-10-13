@@ -6,7 +6,20 @@
 	,nl = '\n'
 	,zc = ['color:#000000','color:#307730','color:#AAAAAA','color:white; background-color:#77A8F3','color:white; background-color:#0055CC','color:white; background-color:#B03939']
 	,sout = function(inf,sty){if(!av.是否在控制台输出信息){sout=function(){};return}console.info('%c'+inf,zc[~~sty])}
-	,tp = function(sel){$(sel).trigger(tapEvent)}
+	,tp = function(sel){
+		var tpev;
+		if(sel==='.prt-start-shine' || sel==='.prt-ok-shine'){
+			tpev = createRangeTapEvent(203,540,96,28);
+		}else if(sel==='.prt-yes-shine' || sel==='.prt-low-shine'){
+			tpev = createRangeTapEvent(270,540,80,33);
+		}else if(sel==='.prt-no-shine' || sel==='.prt-high-shine'){
+			tpev = createRangeTapEvent(128,540,80,33);
+		}else{
+			console.log('normal tap');
+			tpev = tapEvent;
+		}
+		$(sel).trigger(tpev)
+	}
 	,tz = function(sel){var _=$('div',sel),__=_.size()-1,___=0;_.each(function(i,____){___+=~~____.className.split('_')[1]*Math.pow(10,__-i)});return ___}
 	,ce = function(en){$('#canv').trigger(en)}
 	,ce2 = function(b){exportRoot["card_" + b + "_select"]=1}
@@ -79,20 +92,20 @@
 		medal:function(){return tz('.prt-medal')}
 	}
 	,check = {
-		canstart:function(){return iv('.prt-start')},
-		canok:function(){return iv('.prt-ok')},
-		canyesno:function(){return iv('.prt-yes')},
+		canstart:function(){return iv('.prt-start-shine')},
+		canok:function(){return iv('.prt-ok-shine')},
+		canyesno:function(){return iv('.prt-yes-shine')},
 		canhighlow:function(){return iv('.prt-double-select')},
 		candoubleup:function(){return ih('ダブルアップに挑戦しますか？')},
 		issinglecard:function(){return Game.view.doubleKind=='1'}
 	}
 	,act = {
-		tapstart:function(){sout('点击START',1);udo();tp('.prt-start')},
-		tapok:function(){sout('点击OK',1);udo();tp('.prt-ok')},
-		tapyes:function(){sout('点击YES',1);udo();tp('.prt-yes')},
-		tapno:function(){sout('点击NO',1);udo();tp('.prt-no')},
-		taphigh:function(){sout('点击HIGH',1);udo();tp('.prt-double-select[select=high]')},
-		taplow:function(){sout('点击LOW',1);udo();tp('.prt-double-select[select=low]')},
+		tapstart:function(){sout('点击START',1);udo();tp('.prt-start-shine')},
+		tapok:function(){sout('点击OK',1);udo();tp('.prt-ok-shine')},
+		tapyes:function(){sout('点击YES',1);udo();tp('.prt-yes-shine')},
+		tapno:function(){sout('点击NO',1);udo();tp('.prt-no-shine')},
+		taphigh:function(){sout('点击HIGH',1);udo();tp('.prt-high-shine')},
+		taplow:function(){sout('点击LOW',1);udo();tp('.prt-low-shine')},
 		keep1pos:function(){sout('保持第1张卡',1);ce('set1');ce2(1)},
 		keep2pos:function(){sout('保持第2张卡',1);ce('set2');ce2(2)},
 		keep3pos:function(){sout('保持第3张卡',1);ce('set3');ce2(3)},
