@@ -1,34 +1,10 @@
-<!doctype html>
-<meta charset="utf-8" />
-<textarea placeholder="copy the data from excel"></textarea>
-<p><button style="display:none">convert</button>
-	<a href="http://h5.78qp.cc/tablegames/">http://h5.78qp.cc/tablegames/</a>
-<div>output data here</div>
-<script>
-	var elInput = document.querySelector('textarea'), elConvert = document.querySelector('button'), elOutput = document.querySelector('div');
-	elConvert.addEventListener('click',function(){
-		var textInput = elInput.value;
-		if(textInput.length==0 || !/\t/.test(textInput)){
-			alert('Not Right');
-			return;
-		}
-		var data = {}, rows = textInput.replace(/\r/g,'').split(/\n/);
-		for(var i=0,l=rows.length;i<l;i++){
-			var row = rows[i];
-			var cols = row.split(/\t/g);
-			if(cols.length<=1){
-				continue;
-			}
-			var key = cols.shift();
-			data[key]=[];
-			for(var j=0,m=cols.length;j<m;j++){
-				if(cols[j].length==0){
-					continue;
-				}
-				data[key].push(cols[j]);
-			}
-		}
-		elOutput.innerHTML = JSON.stringify(data);
-		alert('OK!');
-	},false);
-</script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
+<title>Morow Capital | Home</title>
+</head>
+<body style="min-height: 624px;">
+<a href="http://h5.78qp.cc/tablegames/">http://h5.78qp.cc/tablegames/</a>
